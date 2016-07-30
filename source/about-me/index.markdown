@@ -4,5 +4,11 @@ title: "about_me"
 sharing: true
 footer: true
 ---
-Necisam
-a ruby rookie
+![profile](https://lh3.googleusercontent.com/7xxVkGPwrq0_sEwIkW760wqjYbBYaQUcJ2uOrFLrNi_egNJ5YKp4tBIyS7a9AJ6WWjcQ7ElrQAliycK6fKR9DTpumdfDI2QuKrjM2xEuATtZY5xzmeqsLuuhdjxeBpoRezn_9THge7hpNZwVmU5ZkleMEXT-e_SUMrt7KJAk7uert1s4n2f669qEUI2aJfVS04IYT7MSoQKTme7264nNTE4sUoNdjpfYlyOWIWgrwBo7j3L0qoXfjDWUPOv9NCu41jedlFs2f7mvcUcrOi42dWAAX_0wPj7cnRlEElvcXOPD613qcsq5P7AuYnw-aHia8kCnyHmsxSJ_zM60sc3jSdQvrluoyAOhP40zDtVR55pfHQ5d4-Xh6JN1boWPPqZcpqQeFYCLGZvRmMbi5eTADapWANnIQ9sHr49M2RgC12qX7z9jAn4q5qZ7v3hc_DOkvLGnhYr5yatNXGKdWDNWHLG2WjgJGqH5_ras-YUk7VdlsiQ4Z9ACgRNg6A1jCwYk1mvq7InC-7OVo4wuahe1q1vQPslRY9LgdPgulw3J5_uaqUmSXQYKym5GzoieDv-fkONFrinsIJIyc0f4COZoLwyh_glEvV4=w534-h801-no)
+
+# Necisam
+
+### a graduate student of NTHU CS
+
+### a ruby rookie
+

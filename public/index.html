@@ -9,8 +9,13 @@
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="This is H1 title My name is necisam
-this is my first post puts "hello world" ">
+  <meta name="description" content="部落開張啦~
+以後疑難雜症或備忘錄就會記在這裡啦
+首先就是架設這個部落格
+上網找了蠻久才決定用octopress
+剛好是適合programmer用的，
+用markdown寫文章，用git做版本控制，不用額外的db
+而且是ruby做的，可以順便研究一下科科 install 基本上沒遇到問題 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +37,18 @@ this is my first post puts "hello world" ">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-81657333-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
@@ -73,7 +90,7 @@ this is my first post puts "hello world" ">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/30/my-first-post/">My First Post</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a></h1>
     
     
       <p class="meta">
@@ -82,23 +99,73 @@ this is my first post puts "hello world" ">
 
 
 
-<time class='entry-date' datetime='2016-07-30T14:54:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>2:54 pm</span></time>
+<time class='entry-date' datetime='2016-07-30T23:01:13+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:01 pm</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h1>This is H1 title</h1>
+  <div class="entry-content"><p>部落開張啦~
+以後疑難雜症或備忘錄就會記在這裡啦
+首先就是架設這個部落格
+上網找了蠻久才決定用octopress
+剛好是適合programmer用的，
+用markdown寫文章，用git做版本控制，不用額外的db
+而且是ruby做的，可以順便研究一下科科</p>
 
-<ul>
-<li>My name is necisam</li>
-<li><p>this is my first post</p>
+<hr />
 
-<pre><code>  puts "hello world"
-</code></pre></li>
-</ul>
+<h2>install</h2>
 
+<p>基本上沒遇到問題
+ruby環境之前的弄好了
+只要照著<a href="http://octopress.org/docs/setup/">官網</a></p>
+
+<pre><code>    clone git clone git://github.com/imathis/octopress.git octopress
+    cd octopress
+    bundle install
+    rake install
+</code></pre>
+
+<p>就完成了</p>
+
+<h2>post article</h2>
+
+<p>rake 裡有寫好一些task可以用，要po文章可以用</p>
+
+<pre><code>    rake new_post["title"]
+</code></pre>
+
+<p>再用markdown語法，撰寫文章內章</p>
+
+<pre><code>    rake generate
+</code></pre>
+
+<p>會幫忙把.markdown檔編成html
+並且放到public/blog裡</p>
+
+<pre><code>    rake preview
+</code></pre>
+
+<p>會在localhost:4000 可以預覽</p>
+
+<p>之後再繼續研究有哪些方便的task可以用 😅</p>
+
+<p>在這邊遇到的問題的rake aborted</p>
+
+<pre><code>    rake aborted!
+    Gem::LoadError: You have already activated rake 11.2.2, but your Gemfile requires rake 10.5.0. Prepending `bundle exec` to your command may solve this.
+</code></pre>
+
+<p>因為我之前rail有裝過更新版的rake，目前似乎只能gem uninstall不符的版本，或是在指令前都加上bundle exec
+例如
+        bundle exec rake preview</p>
+
+<h2>deploy to heroku</h2>
+
+<p>因為沒有放到github上，所以目前先用local git，直接push 到heroku上
+這邊就不贅述</p>
 </div>
   
   
@@ -119,7 +186,7 @@ this is my first post puts "hello world" ">
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/07/30/my-first-post/">My First Post</a>
+        <a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
       </li>
     
   </ul>
