@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Necisam's blog]]></title>
+  <link href="https://github.com/king4sam/atom.xml" rel="self"/>
+  <link href="https://github.com/king4sam/"/>
+  <updated>2016-07-30T16:01:18+08:00</updated>
+  <id>https://github.com/king4sam/</id>
+  <author>
+    <name><![CDATA[Necisam]]></name>
+    <email><![CDATA[king4sam990816@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[My First Post]]></title>
+    <link href="https://github.com/king4sam/blog/2016/07/30/my-first-post/"/>
+    <updated>2016-07-30T14:54:00+08:00</updated>
+    <id>https://github.com/king4sam/blog/2016/07/30/my-first-post</id>
+    <content type="html"><![CDATA[<h1>This is H1 title</h1>
+
+<ul>
+<li>My name is necisam</li>
+<li><p>this is my first post</p>
+
+<pre><code>  puts "hello world"
+</code></pre></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
