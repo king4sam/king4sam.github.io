@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://github.com/king4sam/blog/2016/07/30/install-octopress-and-deploy-to-heroku/</loc>
+<loc>https://github.com/king4sam/blog/20160731/plugin-test/</loc>
+<lastmod>2016-07-31T22:05:33+08:00</lastmod>
+</url>
+<url>
+<loc>https://github.com/king4sam/blog/20160730/install-octopress-and-deploy-to-heroku/</loc>
 <lastmod>2016-07-30T23:01:13+08:00</lastmod>
 </url>
 <url>
 <loc>https://github.com/king4sam/blog/archives/</loc>
 </url>
 <url>
+<loc>https://github.com/king4sam/archives/</loc>
+</url>
+<url>
 <loc>https://github.com/king4sam/</loc>
+</url>
+<url>
+<loc>https://github.com/king4sam/arquivos/</loc>
+</url>
+<url>
+<loc>https://github.com/king4sam/about/</loc>
 </url>
 <url>
 <loc>https://github.com/king4sam/about-me/</loc>

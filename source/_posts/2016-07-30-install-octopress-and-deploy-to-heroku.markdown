@@ -15,6 +15,7 @@ categories:
 剛好是適合programmer用的，
 用markdown寫文章，用git做版本控制，不用額外的db
 而且是ruby做的，可以順便研究一下科科
+<!--more-->
 
 ---
 ## install
@@ -48,7 +49,8 @@ rake 裡有寫好一些task可以用，要po文章可以用
 		Gem::LoadError: You have already activated rake 11.2.2, but your Gemfile requires rake 10.5.0. Prepending `bundle exec` to your command may solve this.
 因為我之前rail有裝過更新版的rake，目前似乎只能gem uninstall不符的版本，或是在指令前都加上bundle exec
 例如
-        bundle exec rake preview
+
+    bundle exec rake preview
 ##deploy to heroku
 因為沒有放到github上，所以目前先用local git，直接push 到heroku上
 這邊就不贅述

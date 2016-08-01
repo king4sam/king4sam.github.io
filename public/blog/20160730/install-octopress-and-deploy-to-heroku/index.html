@@ -15,7 +15,8 @@
 上網找了蠻久才決定用octopress
 剛好是適合programmer用的，
 用markdown寫文章，用git做版本控制，不用額外的db
-而且是ruby做的，可以順便研究一下科科 install 基本上沒遇到問題 &hellip;">
+而且是ruby做的，可以順便研究一下科科 ## install
+基本上沒遇到問題 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +25,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="https://github.com/king4sam/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">
+  <link rel="canonical" href="https://github.com/king4sam/blog/20160730/install-octopress-and-deploy-to-heroku/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Necisam's blog" type="application/atom+xml">
@@ -35,6 +36,34 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
   
   <script type="text/javascript">
@@ -76,7 +105,6 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="/about-me">About</a></li>
 </ul>
 
 </nav>
@@ -109,60 +137,37 @@
 上網找了蠻久才決定用octopress
 剛好是適合programmer用的，
 用markdown寫文章，用git做版本控制，不用額外的db
-而且是ruby做的，可以順便研究一下科科</p>
+而且是ruby做的，可以順便研究一下科科
+<!--more--></p>
 
 <hr />
-
-<h2>install</h2>
-
-<p>基本上沒遇到問題
+<p>## install
+基本上沒遇到問題
 ruby環境之前的弄好了
 只要照著<a href="http://octopress.org/docs/setup/">官網</a></p>
 
 <pre><code>    clone git clone git://github.com/imathis/octopress.git octopress
     cd octopress
     bundle install
-    rake install
+    rake install 就完成了 ## post article rake 裡有寫好一些task可以用，要po文章可以用
+
+	rake new_post["title"] 再用markdown語法，撰寫文章內章
+
+	rake generate 會幫忙把.markdown檔編成html 並且放到public/blog裡
+
+	rake preview 會在localhost:4000 可以預覽
 </code></pre>
-
-<p>就完成了</p>
-
-<h2>post article</h2>
-
-<p>rake 裡有寫好一些task可以用，要po文章可以用</p>
-
-<pre><code>    rake new_post["title"]
-</code></pre>
-
-<p>再用markdown語法，撰寫文章內章</p>
-
-<pre><code>    rake generate
-</code></pre>
-
-<p>會幫忙把.markdown檔編成html
-並且放到public/blog裡</p>
-
-<pre><code>    rake preview
-</code></pre>
-
-<p>會在localhost:4000 可以預覽</p>
 
 <p>之後再繼續研究有哪些方便的task可以用 😅</p>
 
 <p>在這邊遇到的問題的rake aborted</p>
 
-<pre><code>    rake aborted!
-    Gem::LoadError: You have already activated rake 11.2.2, but your Gemfile requires rake 10.5.0. Prepending `bundle exec` to your command may solve this.
+<pre><code>	rake aborted!
+	Gem::LoadError: You have already activated rake 11.2.2, but your Gemfile requires rake 10.5.0. Prepending `bundle exec` to your command may solve this. 因為我之前rail有裝過更新版的rake，目前似乎只能gem uninstall不符的版本，或是在指令前都加上bundle exec 例如
+
+bundle exec rake preview ##deploy to heroku 因為沒有放到github上，所以目前先用local git，直接push 到heroku上 這邊就不贅述
 </code></pre>
 
-<p>因為我之前rail有裝過更新版的rake，目前似乎只能gem uninstall不符的版本，或是在指令前都加上bundle exec
-例如
-        bundle exec rake preview</p>
-
-<h2>deploy to heroku</h2>
-
-<p>因為沒有放到github上，所以目前先用local git，直接push 到heroku上
-這邊就不贅述</p>
 </div>
 
 
@@ -192,7 +197,7 @@ ruby環境之前的弄好了
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://github.com/king4sam/blog/2016/07/30/install-octopress-and-deploy-to-heroku/" data-via="" data-counturl="https://github.com/king4sam/blog/2016/07/30/install-octopress-and-deploy-to-heroku/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="https://github.com/king4sam/blog/20160730/install-octopress-and-deploy-to-heroku/" data-via="" data-counturl="https://github.com/king4sam/blog/20160730/install-octopress-and-deploy-to-heroku/" >Tweet</a>
   
   
   
@@ -204,20 +209,42 @@ ruby環境之前的弄好了
     <p class="meta">
       
       
+        <a class="basic-alignment right" href="/blog/20160731/plugin-test/" title="Next Post: plugin test">plugin test &raquo;</a>
+      
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
 <aside class="sidebar">
   
     <section>
+  <ul id="nav_icons">
+      <li class="post">
+      <a href="" alt="Home"><img src="/images/Home.png"></a>
+      <a href="/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:king4sam990816@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="/about-me" alt="About me"><img src="/images/aboutme.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
+        <a href="/blog/20160731/plugin-test/">Plugin Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/20160730/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
       </li>
     
   </ul>
@@ -269,6 +296,22 @@ ruby環境之前的弄好了
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'necisam';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://github.com/king4sam/blog/20160730/install-octopress-and-deploy-to-heroku/';
+        var disqus_url = 'https://github.com/king4sam/blog/20160730/install-octopress-and-deploy-to-heroku/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

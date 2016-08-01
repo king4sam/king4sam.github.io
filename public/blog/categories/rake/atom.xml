@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rake | Necisam's blog]]></title>
   <link href="https://github.com/king4sam/blog/categories/rake/atom.xml" rel="self"/>
   <link href="https://github.com/king4sam/"/>
-  <updated>2016-07-31T00:00:32+08:00</updated>
+  <updated>2016-08-01T15:53:43+08:00</updated>
   <id>https://github.com/king4sam/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -15,69 +15,46 @@
   
   <entry>
     <title type="html"><![CDATA[Install Octopress and Deploy to Heroku]]></title>
-    <link href="https://github.com/king4sam/blog/2016/07/30/install-octopress-and-deploy-to-heroku/"/>
+    <link href="https://github.com/king4sam/blog/20160730/install-octopress-and-deploy-to-heroku/"/>
     <updated>2016-07-30T23:01:13+08:00</updated>
-    <id>https://github.com/king4sam/blog/2016/07/30/install-octopress-and-deploy-to-heroku</id>
+    <id>https://github.com/king4sam/blog/20160730/install-octopress-and-deploy-to-heroku</id>
     <content type="html"><![CDATA[<p>部落開張啦~
 以後疑難雜症或備忘錄就會記在這裡啦
 首先就是架設這個部落格
 上網找了蠻久才決定用octopress
 剛好是適合programmer用的，
 用markdown寫文章，用git做版本控制，不用額外的db
-而且是ruby做的，可以順便研究一下科科</p>
+而且是ruby做的，可以順便研究一下科科
+<!--more--></p>
 
 <hr />
-
-<h2>install</h2>
-
-<p>基本上沒遇到問題
+<p>## install
+基本上沒遇到問題
 ruby環境之前的弄好了
 只要照著<a href="http://octopress.org/docs/setup/">官網</a></p>
 
 <pre><code>    clone git clone git://github.com/imathis/octopress.git octopress
     cd octopress
     bundle install
-    rake install
+    rake install 就完成了 ## post article rake 裡有寫好一些task可以用，要po文章可以用
+
+	rake new_post["title"] 再用markdown語法，撰寫文章內章
+
+	rake generate 會幫忙把.markdown檔編成html 並且放到public/blog裡
+
+	rake preview 會在localhost:4000 可以預覽
 </code></pre>
-
-<p>就完成了</p>
-
-<h2>post article</h2>
-
-<p>rake 裡有寫好一些task可以用，要po文章可以用</p>
-
-<pre><code>    rake new_post["title"]
-</code></pre>
-
-<p>再用markdown語法，撰寫文章內章</p>
-
-<pre><code>    rake generate
-</code></pre>
-
-<p>會幫忙把.markdown檔編成html
-並且放到public/blog裡</p>
-
-<pre><code>    rake preview
-</code></pre>
-
-<p>會在localhost:4000 可以預覽</p>
 
 <p>之後再繼續研究有哪些方便的task可以用 😅</p>
 
 <p>在這邊遇到的問題的rake aborted</p>
 
-<pre><code>    rake aborted!
-    Gem::LoadError: You have already activated rake 11.2.2, but your Gemfile requires rake 10.5.0. Prepending `bundle exec` to your command may solve this.
+<pre><code>	rake aborted!
+	Gem::LoadError: You have already activated rake 11.2.2, but your Gemfile requires rake 10.5.0. Prepending `bundle exec` to your command may solve this. 因為我之前rail有裝過更新版的rake，目前似乎只能gem uninstall不符的版本，或是在指令前都加上bundle exec 例如
+
+bundle exec rake preview ##deploy to heroku 因為沒有放到github上，所以目前先用local git，直接push 到heroku上 這邊就不贅述
 </code></pre>
 
-<p>因為我之前rail有裝過更新版的rake，目前似乎只能gem uninstall不符的版本，或是在指令前都加上bundle exec
-例如
-        bundle exec rake preview</p>
-
-<h2>deploy to heroku</h2>
-
-<p>因為沒有放到github上，所以目前先用local git，直接push 到heroku上
-這邊就不贅述</p>
 ]]></content>
   </entry>
   

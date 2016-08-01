@@ -9,7 +9,7 @@
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="About_me Necisam a graduate student of NTHU CS a ruby rookie Tweet Recent Posts Install Octopress and Deploy to Heroku GitHub Repos Status updating &hellip;">
+  <meta name="description" content="About_me Necisam a graduate student of NTHU CS a ruby rookie Tweet Recent Posts Plugin Test Install Octopress and Deploy to Heroku GitHub Repos &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,34 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
   
   <script type="text/javascript">
@@ -70,7 +98,6 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="/about-me">About</a></li>
 </ul>
 
 </nav>
@@ -84,13 +111,14 @@
     
   </header>
   
-  <p><img src="https://lh3.googleusercontent.com/7xxVkGPwrq0_sEwIkW760wqjYbBYaQUcJ2uOrFLrNi_egNJ5YKp4tBIyS7a9AJ6WWjcQ7ElrQAliycK6fKR9DTpumdfDI2QuKrjM2xEuATtZY5xzmeqsLuuhdjxeBpoRezn_9THge7hpNZwVmU5ZkleMEXT-e_SUMrt7KJAk7uert1s4n2f669qEUI2aJfVS04IYT7MSoQKTme7264nNTE4sUoNdjpfYlyOWIWgrwBo7j3L0qoXfjDWUPOv9NCu41jedlFs2f7mvcUcrOi42dWAAX_0wPj7cnRlEElvcXOPD613qcsq5P7AuYnw-aHia8kCnyHmsxSJ_zM60sc3jSdQvrluoyAOhP40zDtVR55pfHQ5d4-Xh6JN1boWPPqZcpqQeFYCLGZvRmMbi5eTADapWANnIQ9sHr49M2RgC12qX7z9jAn4q5qZ7v3hc_DOkvLGnhYr5yatNXGKdWDNWHLG2WjgJGqH5_ras-YUk7VdlsiQ4Z9ACgRNg6A1jCwYk1mvq7InC-7OVo4wuahe1q1vQPslRY9LgdPgulw3J5_uaqUmSXQYKym5GzoieDv-fkONFrinsIJIyc0f4COZoLwyh_glEvV4=w534-h801-no" alt="profile" /></p>
+  <p><img src="https://lh3.googleusercontent.com/xixvv7cLV6yvbhxGP9ao-ont1jXmMcW2tHjAfPi151ubK3DPrFjTGo7PTTERIrqoV14Q2DepLeo3=w519-h778-no" alt="profile" /></p>
 
-<h1>Necisam</h1>
+<h1 id="necisam">Necisam</h1>
 
-<h3>a graduate student of NTHU CS</h3>
+<h3 id="a-graduate-student-of-nthu-cs">a graduate student of NTHU CS</h3>
 
-<h3>a ruby rookie</h3>
+<h3 id="a-ruby-rookie">a ruby rookie</h3>
+
 
   
     <footer>
@@ -116,11 +144,25 @@
 <aside class="sidebar">
   
     <section>
+  <ul id="nav_icons">
+      <li class="post">
+      <a href="" alt="Home"><img src="/images/Home.png"></a>
+      <a href="/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:king4sam990816@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="/about-me" alt="About me"><img src="/images/aboutme.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
+        <a href="/blog/20160731/plugin-test/">Plugin Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/20160730/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
       </li>
     
   </ul>
@@ -172,6 +214,19 @@
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'necisam';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

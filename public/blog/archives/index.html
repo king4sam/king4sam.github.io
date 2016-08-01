@@ -9,8 +9,9 @@
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="Blog Archive 2016 Install Octopress and Deploy to Heroku
-Jul 30 2016 posted in heroku, octopress, rake Recent Posts Install Octopress and Deploy to &hellip;">
+  <meta name="description" content="Blog Archive 2016 Plugin Test
+Jul 31 2016 Install Octopress and Deploy to Heroku
+Jul 30 2016 posted in heroku, octopress, rake Recent Posts Plugin &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +31,34 @@ Jul 30 2016 posted in heroku, octopress, rake Recent Posts Install Octopress and
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
   
   <script type="text/javascript">
@@ -71,7 +100,6 @@ Jul 30 2016 posted in heroku, octopress, rake Recent Posts Install Octopress and
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="/about-me">About</a></li>
 </ul>
 
 </nav>
@@ -94,7 +122,17 @@ Jul 30 2016 posted in heroku, octopress, rake Recent Posts Install Octopress and
 
 <article>
   
-<h1><a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a></h1>
+<h1><a href="/blog/20160731/plugin-test/">Plugin Test</a></h1>
+<time datetime="2016-07-31T22:05:33+08:00" pubdate><span class='month'>Jul</span> <span class='day'>31</span> <span class='year'>2016</span></time>
+
+
+</article>
+
+
+
+<article>
+  
+<h1><a href="/blog/20160730/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a></h1>
 <time datetime="2016-07-30T23:01:13+08:00" pubdate><span class='month'>Jul</span> <span class='day'>30</span> <span class='year'>2016</span></time>
 
 <footer>
@@ -114,11 +152,25 @@ Jul 30 2016 posted in heroku, octopress, rake Recent Posts Install Octopress and
 <aside class="sidebar">
   
     <section>
+  <ul id="nav_icons">
+      <li class="post">
+      <a href="" alt="Home"><img src="/images/Home.png"></a>
+      <a href="/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:king4sam990816@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="/about-me" alt="About me"><img src="/images/aboutme.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
+        <a href="/blog/20160731/plugin-test/">Plugin Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/20160730/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
       </li>
     
   </ul>
@@ -170,6 +222,19 @@ Jul 30 2016 posted in heroku, octopress, rake Recent Posts Install Octopress and
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'necisam';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

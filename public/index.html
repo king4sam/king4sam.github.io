@@ -9,13 +9,7 @@
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="部落開張啦~
-以後疑難雜症或備忘錄就會記在這裡啦
-首先就是架設這個部落格
-上網找了蠻久才決定用octopress
-剛好是適合programmer用的，
-用markdown寫文章，用git做版本控制，不用額外的db
-而且是ruby做的，可以順便研究一下科科 install 基本上沒遇到問題 &hellip;">
+  <meta name="description" content="">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -35,6 +29,34 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
   
   <script type="text/javascript">
@@ -76,7 +98,6 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="/about-me">About</a></li>
 </ul>
 
 </nav>
@@ -90,7 +111,39 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a></h1>
+      <h1 class="entry-title"><a href="/blog/20160731/plugin-test/">Plugin Test</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-07-31T22:05:33+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>10:05 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/20160731/plugin-test/">繼續閱讀 on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/20160730/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a></h1>
     
     
       <p class="meta">
@@ -112,62 +165,13 @@
 上網找了蠻久才決定用octopress
 剛好是適合programmer用的，
 用markdown寫文章，用git做版本控制，不用額外的db
-而且是ruby做的，可以順便研究一下科科</p>
-
-<hr />
-
-<h2>install</h2>
-
-<p>基本上沒遇到問題
-ruby環境之前的弄好了
-只要照著<a href="http://octopress.org/docs/setup/">官網</a></p>
-
-<pre><code>    clone git clone git://github.com/imathis/octopress.git octopress
-    cd octopress
-    bundle install
-    rake install
-</code></pre>
-
-<p>就完成了</p>
-
-<h2>post article</h2>
-
-<p>rake 裡有寫好一些task可以用，要po文章可以用</p>
-
-<pre><code>    rake new_post["title"]
-</code></pre>
-
-<p>再用markdown語法，撰寫文章內章</p>
-
-<pre><code>    rake generate
-</code></pre>
-
-<p>會幫忙把.markdown檔編成html
-並且放到public/blog裡</p>
-
-<pre><code>    rake preview
-</code></pre>
-
-<p>會在localhost:4000 可以預覽</p>
-
-<p>之後再繼續研究有哪些方便的task可以用 😅</p>
-
-<p>在這邊遇到的問題的rake aborted</p>
-
-<pre><code>    rake aborted!
-    Gem::LoadError: You have already activated rake 11.2.2, but your Gemfile requires rake 10.5.0. Prepending `bundle exec` to your command may solve this.
-</code></pre>
-
-<p>因為我之前rail有裝過更新版的rake，目前似乎只能gem uninstall不符的版本，或是在指令前都加上bundle exec
-例如
-        bundle exec rake preview</p>
-
-<h2>deploy to heroku</h2>
-
-<p>因為沒有放到github上，所以目前先用local git，直接push 到heroku上
-這邊就不贅述</p>
+而且是ruby做的，可以順便研究一下科科
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/20160730/install-octopress-and-deploy-to-heroku/">繼續閱讀 on &rarr;</a>
+    </footer>
   
 
 
@@ -182,11 +186,25 @@ ruby環境之前的弄好了
 <aside class="sidebar">
   
     <section>
+  <ul id="nav_icons">
+      <li class="post">
+      <a href="" alt="Home"><img src="/images/Home.png"></a>
+      <a href="/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:king4sam990816@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="/about-me" alt="About me"><img src="/images/aboutme.png"></a>
+      </li>
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
+        <a href="/blog/20160731/plugin-test/">Plugin Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/20160730/install-octopress-and-deploy-to-heroku/">Install Octopress and Deploy to Heroku</a>
       </li>
     
   </ul>
@@ -237,6 +255,19 @@ ruby環境之前的弄好了
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'necisam';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
