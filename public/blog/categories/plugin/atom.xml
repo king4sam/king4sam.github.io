@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: plugin | Necisam's blog]]></title>
+  <link href="https://necisam-blog.herokuapp.com/blog/categories/plugin/atom.xml" rel="self"/>
+  <link href="https://necisam-blog.herokuapp.com/"/>
+  <updated>2016-08-01T17:57:28+08:00</updated>
+  <id>https://necisam-blog.herokuapp.com/</id>
+  <author>
+    <name><![CDATA[Necisam]]></name>
+    <email><![CDATA[king4sam990816@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[plugin test]]></title>
+    <link href="https://necisam-blog.herokuapp.com/blog/2016/08/01/plugin-test/"/>
+    <updated>2016-08-01T14:05:33+08:00</updated>
+    <id>https://necisam-blog.herokuapp.com/blog/2016/08/01/plugin-test</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h2 id="codeblock">Codeblock</h2>
+
+<h3 id="syntax">Syntax</h3>
+<p>
+    {% codeblock [lang:language] [title] [url] [link text] %}
+    code snippet
+    {% endcodeblock %}
+</p>
+
+<h3 id="section">效果</h3>
+<p><code>ruby Discover if a number is prime http://www.noulakaz.net/weblog/2007/03/18/a-regular-expression-to-check-for-prime-numbers/ Source Article
+class Fixnum
+  def prime?
+    ('1' * self) !~ /^1?$|^(11+?)\1+$/
+  end
+end
+</code></p>
+
+<h2 id="youtube-">Youtube 嵌入</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YCuk1kdQuNo" frameborder="0" allowfullscreen=""></iframe>
+
+<h2 id="image-tag">Image Tag</h2>
+
+<h3 id="syntax-1">Syntax</h3>
+<p>
+    {% img [class names] /path/to/image [width] [height] [title text [alt text]] %}
+</p>
+
+<h3 id="section-1">效果</h3>
+
+<p><img class="[class names]" src="https://s3.graphiq.com/sites/default/files/465/media/images/t2/Shiba_Inu_5187048.jpg"></p>
+
+<h2 id="mathjax">Mathjax</h2>
+
+<h3 id="allow-latex">allow Latex</h3>
+
+<script type="math/tex; mode=display">f'\left( x\right) = \lim _{x\rightarrow 0}\dfrac {f\left( x+\Delta x\right) - f\left( x\right)}{\Delta x}</script>
+
+<hr />
+
+<p>後記</p>
+
+<ul>
+  <li>install new theme oct2</li>
+  <li>excerpt_link 改為中文</li>
+  <li>include Mathjax</li>
+  <li>change markdown parser</li>
+</ul>
+]]></content>
+  </entry>
+  
+</feed>

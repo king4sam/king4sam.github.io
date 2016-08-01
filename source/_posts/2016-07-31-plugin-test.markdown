@@ -1,10 +1,12 @@
 ---
 layout: post
 title: "plugin test"
-date: 2016-07-31 22:05:33 +0800
+date: 2016-08-1 14:05:33 +0800
 comments: true
 categories:
-publish: false
+- octopress
+- plugin
+
 ---
 <!--more-->
 

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: https://github.com/king4sam/sitemap.xml 
+Sitemap: https://necisam-blog.herokuapp.com/sitemap.xml 
