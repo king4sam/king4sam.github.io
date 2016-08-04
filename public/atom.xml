@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Necisam's blog]]></title>
-  <link href="https://necisam-blog.herokuapp.com/atom.xml" rel="self"/>
-  <link href="https://necisam-blog.herokuapp.com/"/>
-  <updated>2016-08-01T17:57:28+08:00</updated>
-  <id>https://necisam-blog.herokuapp.com/</id>
+  <link href="http://king4sam.github.io/atom.xml" rel="self"/>
+  <link href="http://king4sam.github.io/"/>
+  <updated>2016-08-05T00:53:40+08:00</updated>
+  <id>http://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
     <email><![CDATA[king4sam990816@gmail.com]]></email>
@@ -14,10 +14,118 @@
 
   
   <entry>
+    <title type="html"><![CDATA[move blog to github.io]]></title>
+    <link href="http://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
+    <updated>2016-08-04T23:46:00+08:00</updated>
+    <id>http://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
+    <content type="html"><![CDATA[<p>前兩天試著把部落格移到github.io</p>
+
+<p>一是因為heroku改<a href="https://devcenter.heroku.com/articles/free-dyno-hours">免費dyno的使用方式</a></p>
+
+<p>二還是想說有個遠端備份</p>
+
+<hr />
+
+<!--more-->
+
+<h1 id="document">官方document</h1>
+
+<p><a href="http://octopress.org/docs/deploying/github/">here</a></p>
+
+<h2 id="step1-create-new-repo">step1. create new repo</h2>
+
+<p>Create a new Github repository and name the repository with the format username.github.io</p>
+
+<h2 id="step2--set-up-github">step2.  set up github</h2>
+
+<pre><code>rake setup_github_pages
+</code></pre>
+
+<p>輸入url後這指令還做了一些事</p>
+
+<ul>
+  <li>Rename the remote pointing to imathis/octopress from ‘origin’ to ‘octopress’</li>
+  <li>Add your Github Pages repository as the default origin remote.</li>
+  <li>Switch the active branch from master to source.</li>
+  <li>Configure your blog’s url according to your repository.</li>
+  <li>Setup a master branch in the _deploy directory for deployment.</li>
+</ul>
+
+<p>可以對照執行時的輸出</p>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Added remote git@github.com:username/username.github.io.git as origin
+</span><span class="line">Set origin as default remote
+</span><span class="line">Master branch renamed to 'source' for committing your blog source files
+</span><span class="line">rm -rf _deploy
+</span><span class="line">mkdir _deploy
+</span><span class="line">cd _deploy
+</span><span class="line">Initialized empty Git repository in /Users/username/Desktop/GIT/octopress/_deploy/.git/</span></code></pre></td></tr></table></div></figure>
+
+<h2 id="step3-deploy-blog">step3. deploy blog</h2>
+
+<pre><code>rake generate
+rake deploy
+</code></pre>
+
+<p>除了像之前generate出靜態網頁外，還需要delpoy</p>
+
+<p>一樣來看看這指令做了哪些事</p>
+
+<ul>
+  <li>copy the generated files into _deploy/</li>
+  <li>add them to git</li>
+  <li>commit</li>
+  <li>push them up to the master branch</li>
+</ul>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">## Deploying branch to Github Pages
+</span><span class="line">## Pulling any updates from Github Pages
+</span><span class="line">cd _deploy
+</span><span class="line">cd -
+</span><span class="line">rm -rf _deploy/index.html
+</span><span class="line">
+</span><span class="line">## Copying public to _deploy
+</span><span class="line">cp -r public/. _deploy
+</span><span class="line">cd _deploy
+</span><span class="line">
+</span><span class="line">## Committing: Site updated at 2016-08-02 08:54:10 UTC
+</span><span class="line">*
+</span><span class="line">## Pushing generated _deploy website
+</span><span class="line">To git@github.com:username/username.github.io.git
+</span><span class="line"> * [new branch]      master -&gt; master</span></code></pre></td></tr></table></div></figure>
+
+<h2 id="custom-domains">Custom Domains</h2>
+<p>沒申請過，等之後有再設定XD</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[plugin test]]></title>
-    <link href="https://necisam-blog.herokuapp.com/blog/2016/08/01/plugin-test/"/>
+    <link href="http://king4sam.github.io/blog/2016/08/01/plugin-test/"/>
     <updated>2016-08-01T14:05:33+08:00</updated>
-    <id>https://necisam-blog.herokuapp.com/blog/2016/08/01/plugin-test</id>
+    <id>http://king4sam.github.io/blog/2016/08/01/plugin-test</id>
     <content type="html"><![CDATA[<!--more-->
 
 <h2 id="codeblock">Codeblock</h2>
@@ -77,9 +185,9 @@ code snippet
   
   <entry>
     <title type="html"><![CDATA[Install octopress and deploy to heroku]]></title>
-    <link href="https://necisam-blog.herokuapp.com/blog/2016/07/30/install-octopress-and-deploy-to-heroku/"/>
+    <link href="http://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku/"/>
     <updated>2016-07-30T23:01:14+08:00</updated>
-    <id>https://necisam-blog.herokuapp.com/blog/2016/07/30/install-octopress-and-deploy-to-heroku</id>
+    <id>http://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku</id>
     <content type="html"><![CDATA[<p>部落開張啦~</p>
 
 <p>以後疑難雜症或備忘錄就會記在這裡啦</p>

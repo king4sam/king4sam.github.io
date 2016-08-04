@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: github | Necisam's blog]]></title>
+  <link href="http://king4sam.github.io/blog/categories/github/atom.xml" rel="self"/>
+  <link href="http://king4sam.github.io/"/>
+  <updated>2016-08-05T00:53:40+08:00</updated>
+  <id>http://king4sam.github.io/</id>
+  <author>
+    <name><![CDATA[Necisam]]></name>
+    <email><![CDATA[king4sam990816@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[move blog to github.io]]></title>
+    <link href="http://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
+    <updated>2016-08-04T23:46:00+08:00</updated>
+    <id>http://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
+    <content type="html"><![CDATA[<p>前兩天試著把部落格移到github.io</p>
+
+<p>一是因為heroku改<a href="https://devcenter.heroku.com/articles/free-dyno-hours">免費dyno的使用方式</a></p>
+
+<p>二還是想說有個遠端備份</p>
+
+<hr />
+
+<!--more-->
+
+<h1 id="document">官方document</h1>
+
+<p><a href="http://octopress.org/docs/deploying/github/">here</a></p>
+
+<h2 id="step1-create-new-repo">step1. create new repo</h2>
+
+<p>Create a new Github repository and name the repository with the format username.github.io</p>
+
+<h2 id="step2--set-up-github">step2.  set up github</h2>
+
+<pre><code>rake setup_github_pages
+</code></pre>
+
+<p>輸入url後這指令還做了一些事</p>
+
+<ul>
+  <li>Rename the remote pointing to imathis/octopress from ‘origin’ to ‘octopress’</li>
+  <li>Add your Github Pages repository as the default origin remote.</li>
+  <li>Switch the active branch from master to source.</li>
+  <li>Configure your blog’s url according to your repository.</li>
+  <li>Setup a master branch in the _deploy directory for deployment.</li>
+</ul>
+
+<p>可以對照執行時的輸出</p>
+
+<p><code>
+Added remote git@github.com:username/username.github.io.git as origin
+Set origin as default remote
+Master branch renamed to 'source' for committing your blog source files
+rm -rf _deploy
+mkdir _deploy
+cd _deploy
+Initialized empty Git repository in /Users/username/Desktop/GIT/octopress/_deploy/.git/
+</code></p>
+
+<h2 id="step3-deploy-blog">step3. deploy blog</h2>
+
+<pre><code>rake generate
+rake deploy
+</code></pre>
+
+<p>除了像之前generate出靜態網頁外，還需要delpoy</p>
+
+<p>一樣來看看這指令做了哪些事</p>
+
+<ul>
+  <li>copy the generated files into _deploy/</li>
+  <li>add them to git</li>
+  <li>commit</li>
+  <li>push them up to the master branch</li>
+</ul>
+
+<p>```
+## Deploying branch to Github Pages
+## Pulling any updates from Github Pages
+cd _deploy
+cd -
+rm -rf _deploy/index.html</p>
+
+<h2 id="copying-public-to-deploy">Copying public to _deploy</h2>
+<p>cp -r public/. _deploy
+cd _deploy</p>
+
+<h2 id="committing-site-updated-at-2016-08-02-085410-utc">Committing: Site updated at 2016-08-02 08:54:10 UTC</h2>
+<p>*
+## Pushing generated _deploy website
+To git@github.com:username/username.github.io.git
+ * [new branch]      master -&gt; master
+```</p>
+
+<h2 id="custom-domains">Custom Domains</h2>
+<p>沒申請過，等之後有再設定XD</p>
+]]></content>
+  </entry>
+  
+</feed>

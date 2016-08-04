@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby '2.2.4'
+
 group :development do
   gem 'rake', '~> 10.0'
   gem 'jekyll', '~> 2.0'
@@ -17,3 +19,4 @@ end
 
 gem 'sinatra', '~> 1.4.2'
 gem 'kramdown'
+
