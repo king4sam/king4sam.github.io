@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://king4sam.github.io
+url: https://king4sam.github.io
 title: Necisam's blog
 subtitle: Ruby starter
 author: Necisam
@@ -96,7 +96,7 @@ delicious_count: 3
 
 # Disqus Comments
 disqus_short_name: necisam
-disqus_show_comment_count: false
+disqus_show_comment_count: true
 
 # Google Analytics
 google_analytics_tracking_id: ENV["GAnumber"]

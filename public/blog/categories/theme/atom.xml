@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: theme | Necisam's blog]]></title>
+  <link href="https://king4sam.github.io/blog/categories/theme/atom.xml" rel="self"/>
+  <link href="https://king4sam.github.io/"/>
+  <updated>2016-08-19T19:09:26+08:00</updated>
+  <id>https://king4sam.github.io/</id>
+  <author>
+    <name><![CDATA[Necisam]]></name>
+    <email><![CDATA[king4sam990816@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[theme安裝]]></title>
+    <link href="https://king4sam.github.io/blog/2016/08/05/themean-zhuang/"/>
+    <updated>2016-08-05T10:52:06+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/08/05/themean-zhuang</id>
+    <content type="html"><![CDATA[<p>在安裝theme時遇到蠻多問題的</p>
+
+<p>所以再開一篇專門來討論</p>
+
+<hr />
+
+<h1 id="theme">theme</h1>
+
+<p>先上網找到第三方octopress 的theme</p>
+
+<p><a href="https://github.com/octothemes/cyan#applying-the-cyan-theme-to-your-blog">範例</a></p>
+
+<p>clone 下來後通常會是個sass sourse兩個資料夾</p>
+
+<p>安裝指令</p>
+
+<pre><code>rake install[themename]
+</code></pre>
+
+<p>再進一步進去rakefile看做了哪些事</p>
+
+<p><code>
+task :install, :theme do |t, args|
+  if File.directory?(source_dir) || File.directory?("sass")
+    abort("rake aborted!") if ask("A theme is already installed, proceeding will overwrite existing files. Are you sure?", ['y', 'n']) == 'n'
+  end
+  # copy theme into working Jekyll directories
+  theme = args.theme || 'classic'
+  puts "## Copying "+theme+" theme into ./#{source_dir} and ./sass"
+  mkdir_p source_dir
+  cp_r "#{themes_dir}/#{theme}/source/.", source_dir
+  mkdir_p "sass"
+  cp_r "#{themes_dir}/#{theme}/sass/.", "sass"
+  mkdir_p "#{source_dir}/#{posts_dir}"
+  mkdir_p public_dir
+end
+</code></p>
+
+<p>default是安裝classic這個theme
+大致上只是將sass 跟source複製出來
+有自已改過樣式的話可以自行將這兩個資料夾備份</p>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>move blog to github.io - Necisam's blog</title>
+  <title>Category: disqus - Necisam's blog</title>
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="前兩天試著把部落格移到github.io 一是因為heroku改免費dyno的使用方式 二還是想說有個遠端備份 官方document here 1. create new repo Create a new Github repository and name the repository &hellip;">
+  <meta name="description" content="Category: disqus">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/">
+  <link rel="canonical" href="https://king4sam.github.io/blog/categories/disqus/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -92,208 +92,36 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">Move Blog to github.io</h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-08-04T23:46:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:46 pm</span></time>
-        
-         | <a href="#disqus_thread">Comments</a>
-        
-      </p>
+    <h1 class="entry-title">Category: Disqus</h1>
     
   </header>
-
-
-<div class="entry-content"><p>前兩天試著把部落格移到github.io</p>
-
-<p>一是因為heroku改<a href="https://devcenter.heroku.com/articles/free-dyno-hours">免費dyno的使用方式</a></p>
-
-<p>二還是想說有個遠端備份</p>
-
-<hr />
-
-<!--more-->
-
-<h1 id="document">官方document</h1>
-
-<p><a href="http://octopress.org/docs/deploying/github/">here</a></p>
-
-<h2 id="create-new-repo">1. create new repo</h2>
-
-<p>Create a new Github repository and name the repository with the format username.github.io</p>
-
-<h2 id="set-up-github">2.  set up github</h2>
-
-<pre><code>rake setup_github_pages
-</code></pre>
-
-<p>輸入url後這指令還做了一些事</p>
-
-<ul>
-  <li>Rename the remote pointing to imathis/octopress from ‘origin’ to ‘octopress’</li>
-  <li>Add your Github Pages repository as the default origin remote.</li>
-  <li>Switch the active branch from master to source.</li>
-  <li>Configure your blog’s url according to your repository.</li>
-  <li>Setup a master branch in the _deploy directory for deployment.</li>
-</ul>
-
-<p>可以對照執行時的輸出</p>
-
-<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Added remote git@github.com:username/username.github.io.git as origin
-</span><span class="line">Set origin as default remote
-</span><span class="line">Master branch renamed to 'source' for committing your blog source files
-</span><span class="line">rm -rf _deploy
-</span><span class="line">mkdir _deploy
-</span><span class="line">cd _deploy
-</span><span class="line">Initialized empty Git repository in /Users/username/Desktop/GIT/octopress/_deploy/.git/</span></code></pre></td></tr></table></div></figure>
-
-<h2 id="deploy-blog">3. deploy blog</h2>
-
-<pre><code>rake generate
-rake deploy
-</code></pre>
-
-<p>除了像之前generate出靜態網頁外，還需要delpoy</p>
-
-<p>一樣來看看這指令做了哪些事</p>
-
-<ul>
-  <li>copy the generated files into _deploy/</li>
-  <li>add them to git</li>
-  <li>commit</li>
-  <li>push them up to the master branch</li>
-</ul>
-
-<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">## Deploying branch to Github Pages
-</span><span class="line">## Pulling any updates from Github Pages
-</span><span class="line">cd _deploy
-</span><span class="line">cd -
-</span><span class="line">rm -rf _deploy/index.html
-</span><span class="line">
-</span><span class="line">## Copying public to _deploy
-</span><span class="line">cp -r public/. _deploy
-</span><span class="line">cd _deploy
-</span><span class="line">
-</span><span class="line">## Committing: Site updated at 2016-08-02 08:54:10 UTC
-</span><span class="line">*
-</span><span class="line">## Pushing generated _deploy website
-</span><span class="line">To git@github.com:username/username.github.io.git
-</span><span class="line"> * [new branch]      master -&gt; master</span></code></pre></td></tr></table></div></figure>
-
-<h2 id="custom-domains">4. Custom Domains</h2>
-<p>沒申請過，等之後有再設定XD</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Necisam</span></span>
-
-      <!-- 
+  <div id="blog-archives" class="category">
 
 
-
-
-
-
-<p>hahah</p>
 
   
+  <h2>2016</h2>
 
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-08-04T23:46:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:46 pm</span></time>
-      
-
-<span class="categories">
+<article>
   
-    <a class='category' href='/blog/categories/github/'>github</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
+<h1><a href="/blog/2016/08/19/about-disqus-dot-dot-dot/">about disqus...</a></h1>
+<time datetime="2016-08-19T18:45:44+08:00" pubdate><span class='month'>Aug</span> <span class='day'>19</span> <span class='year'>2016</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/disqus/'>disqus</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
+</footer>
 
 
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/" data-via="" data-counturl="https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2016/08/01/plugin-test/" title="Previous Post: plugin test">&laquo; plugin test</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2016/08/05/themean-zhuang/" title="Next Post: theme安裝">theme安裝 &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Pleassssssssse enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -410,10 +238,7 @@ rake deploy
       var disqus_shortname = 'necisam';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/';
-        var disqus_url = 'https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

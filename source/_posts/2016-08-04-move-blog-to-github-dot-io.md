@@ -22,12 +22,12 @@ categories:
 
 [here](http://octopress.org/docs/deploying/github/)
 
-## step1. create new repo
+## 1. create new repo
 
 Create a new Github repository and name the repository with the format username.github.io
 
 
-## step2.  set up github
+## 2.  set up github
 
     rake setup_github_pages
 
@@ -51,7 +51,7 @@ cd _deploy
 Initialized empty Git repository in /Users/username/Desktop/GIT/octopress/_deploy/.git/
 ```
 
-## step3. deploy blog
+## 3. deploy blog
 
     rake generate
     rake deploy
@@ -84,5 +84,5 @@ To git@github.com:username/username.github.io.git
  * [new branch]      master -> master
 ```
 
-## Custom Domains
+## 4. Custom Domains
 沒申請過，等之後有再設定XD

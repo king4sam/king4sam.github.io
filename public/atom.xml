@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Necisam's blog]]></title>
-  <link href="http://king4sam.github.io/atom.xml" rel="self"/>
-  <link href="http://king4sam.github.io/"/>
-  <updated>2016-08-05T00:53:40+08:00</updated>
-  <id>http://king4sam.github.io/</id>
+  <link href="https://king4sam.github.io/atom.xml" rel="self"/>
+  <link href="https://king4sam.github.io/"/>
+  <updated>2016-08-19T19:09:26+08:00</updated>
+  <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
     <email><![CDATA[king4sam990816@gmail.com]]></email>
@@ -14,10 +14,101 @@
 
   
   <entry>
+    <title type="html"><![CDATA[about disqus...]]></title>
+    <link href="https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot/"/>
+    <updated>2016-08-19T18:45:44+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>困擾我很久的disqus終於在今天解開啦~</p>
+
+<p>因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname</p>
+
+<p>在_config.yml 裡填入shortname就好了</p>
+
+<p>但在githubio上卻一直無法載入成功</p>
+
+<p>原本一直以為是code或設定的問題</p>
+
+<p>但直到我今天打開chrome 的 console……</p>
+
+<p>阿阿阿~因為githubio是提供 https</p>
+
+<p>但octopress預設是載入http的 cdn，所以因為安全性載入失敗啊</p>
+
+<p>只要改成https的cdn 就出現惹QQQQQ</p>
+
+<p>耍蠢</p>
+
+<p>只好紀念一下</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[theme安裝]]></title>
+    <link href="https://king4sam.github.io/blog/2016/08/05/themean-zhuang/"/>
+    <updated>2016-08-05T10:52:06+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/08/05/themean-zhuang</id>
+    <content type="html"><![CDATA[<p>在安裝theme時遇到蠻多問題的</p>
+
+<p>所以再開一篇專門來討論</p>
+
+<hr />
+
+<h1 id="theme">theme</h1>
+
+<p>先上網找到第三方octopress 的theme</p>
+
+<p><a href="https://github.com/octothemes/cyan#applying-the-cyan-theme-to-your-blog">範例</a></p>
+
+<p>clone 下來後通常會是個sass sourse兩個資料夾</p>
+
+<p>安裝指令</p>
+
+<pre><code>rake install[themename]
+</code></pre>
+
+<p>再進一步進去rakefile看做了哪些事</p>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">task :install, :theme do |t, args|
+</span><span class="line">  if File.directory?(source_dir) || File.directory?("sass")
+</span><span class="line">    abort("rake aborted!") if ask("A theme is already installed, proceeding will overwrite existing files. Are you sure?", ['y', 'n']) == 'n'
+</span><span class="line">  end
+</span><span class="line">  # copy theme into working Jekyll directories
+</span><span class="line">  theme = args.theme || 'classic'
+</span><span class="line">  puts "## Copying "+theme+" theme into ./#{source_dir} and ./sass"
+</span><span class="line">  mkdir_p source_dir
+</span><span class="line">  cp_r "#{themes_dir}/#{theme}/source/.", source_dir
+</span><span class="line">  mkdir_p "sass"
+</span><span class="line">  cp_r "#{themes_dir}/#{theme}/sass/.", "sass"
+</span><span class="line">  mkdir_p "#{source_dir}/#{posts_dir}"
+</span><span class="line">  mkdir_p public_dir
+</span><span class="line">end</span></code></pre></td></tr></table></div></figure>
+
+<p>default是安裝classic這個theme
+大致上只是將sass 跟source複製出來
+有自已改過樣式的話可以自行將這兩個資料夾備份</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[move blog to github.io]]></title>
-    <link href="http://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
+    <link href="https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
     <updated>2016-08-04T23:46:00+08:00</updated>
-    <id>http://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
+    <id>https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
     <content type="html"><![CDATA[<p>前兩天試著把部落格移到github.io</p>
 
 <p>一是因為heroku改<a href="https://devcenter.heroku.com/articles/free-dyno-hours">免費dyno的使用方式</a></p>
@@ -32,11 +123,11 @@
 
 <p><a href="http://octopress.org/docs/deploying/github/">here</a></p>
 
-<h2 id="step1-create-new-repo">step1. create new repo</h2>
+<h2 id="create-new-repo">1. create new repo</h2>
 
 <p>Create a new Github repository and name the repository with the format username.github.io</p>
 
-<h2 id="step2--set-up-github">step2.  set up github</h2>
+<h2 id="set-up-github">2.  set up github</h2>
 
 <pre><code>rake setup_github_pages
 </code></pre>
@@ -68,7 +159,7 @@
 </span><span class="line">cd _deploy
 </span><span class="line">Initialized empty Git repository in /Users/username/Desktop/GIT/octopress/_deploy/.git/</span></code></pre></td></tr></table></div></figure>
 
-<h2 id="step3-deploy-blog">step3. deploy blog</h2>
+<h2 id="deploy-blog">3. deploy blog</h2>
 
 <pre><code>rake generate
 rake deploy
@@ -116,16 +207,16 @@ rake deploy
 </span><span class="line">To git@github.com:username/username.github.io.git
 </span><span class="line"> * [new branch]      master -&gt; master</span></code></pre></td></tr></table></div></figure>
 
-<h2 id="custom-domains">Custom Domains</h2>
+<h2 id="custom-domains">4. Custom Domains</h2>
 <p>沒申請過，等之後有再設定XD</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[plugin test]]></title>
-    <link href="http://king4sam.github.io/blog/2016/08/01/plugin-test/"/>
+    <link href="https://king4sam.github.io/blog/2016/08/01/plugin-test/"/>
     <updated>2016-08-01T14:05:33+08:00</updated>
-    <id>http://king4sam.github.io/blog/2016/08/01/plugin-test</id>
+    <id>https://king4sam.github.io/blog/2016/08/01/plugin-test</id>
     <content type="html"><![CDATA[<!--more-->
 
 <h2 id="codeblock">Codeblock</h2>
@@ -185,9 +276,9 @@ code snippet
   
   <entry>
     <title type="html"><![CDATA[Install octopress and deploy to heroku]]></title>
-    <link href="http://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku/"/>
+    <link href="https://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku/"/>
     <updated>2016-07-30T23:01:14+08:00</updated>
-    <id>http://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku</id>
+    <id>https://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku</id>
     <content type="html"><![CDATA[<p>部落開張啦~</p>
 
 <p>以後疑難雜症或備忘錄就會記在這裡啦</p>

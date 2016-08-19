@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: github | Necisam's blog]]></title>
-  <link href="http://king4sam.github.io/blog/categories/github/atom.xml" rel="self"/>
-  <link href="http://king4sam.github.io/"/>
-  <updated>2016-08-05T00:53:40+08:00</updated>
-  <id>http://king4sam.github.io/</id>
+  <link href="https://king4sam.github.io/blog/categories/github/atom.xml" rel="self"/>
+  <link href="https://king4sam.github.io/"/>
+  <updated>2016-08-19T19:09:26+08:00</updated>
+  <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
     <email><![CDATA[king4sam990816@gmail.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[move blog to github.io]]></title>
-    <link href="http://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
+    <link href="https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
     <updated>2016-08-04T23:46:00+08:00</updated>
-    <id>http://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
+    <id>https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
     <content type="html"><![CDATA[<p>前兩天試著把部落格移到github.io</p>
 
 <p>一是因為heroku改<a href="https://devcenter.heroku.com/articles/free-dyno-hours">免費dyno的使用方式</a></p>
@@ -32,11 +32,11 @@
 
 <p><a href="http://octopress.org/docs/deploying/github/">here</a></p>
 
-<h2 id="step1-create-new-repo">step1. create new repo</h2>
+<h2 id="create-new-repo">1. create new repo</h2>
 
 <p>Create a new Github repository and name the repository with the format username.github.io</p>
 
-<h2 id="step2--set-up-github">step2.  set up github</h2>
+<h2 id="set-up-github">2.  set up github</h2>
 
 <pre><code>rake setup_github_pages
 </code></pre>
@@ -63,7 +63,7 @@ cd _deploy
 Initialized empty Git repository in /Users/username/Desktop/GIT/octopress/_deploy/.git/
 </code></p>
 
-<h2 id="step3-deploy-blog">step3. deploy blog</h2>
+<h2 id="deploy-blog">3. deploy blog</h2>
 
 <pre><code>rake generate
 rake deploy
@@ -98,7 +98,7 @@ To git@github.com:username/username.github.io.git
  * [new branch]      master -&gt; master
 ```</p>
 
-<h2 id="custom-domains">Custom Domains</h2>
+<h2 id="custom-domains">4. Custom Domains</h2>
 <p>沒申請過，等之後有再設定XD</p>
 ]]></content>
   </entry>

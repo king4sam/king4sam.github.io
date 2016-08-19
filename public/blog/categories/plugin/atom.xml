@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: plugin | Necisam's blog]]></title>
-  <link href="http://king4sam.github.io/blog/categories/plugin/atom.xml" rel="self"/>
-  <link href="http://king4sam.github.io/"/>
-  <updated>2016-08-05T00:53:40+08:00</updated>
-  <id>http://king4sam.github.io/</id>
+  <link href="https://king4sam.github.io/blog/categories/plugin/atom.xml" rel="self"/>
+  <link href="https://king4sam.github.io/"/>
+  <updated>2016-08-19T19:09:26+08:00</updated>
+  <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
     <email><![CDATA[king4sam990816@gmail.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[plugin test]]></title>
-    <link href="http://king4sam.github.io/blog/2016/08/01/plugin-test/"/>
+    <link href="https://king4sam.github.io/blog/2016/08/01/plugin-test/"/>
     <updated>2016-08-01T14:05:33+08:00</updated>
-    <id>http://king4sam.github.io/blog/2016/08/01/plugin-test</id>
+    <id>https://king4sam.github.io/blog/2016/08/01/plugin-test</id>
     <content type="html"><![CDATA[<!--more-->
 
 <h2 id="codeblock">Codeblock</h2>

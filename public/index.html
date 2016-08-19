@@ -9,7 +9,7 @@
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="前兩天試著把部落格移到github.io 一是因為heroku改免費dyno的使用方式 二還是想說有個遠端備份 ">
+  <meta name="description" content="困擾我很久的disqus終於在今天解開啦~ 因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname 在_config.yml 裡填入shortname就好了 但在githubio上卻一直無法載入成功 原本一直以為是code或設定的問題 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://king4sam.github.io/">
+  <link rel="canonical" href="https://king4sam.github.io/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -29,9 +29,9 @@
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href='http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900' rel='stylesheet' type='text/css'>
 
 
 	<!-- mathjax config similar to math.stackexchange -->
@@ -62,7 +62,7 @@
     });
 </script>
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
 
@@ -99,6 +99,167 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2016/08/19/about-disqus-dot-dot-dot/">About Disqus...</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-08-19T18:45:44+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>6:45 pm</span></time>
+        
+         | <a href="/blog/2016/08/19/about-disqus-dot-dot-dot/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>困擾我很久的disqus終於在今天解開啦~</p>
+
+<p>因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname</p>
+
+<p>在_config.yml 裡填入shortname就好了</p>
+
+<p>但在githubio上卻一直無法載入成功</p>
+
+<p>原本一直以為是code或設定的問題</p>
+
+<p>但直到我今天打開chrome 的 console……</p>
+
+<p>阿阿阿~因為githubio是提供 https</p>
+
+<p>但octopress預設是載入http的 cdn，所以因為安全性載入失敗啊</p>
+
+<p>只要改成https的cdn 就出現惹QQQQQ</p>
+
+<p>耍蠢</p>
+
+<p>只好紀念一下</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/05/themean-zhuang/">Theme安裝</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-08-05T10:52:06+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:52 am</span></time>
+        
+         | <a href="/blog/2016/08/05/themean-zhuang/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在安裝theme時遇到蠻多問題的</p>
+
+<p>所以再開一篇專門來討論</p>
+
+<hr />
+
+<h1 id="theme">theme</h1>
+
+<p>先上網找到第三方octopress 的theme</p>
+
+<p><a href="https://github.com/octothemes/cyan#applying-the-cyan-theme-to-your-blog">範例</a></p>
+
+<p>clone 下來後通常會是個sass sourse兩個資料夾</p>
+
+<p>安裝指令</p>
+
+<pre><code>rake install[themename]
+</code></pre>
+
+<p>再進一步進去rakefile看做了哪些事</p>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">task :install, :theme do |t, args|
+</span><span class="line">  if File.directory?(source_dir) || File.directory?("sass")
+</span><span class="line">    abort("rake aborted!") if ask("A theme is already installed, proceeding will overwrite existing files. Are you sure?", ['y', 'n']) == 'n'
+</span><span class="line">  end
+</span><span class="line">  # copy theme into working Jekyll directories
+</span><span class="line">  theme = args.theme || 'classic'
+</span><span class="line">  puts "## Copying "+theme+" theme into ./#{source_dir} and ./sass"
+</span><span class="line">  mkdir_p source_dir
+</span><span class="line">  cp_r "#{themes_dir}/#{theme}/source/.", source_dir
+</span><span class="line">  mkdir_p "sass"
+</span><span class="line">  cp_r "#{themes_dir}/#{theme}/sass/.", "sass"
+</span><span class="line">  mkdir_p "#{source_dir}/#{posts_dir}"
+</span><span class="line">  mkdir_p public_dir
+</span><span class="line">end</span></code></pre></td></tr></table></div></figure>
+
+<p>default是安裝classic這個theme
+大致上只是將sass 跟source複製出來
+有自已改過樣式的話可以自行將這兩個資料夾備份</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2016/08/04/move-blog-to-github-dot-io/">Move Blog to github.io</a></h1>
     
     
@@ -122,6 +283,8 @@
 
 
 <time class='entry-date' datetime='2016-08-04T23:46:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:46 pm</span></time>
+        
+         | <a href="/blog/2016/08/04/move-blog-to-github-dot-io/#disqus_thread">Comments</a>
         
       </p>
     
@@ -176,6 +339,8 @@
 
 <time class='entry-date' datetime='2016-08-01T14:05:33+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>2:05 pm</span></time>
         
+         | <a href="/blog/2016/08/01/plugin-test/#disqus_thread">Comments</a>
+        
       </p>
     
   </header>
@@ -220,6 +385,8 @@
 
 
 <time class='entry-date' datetime='2016-07-30T23:01:14+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:01 pm</span></time>
+        
+         | <a href="/blog/2016/07/30/install-octopress-and-deploy-to-heroku/#disqus_thread">Comments</a>
         
       </p>
     
@@ -297,6 +464,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/19/about-disqus-dot-dot-dot/">about disqus...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/05/themean-zhuang/">theme安裝</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/08/04/move-blog-to-github-dot-io/">move blog to github.io</a>
       </li>
     
@@ -365,7 +540,7 @@
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
