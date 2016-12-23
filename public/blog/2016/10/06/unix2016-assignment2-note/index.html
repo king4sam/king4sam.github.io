@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: disqus - Necisam's blog</title>
+  <title>unix2016 assignment2 note - Necisam's blog</title>
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="Category: disqus">
+  <meta name="description" content="Requirements In this assignment, you will need to write your own dup2 function that behaves the same way as the dup2 function described in Section 3. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="https://king4sam.github.io/blog/categories/disqus/">
+  <link rel="canonical" href="https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -92,36 +92,131 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Disqus</h1>
+    
+      <h1 class="entry-title">Unix2016 Assignment2 Note</h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-10-06T00:30:39+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:30 am</span></time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><h1 id="requirements">Requirements</h1>
 
-  
-  <h2>2016</h2>
+<p>In this assignment, you will need to write your own dup2 function that behaves the same way as the dup2 function described in Section 3.12.
+<!--more-->
+- Your dup2 must copy the file descriptor oldfd and use the newfd as the target fd.
+- Make sure that the oldfd and the newfd point to the same file.
+- The return file descriptor should be the new newfd that points to the file table of oldfd. If error occurs, you have to return -1.
+- If newfd is not closed, you have to close the newfd before you copy the fds.
+- Your dup2 should handle invalid file descriptors (please check out the valid range of file descriptors online) and others error status.
+- Note that you can not use dup2, fcntl functions in your implementation.</p>
 
-<article>
-  
-<h1><a href="/blog/2016/08/19/about-disqus-dot-dot-dot/">about disqus...</a></h1>
-<time datetime="2016-08-19T18:45:44+08:00" pubdate><span class='month'>Aug</span> <span class='day'>19</span> <span class='year'>2016</span></time>
+<h1 id="implementation">Implementation</h1>
+<ol>
+  <li>
+    <p>KEYIDEA creates a copy of the file descriptor oldfd, using the lowest-numbered unused descriptor for the new descriptor.
+所以我們重複呼叫dup，直到用到目標fd，再將之前多複製的fd關掉，就可以實作出dup2的功能</p>
+  </li>
+  <li>
+    <p>呼叫sysconf(_SC_OPEN_MAX)太多次會crash，需將結果存下來</p>
+  </li>
+</ol>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/disqus/'>disqus</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
-</footer>
-
-
-</article>
-
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment2">link to assignment2</a></p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Necisam</span></span>
+
+      <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-10-06T00:30:39+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:30 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/unix2016/'>unix2016</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note/" data-via="" data-counturl="https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/09/28/unix2016-assignment1-note/" title="Previous Post: unix2016 assignment1 note">&laquo; unix2016 assignment1 note</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/11/01/unix2016-assignment3-note/" title="Next Post: unix2016 assignment3 note">unix2016 assignment3 note &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Pleassssssssse enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -238,7 +333,10 @@
       var disqus_shortname = 'necisam';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note/';
+        var disqus_url = 'https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

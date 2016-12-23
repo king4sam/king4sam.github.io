@@ -10,7 +10,7 @@ categories:
 在安裝theme時遇到蠻多問題的
 
 所以再開一篇專門來討論
-
+<!--more-->
 ---
 
 #theme

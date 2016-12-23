@@ -4,7 +4,7 @@
   <title><![CDATA[Category: octopress | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2016-08-19T19:09:26+08:00</updated>
+  <updated>2016-12-24T00:19:14+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -18,9 +18,9 @@
     <link href="https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot/"/>
     <updated>2016-08-19T18:45:44+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot</id>
-    <content type="html"><![CDATA[<p>困擾我很久的disqus終於在今天解開啦~</p>
-
-<p>因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname</p>
+    <content type="html"><![CDATA[<p>困擾我很久的disqus終於在今天解開啦~
+<!--more-->
+因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname</p>
 
 <p>在_config.yml 裡填入shortname就好了</p>
 
@@ -49,9 +49,9 @@
     <id>https://king4sam.github.io/blog/2016/08/05/themean-zhuang</id>
     <content type="html"><![CDATA[<p>在安裝theme時遇到蠻多問題的</p>
 
-<p>所以再開一篇專門來討論</p>
-
-<hr />
+<p>所以再開一篇專門來討論
+<!--more-->
+—</p>
 
 <h1 id="theme">theme</h1>
 

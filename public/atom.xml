@@ -4,7 +4,7 @@
   <title><![CDATA[Necisam's blog]]></title>
   <link href="https://king4sam.github.io/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2016-08-19T19:09:26+08:00</updated>
+  <updated>2016-12-24T00:19:14+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,13 +14,322 @@
 
   
   <entry>
+    <title type="html"><![CDATA[unix2016 assignment7 note]]></title>
+    <link href="https://king4sam.github.io/blog/2016/12/22/unix2016-assignment7-note/"/>
+    <updated>2016-12-22T10:49:25+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/12/22/unix2016-assignment7-note</id>
+    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
+
+<p>To implement Terminal Control and Signal Handling to support Job Control.</p>
+
+<ul>
+  <li>Signal Handling: user can terminate the running process with Ctrl+C without quitting from your shell</li>
+  <li>Background processes without resulting in zombies</li>
+  <li>Foreground/Background Switching: Your shell is able to put the process to the background (“&amp;”) and bring background process back to the foreground by “fg” command</li>
+  <li>Built-in functions: jobs, fg
+    <ul>
+      <li>“Jobs” allows users to view all the processes</li>
+      <li>“fg” <shell_assigned_process_id>” (You will need to handle the id by yourself)</shell_assigned_process_id></li>
+    </ul>
+  </li>
+</ul>
+
+<!--more-->
+
+<h1 id="implements">Implements</h1>
+
+<ul>
+  <li>set tsh controlling process as current foreground process</li>
+</ul>
+
+<p>The function tcgetpgrp() returns the process group ID of the foreground process group on the terminal associated to fd, which must be the controlling terminal of the calling process.</p>
+
+<figure class="code"><figcaption><span>SYNOPSIS</span><a href="https://linux.die.net/man/3/tcgetpgrp">link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="kt">int</span> <span class="nf">tcsetpgrp</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">pid_t</span> <span class="n">pgrp</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>
+    <p>signal hanlding</p>
+
+    <p>Control process should ignore terminate signal(SIGINT…)</p>
+
+    <p>Control process set child process as foreground to access STDIN, so that child process would receive the signal from STDIN.</p>
+
+    <p>Control process need to set signal handler for child process, preventing children becoming a zombie process</p>
+
+    <p>there some special func defined
+  - SIG_DFL is defalt handler
+  - SIG_IGN is to ignore the signal</p>
+  </li>
+</ul>
+
+<figure class="code"><figcaption><span>SYNOPSIS</span><a href="https://linux.die.net/man/3/signal">link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">signal</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">int</span><span class="p">)))(</span><span class="kt">int</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>
+    <p>job control</p>
+
+    <p>implement a job queue to add/remove job while forking a new background process</p>
+  </li>
+  <li>
+    <p>fg cmd</p>
+
+    <p>control process set given jobid as foreground process and send SIGCONT to job to wake it</p>
+  </li>
+  <li>
+    <p>extra note</p>
+
+    <p>in SIGCHLD handler, use while to catch childe process’s return status.</p>
+  </li>
+</ul>
+
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment7">links to assignment7</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[unix2016 assignment6 note]]></title>
+    <link href="https://king4sam.github.io/blog/2016/11/29/unix2016-assignment6-note/"/>
+    <updated>2016-11-29T11:40:29+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/11/29/unix2016-assignment6-note</id>
+    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
+
+<p>We will write a tiny shell (tsh) command processor like sh, bash, or csh for single line commands. Your shell’s main loop will display a prompt, read a line of input, and fork a child process to perform the indicated command.
+<!--more-->
+Required capabilities:</p>
+
+<ol>
+  <li>
+    <p>Ordinary commands, consisting of an executable program name and an optional list of arguments, run in a separate process.</p>
+  </li>
+  <li>
+    <p>Two built-in commands: cd and pwd</p>
+  </li>
+  <li>
+    <p>Background processing, when the last token in the command line is “&amp;”.</p>
+  </li>
+</ol>
+
+<h1 id="implementation">Implementation</h1>
+
+<ol>
+  <li>
+    <p>get user input</p>
+  </li>
+  <li>
+    <p>parse oneline cmd , create command argv &amp;</p>
+  </li>
+  <li>
+    <p>if cmd is build-in cmd, call corresponding system call</p>
+  </li>
+  <li>
+    <p>if not, create a child process, and execvp the cmd</p>
+  </li>
+</ol>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">The exec family of functions replaces the current process image with a new process image.</span></code></pre></td></tr></table></div></figure>
+
+<ol>
+  <li>if it is not a background process, use waitpid for childprocess</li>
+</ol>
+
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment6">links to assignment6</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[unix2016 assignment4 note]]></title>
+    <link href="https://king4sam.github.io/blog/2016/11/08/unix2016-assignment4-note/"/>
+    <updated>2016-11-08T10:43:31+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/11/08/unix2016-assignment4-note</id>
+    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
+<p>Your tool will load this dictionary into memory, and tries to concatenate three words into the plaintext password candidate. Use the crypt library to find the actually password of a person. The TA will time how fast your code can break the password. The top 10% of the student will receive 2 bonus points.</p>
+
+<!--more-->
+<ol>
+  <li>
+    <p>Your tool, say decrypt, that reads the hashed password from a file, and output the decrypted password. (sample test case can be downloaded from the iLms)</p>
+  </li>
+  <li>
+    <p>The password is composed of three random words from the given dictionary file.</p>
+  </li>
+  <li>
+    <p>You will need to check how to get a hashed string as explained during the lecture.</p>
+  </li>
+</ol>
+
+<h1 id="implementation">Implementation</h1>
+
+<ul>
+  <li>more detail on user password</li>
+</ul>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$6$naIJPKfO$SMkeSkFM36M6u3mZIyf2hAtt31WxuYtoTwLMjF9Fv49cprYPKtR1K88Ox5xvQdLdoBrAOmCnomRvaHc7VDiqQ0</span></code></pre></td></tr></table></div></figure>
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$Algorithmid$Salt$Encryptedpassword</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>algorithmid table</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>MD5</td>
+    </tr>
+    <tr>
+      <td>2a</td>
+      <td>Blowfish (not in mainline glibc; added in some Linux distributions)</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>SHA-256 (since glibc 2.7)</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>SHA-512 (since glibc 2.7)</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>dictionary attack</li>
+</ul>
+
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment4">links to assignment4</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[unix2016 assignment3 note]]></title>
+    <link href="https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note/"/>
+    <updated>2016-11-01T00:41:05+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note</id>
+    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
+<!--more-->
+<ol>
+  <li>Write a utility like cp(1), say lcp, that copies a file containing holes, without copying the hole to the target file. Instead, your utility writes “\0” to fill those holes in the target file.
+    <ul>
+      <li>lcp only needs to support basic copy feature; copying a file to another file. (usage : lcp <source_file> <destination_file>)</destination_file></source_file></li>
+      <li>Your output file should be identical to the original input file (size, content), but the block usage on the disk is different.</li>
+      <li>You need to check how to create a file with holes as explained in Chapter 3.</li>
+      <li>The test cases will be regular files, and you don’t have to handle any unusual exceptions.</li>
+    </ul>
+  </li>
+  <li>In Section 4.22, our version of ftw, called ftw8.c, never changes its directory. Modify this routine so that each time it encounters a directory, it uses the chdir function to change to that directory, allowing it to use the filename and not the pathname for each call to lstat. When all the entries in a directory have been processed, execute chdir(“..”). Compare the time consumed by this version and the version in the text book.
+    <ul>
+      <li>Trace the ftw8 source code given by TA. (compile with “make ftw8”)</li>
+      <li>Modify the code with chdir</li>
+    </ul>
+  </li>
+</ol>
+
+<h1 id="implementation">Implementation</h1>
+
+<ol>
+  <li>
+    <p>用read/write就符合需求了，唯一要注意的是lcp後的檔案權限也要跟原檔一樣</p>
+  </li>
+  <li>
+    <p>chdir()，不過給絕對路徑跟相對路徑在檔案數多時還是有效能的差距</p>
+  </li>
+</ol>
+
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment3">link to assignment3</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[unix2016 assignment2 note]]></title>
+    <link href="https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note/"/>
+    <updated>2016-10-06T00:30:39+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note</id>
+    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
+
+<p>In this assignment, you will need to write your own dup2 function that behaves the same way as the dup2 function described in Section 3.12.
+<!--more-->
+- Your dup2 must copy the file descriptor oldfd and use the newfd as the target fd.
+- Make sure that the oldfd and the newfd point to the same file.
+- The return file descriptor should be the new newfd that points to the file table of oldfd. If error occurs, you have to return -1.
+- If newfd is not closed, you have to close the newfd before you copy the fds.
+- Your dup2 should handle invalid file descriptors (please check out the valid range of file descriptors online) and others error status.
+- Note that you can not use dup2, fcntl functions in your implementation.</p>
+
+<h1 id="implementation">Implementation</h1>
+<ol>
+  <li>
+    <p>KEYIDEA creates a copy of the file descriptor oldfd, using the lowest-numbered unused descriptor for the new descriptor.
+所以我們重複呼叫dup，直到用到目標fd，再將之前多複製的fd關掉，就可以實作出dup2的功能</p>
+  </li>
+  <li>
+    <p>呼叫sysconf(_SC_OPEN_MAX)太多次會crash，需將結果存下來</p>
+  </li>
+</ol>
+
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment2">link to assignment2</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[unix2016 assignment1 note]]></title>
+    <link href="https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note/"/>
+    <updated>2016-09-28T23:51:08+08:00</updated>
+    <id>https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note</id>
+    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
+
+<p>Implement your  own light-weight  wc utility, called  lwc.c,  in  C (not  C++)
+<!--more-->
+1. lwc only  supports  three options -l, -w, and –c; lwc assumes at  least one option  is  provided; lwc only process  files (ignore stdin)
+2. lwc supports  multiple  options;  lwc ignore  the order of  options.  The no. lines is  always  printed first, followed by  the no. words and characters. run wc on Ubuntu  to  make  sure  that  your  outputs are identical to  it!
+3. If  an  invalid option  or  filename  is  given,  lwc prints  the same  error message wc would  print to  stderr, and return  the same  non-zero  exit  status</p>
+
+<h1 id="implementation">Implementation</h1>
+
+<ol>
+  <li>第一次知道有getopt()可以用 😂</li>
+</ol>
+
+<figure class="code"><figcaption><span>SYNOPSIS</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;unistd.h&gt;</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">getopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[],</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">optstring</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>另外有些 extern 的變數</p>
+
+<ul>
+  <li>optind : The  variable optind is the index of the next element to be processed in argv.</li>
+  <li>opterr : The calling program may prevent the error message by setting opterr to 0.(defualt value is 1)</li>
+  <li>optopt : The variable optopt is set to the actual option character.</li>
+</ul>
+
+<ol>
+  <li>count的部分就沒有大問題，只有wordcount時注意一下連續空白就可以了</li>
+</ol>
+
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment1">link to assignment1</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[about disqus...]]></title>
     <link href="https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot/"/>
     <updated>2016-08-19T18:45:44+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot</id>
-    <content type="html"><![CDATA[<p>困擾我很久的disqus終於在今天解開啦~</p>
-
-<p>因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname</p>
+    <content type="html"><![CDATA[<p>困擾我很久的disqus終於在今天解開啦~
+<!--more-->
+因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname</p>
 
 <p>在_config.yml 裡填入shortname就好了</p>
 
@@ -49,9 +358,9 @@
     <id>https://king4sam.github.io/blog/2016/08/05/themean-zhuang</id>
     <content type="html"><![CDATA[<p>在安裝theme時遇到蠻多問題的</p>
 
-<p>所以再開一篇專門來討論</p>
-
-<hr />
+<p>所以再開一篇專門來討論
+<!--more-->
+—</p>
 
 <h1 id="theme">theme</h1>
 

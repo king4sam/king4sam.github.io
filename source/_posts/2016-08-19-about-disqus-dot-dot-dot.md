@@ -9,7 +9,7 @@ categories:
 ---
 
 困擾我很久的disqus終於在今天解開啦~
-
+<!--more-->
 因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname
 
 在_config.yml 裡填入shortname就好了

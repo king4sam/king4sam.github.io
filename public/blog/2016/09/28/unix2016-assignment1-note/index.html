@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: disqus - Necisam's blog</title>
+  <title>unix2016 assignment1 note - Necisam's blog</title>
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="Category: disqus">
+  <meta name="description" content="Requirements Implement your own light-weight wc utility, called lwc.c, in C (not C++) 1. lwc only supports three options -l, -w, and –c; lwc assumes &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="https://king4sam.github.io/blog/categories/disqus/">
+  <link rel="canonical" href="https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -92,36 +92,141 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Disqus</h1>
+    
+      <h1 class="entry-title">Unix2016 Assignment1 Note</h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-09-28T23:51:08+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:51 pm</span></time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><h1 id="requirements">Requirements</h1>
 
-  
-  <h2>2016</h2>
+<p>Implement your  own light-weight  wc utility, called  lwc.c,  in  C (not  C++)
+<!--more-->
+1. lwc only  supports  three options -l, -w, and –c; lwc assumes at  least one option  is  provided; lwc only process  files (ignore stdin)
+2. lwc supports  multiple  options;  lwc ignore  the order of  options.  The no. lines is  always  printed first, followed by  the no. words and characters. run wc on Ubuntu  to  make  sure  that  your  outputs are identical to  it!
+3. If  an  invalid option  or  filename  is  given,  lwc prints  the same  error message wc would  print to  stderr, and return  the same  non-zero  exit  status</p>
 
-<article>
-  
-<h1><a href="/blog/2016/08/19/about-disqus-dot-dot-dot/">about disqus...</a></h1>
-<time datetime="2016-08-19T18:45:44+08:00" pubdate><span class='month'>Aug</span> <span class='day'>19</span> <span class='year'>2016</span></time>
+<h1 id="implementation">Implementation</h1>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/disqus/'>disqus</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
-</footer>
+<ol>
+  <li>第一次知道有getopt()可以用 😂</li>
+</ol>
 
+<figure class="code"><figcaption><span>SYNOPSIS</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;unistd.h&gt;</span>
+</span><span class="line"><span class="kt">int</span> <span class="nf">getopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[],</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">optstring</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
-</article>
+<p>另外有些 extern 的變數</p>
 
+<ul>
+  <li>optind : The  variable optind is the index of the next element to be processed in argv.</li>
+  <li>opterr : The calling program may prevent the error message by setting opterr to 0.(defualt value is 1)</li>
+  <li>optopt : The variable optopt is set to the actual option character.</li>
+</ul>
+
+<ol>
+  <li>count的部分就沒有大問題，只有wordcount時注意一下連續空白就可以了</li>
+</ol>
+
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment1">link to assignment1</a></p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Necisam</span></span>
+
+      <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-09-28T23:51:08+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:51 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/unix2016/'>unix2016</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note/" data-via="" data-counturl="https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/08/19/about-disqus-dot-dot-dot/" title="Previous Post: about disqus...">&laquo; about disqus...</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/10/06/unix2016-assignment2-note/" title="Next Post: unix2016 assignment2 note">unix2016 assignment2 note &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Pleassssssssse enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -238,7 +343,10 @@
       var disqus_shortname = 'necisam';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note/';
+        var disqus_url = 'https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

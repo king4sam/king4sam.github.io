@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: disqus - Necisam's blog</title>
+  <title>unix2016 assignment3 note - Necisam's blog</title>
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="Category: disqus">
+  <meta name="description" content="Requirements Write a utility like cp(1), say lcp, that copies a file containing holes, without copying the hole to the target file. Instead, your &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="https://king4sam.github.io/blog/categories/disqus/">
+  <link rel="canonical" href="https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -92,36 +92,139 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Disqus</h1>
+    
+      <h1 class="entry-title">Unix2016 Assignment3 Note</h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-11-01T00:41:05+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>12:41 am</span></time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><h1 id="requirements">Requirements</h1>
+<!--more-->
+<ol>
+  <li>Write a utility like cp(1), say lcp, that copies a file containing holes, without copying the hole to the target file. Instead, your utility writes “\0” to fill those holes in the target file.
+    <ul>
+      <li>lcp only needs to support basic copy feature; copying a file to another file. (usage : lcp <source_file> <destination_file>)</destination_file></source_file></li>
+      <li>Your output file should be identical to the original input file (size, content), but the block usage on the disk is different.</li>
+      <li>You need to check how to create a file with holes as explained in Chapter 3.</li>
+      <li>The test cases will be regular files, and you don’t have to handle any unusual exceptions.</li>
+    </ul>
+  </li>
+  <li>In Section 4.22, our version of ftw, called ftw8.c, never changes its directory. Modify this routine so that each time it encounters a directory, it uses the chdir function to change to that directory, allowing it to use the filename and not the pathname for each call to lstat. When all the entries in a directory have been processed, execute chdir(“..”). Compare the time consumed by this version and the version in the text book.
+    <ul>
+      <li>Trace the ftw8 source code given by TA. (compile with “make ftw8”)</li>
+      <li>Modify the code with chdir</li>
+    </ul>
+  </li>
+</ol>
 
-  
-  <h2>2016</h2>
+<h1 id="implementation">Implementation</h1>
 
-<article>
-  
-<h1><a href="/blog/2016/08/19/about-disqus-dot-dot-dot/">about disqus...</a></h1>
-<time datetime="2016-08-19T18:45:44+08:00" pubdate><span class='month'>Aug</span> <span class='day'>19</span> <span class='year'>2016</span></time>
+<ol>
+  <li>
+    <p>用read/write就符合需求了，唯一要注意的是lcp後的檔案權限也要跟原檔一樣</p>
+  </li>
+  <li>
+    <p>chdir()，不過給絕對路徑跟相對路徑在檔案數多時還是有效能的差距</p>
+  </li>
+</ol>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/disqus/'>disqus</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
-</footer>
-
-
-</article>
-
+<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment3">link to assignment3</a></p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Necisam</span></span>
+
+      <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-11-01T00:41:05+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>12:41 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/unix2016/'>unix2016</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note/" data-via="" data-counturl="https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/10/06/unix2016-assignment2-note/" title="Previous Post: unix2016 assignment2 note">&laquo; unix2016 assignment2 note</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/11/08/unix2016-assignment4-note/" title="Next Post: unix2016 assignment4 note">unix2016 assignment4 note &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Pleassssssssse enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -238,7 +341,10 @@
       var disqus_shortname = 'necisam';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note/';
+        var disqus_url = 'https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
