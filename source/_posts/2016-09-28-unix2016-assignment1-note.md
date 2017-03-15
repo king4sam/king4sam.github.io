@@ -14,6 +14,8 @@ Implement your  own light-weight  wc utility, called  lwc.c,  in  C (not  C++)
 2. lwc supports  multiple  options;  lwc ignore  the order of  options.  The no. lines is  always  printed first, followed by  the no. words and characters. run wc on Ubuntu  to  make  sure  that  your  outputs are identical to  it!
 3. If  an  invalid option  or  filename  is  given,  lwc prints  the same  error message wc would  print to  stderr, and return  the same  non-zero  exit  status
 
+---
+
 # Implementation
 
 1. 第一次知道有getopt()可以用 😂

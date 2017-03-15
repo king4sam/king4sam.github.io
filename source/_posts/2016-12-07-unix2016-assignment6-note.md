@@ -9,6 +9,8 @@ categories: unix2016
 
 We will write a tiny shell (tsh) command processor like sh, bash, or csh for single line commands. Your shell's main loop will display a prompt, read a line of input, and fork a child process to perform the indicated command.
 <!--more-->
+---
+
 Required capabilities:
 
 1. Ordinary commands, consisting of an executable program name and an optional list of arguments, run in a separate process.

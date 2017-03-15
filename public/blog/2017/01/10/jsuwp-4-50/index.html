@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>JS understanding the weird parts 4-50 call apply bind - Necisam's blog</title>
+  <meta name="author" content="Necisam">
+
+  
+  <meta name="description" content="4-50 call(), apply(), and bind() bigword alert : Function currying creating a copy of a function but with some preset parameters. The bind() method &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="https://king4sam.github.io/blog/2017/01/10/jsuwp-4-50/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Necisam's blog" type="application/atom+xml">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900' rel='stylesheet' type='text/css'>
+
+
+	<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'ENV["GAnumber"]']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+  <style>html{background: url(/images/background.png) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;}</style>
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+</hgroup>
+
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">JS Understanding the Weird Parts 4-50 Call Apply Bind</h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-10T22:12:52+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>10:12 pm</span></time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><!--more-->
+
+<h1 id="call-apply-and-bind">4-50 call(), apply(), and bind()</h1>
+
+<h2 id="bigword-alert--function-currying">bigword alert : Function currying</h2>
+<ul>
+  <li>
+    <p>creating a copy of a function but with some preset parameters.</p>
+  </li>
+  <li>
+    <p>The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">REF</a></p>
+  </li>
+</ul>
+
+<hr />
+
+<p>bind 複製function，並將其中的 this 設成給定的物件，回傳複製的function</p>
+
+<ul>
+  <li>The call() method calls a function with a given this value and arguments provided individually.<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">REF</a></li>
+</ul>
+
+<p>call 將function中的this改為thisArg, 並用後面的參數invoked 該function</p>
+
+<ul>
+  <li>The apply() method calls a function with a given this value and arguments provided as an array <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">REF</a></li>
+</ul>
+
+<p>apply和call功能相同，差別只有function的參數要用array傳入</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">fun</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">[,</span> <span class="nx">arg1</span><span class="p">[,</span> <span class="nx">arg2</span><span class="p">[,</span> <span class="p">...]]])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">=</span> <span class="s1">&#39;John&#39;</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">=</span> <span class="s1">&#39;Doe&#39;</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">getFullName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">fullname</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="nx">fullname</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">logName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lang1</span><span class="p">,</span><span class="nx">lang2</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Logged : &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">getFullName</span><span class="p">());</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Arguments: &#39;</span> <span class="o">+</span> <span class="nx">lang1</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">lang2</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">logPersonName</span> <span class="o">=</span> <span class="nx">logName</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+</span><span class="line"><span class="nx">logName</span><span class="p">();</span>
+</span><span class="line"><span class="nx">logName</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span><span class="s1">&#39;en&#39;</span><span class="p">,</span><span class="s1">&#39;es&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">logName</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">person</span><span class="p">,[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span><span class="s1">&#39;es&#39;</span><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>When is this used in real life?</p>
+
+<ul>
+  <li>function borrowing</li>
+</ul>
+
+<figure class="code"><figcaption><span>function borrowing</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person2</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Jane&#39;</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">person</span><span class="p">.</span><span class="nx">getFullName</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">person2</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>function currying</li>
+</ul>
+
+<figure class="code"><figcaption><span>function currying</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>
+</span><span class="line">  <span class="k">return</span> <span class="nx">a</span> <span class="o">*</span> <span class="nx">b</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">multiplyByTwo</span> <span class="o">=</span> <span class="nx">multiply</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span><span class="line"><span class="c1">// set first parameter(a) = 2, reutrn a new copy of multiply function</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">multiplyByTwo</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Necisam</span></span>
+
+      <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-10T22:12:52+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>10:12 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/studynote/'>studynote</a>, <a class='category' href='/blog/categories/udemy/'>udemy</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://king4sam.github.io/blog/2017/01/10/jsuwp-4-50/" data-via="" data-counturl="https://king4sam.github.io/blog/2017/01/10/jsuwp-4-50/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/01/10/jsuwp-4-46-4-49/" title="Previous Post: JS understanding the weird parts 4-46 ~ 4-49 Closures">&laquo; JS understanding the weird parts 4-46 ~ 4-49 Closures</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2017/01/11/jsuwp-4-51-4-52/" title="Next Post: JS understanding the weird parts 4-51 ~ 4-52 Functional Programming">JS understanding the weird parts 4-51 ~ 4-52 Functional Programming &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Pleassssssssse enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul id="nav_iconssss">
+      <li class="post">
+      <a href="/index.html" alt="Home"><img src="/images/Home.png"></a>
+      <a href="/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:king4sam990816@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="/about-me" alt="About me"><img src="/images/aboutme.png"></a>
+      </li>
+  </ul>
+</section>
+<section id="titles">
+  <h1 id="site_title"><a href="/index.html" title="Necisam's blog">Necisam's blog</a></h1>
+  <h3 id="site_subtitle">Ruby starter</h3>
+  <a href="/index.html" title="Necisam's blog"><img id="logo" src="https://lh3.googleusercontent.com/xixvv7cLV6yvbhxGP9ao-ont1jXmMcW2tHjAfPi151ubK3DPrFjTGo7PTTERIrqoV14Q2DepLeo3=w519-h778-no" /></a>
+</section>
+
+<section id="social">
+  
+
+  
+
+  
+
+  
+    <a href="https://github.com/king4sam" title="king4sam"><i class="fa fa-github fa-2x"></i></a>
+  
+
+  
+
+  
+</section>
+
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">jsuwp-9-73 ~ 9-80 Let's build a Framework/library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">jsuwp-8-69 ~ 8-72 Deep dive into jQuery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/20/jsuwp-7-65-odds-and-ends/">jsuwp-7-65 ~ 7-68 Odds and Ends</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/12/jsuwp-4-34-functions-are-objects/">jsuwp-4-34 functions are objects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/">jsuwp-4-33 Json and object literal</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/king4sam">@king4sam</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'king4sam',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Necisam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'necisam';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://king4sam.github.io/blog/2017/01/10/jsuwp-4-50/';
+        var disqus_url = 'https://king4sam.github.io/blog/2017/01/10/jsuwp-4-50/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

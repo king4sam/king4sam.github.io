@@ -1,0 +1,748 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Necisam's blog</title>
+  <meta name="author" content="Necisam">
+
+  
+  <meta name="description" content="Requirements Write a program to determine your system’s byte ordering. Explain how does it work and present your test results. Write a client program &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="https://king4sam.github.io/posts/3/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Necisam's blog" type="application/atom+xml">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900' rel='stylesheet' type='text/css'>
+
+
+	<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'ENV["GAnumber"]']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+  <style>html{background: url(/images/background.png) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;}</style>
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+</hgroup>
+
+</header>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/01/11/unix2016-assignment10-note/">Unix2016 Assignment10 Note</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-11T17:36:45+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>5:36 pm</span></time>
+        
+         | <a href="/blog/2017/01/11/unix2016-assignment10-note/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="requirements">Requirements</h1>
+
+<ol>
+  <li>
+    <p>Write a program to determine your system’s byte ordering. Explain how does it work and present your test results.</p>
+  </li>
+  <li>
+    <p>Write a client program and a server program to continuously report the number of processes currently running on a specified host (UNIX) computer. Make sure your server supports multiple concurrent clients and handle socket-related exceptions.</p>
+  </li>
+</ol>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/01/11/unix2016-assignment10-note/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/01/11/jsuwp-4-51-4-52/">JS Understanding the Weird Parts 4-51 ~ 4-52 Functional Programming</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-11T14:35:24+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>2:35 pm</span></time>
+        
+         | <a href="/blog/2017/01/11/jsuwp-4-51-4-52/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/01/11/jsuwp-4-51-4-52/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/01/10/jsuwp-4-50/">JS Understanding the Weird Parts 4-50 Call Apply Bind</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-10T22:12:52+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>10:12 pm</span></time>
+        
+         | <a href="/blog/2017/01/10/jsuwp-4-50/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/01/10/jsuwp-4-50/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/01/10/jsuwp-4-46-4-49/">JS Understanding the Weird Parts 4-46 ~ 4-49 Closures</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-10T16:53:12+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>4:53 pm</span></time>
+        
+         | <a href="/blog/2017/01/10/jsuwp-4-46-4-49/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/01/10/jsuwp-4-46-4-49/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/01/06/jsuwp-4-43-4-45/">JS Understanding the Weird Parts 4-43 ~ 4-45 IIFEs</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-06T14:35:53+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>2:35 pm</span></time>
+        
+         | <a href="/blog/2017/01/06/jsuwp-4-43-4-45/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/01/06/jsuwp-4-43-4-45/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/01/05/jsuwp-4-41-4-42/">JS Understanding the Weird Parts 4-41 ~ 4-42 ASI</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-05T14:23:42+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>2:23 pm</span></time>
+        
+         | <a href="/blog/2017/01/05/jsuwp-4-41-4-42/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/01/05/jsuwp-4-41-4-42/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/01/04/jsuwp-4-34-4-40/">JS Understanding the Weird Parts 4-34 ~ 4-40 Function</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-04T15:20:42+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>3:20 pm</span></time>
+        
+         | <a href="/blog/2017/01/04/jsuwp-4-34-4-40/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/01/04/jsuwp-4-34-4-40/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/12/22/unix2016-assignment7-note/">Unix2016 Assignment7 Note</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-12-22T10:49:25+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2016</span></span> <span class='time'>10:49 am</span></time>
+        
+         | <a href="/blog/2016/12/22/unix2016-assignment7-note/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="requirements">Requirements</h1>
+
+<p>To implement Terminal Control and Signal Handling to support Job Control.
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/12/22/unix2016-assignment7-note/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/11/29/unix2016-assignment6-note/">Unix2016 Assignment6 Note</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-11-29T11:40:29+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:40 am</span></time>
+        
+         | <a href="/blog/2016/11/29/unix2016-assignment6-note/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="requirements">Requirements</h1>
+
+<p>We will write a tiny shell (tsh) command processor like sh, bash, or csh for single line commands. Your shell’s main loop will display a prompt, read a line of input, and fork a child process to perform the indicated command.
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/11/29/unix2016-assignment6-note/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/11/08/unix2016-assignment4-note/">Unix2016 Assignment4 Note</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2016-11-08T10:43:31+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:43 am</span></time>
+        
+         | <a href="/blog/2016/11/08/unix2016-assignment4-note/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="requirements">Requirements</h1>
+<p>Your tool will load this dictionary into memory, and tries to concatenate three words into the plaintext password candidate. Use the crypt library to find the actually password of a person. The TA will time how fast your code can break the password. The top 10% of the student will receive 2 bonus points.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/11/08/unix2016-assignment4-note/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="4">&larr; Older</a>
+    
+    <a href="/blog/archives/"> Archives </a>
+    
+    <a class="next" href="2">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <ul id="nav_iconssss">
+      <li class="post">
+      <a href="/index.html" alt="Home"><img src="/images/Home.png"></a>
+      <a href="/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:king4sam990816@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="/about-me" alt="About me"><img src="/images/aboutme.png"></a>
+      </li>
+  </ul>
+</section>
+<section id="titles">
+  <h1 id="site_title"><a href="/index.html" title="Necisam's blog">Necisam's blog</a></h1>
+  <h3 id="site_subtitle">Ruby starter</h3>
+  <a href="/index.html" title="Necisam's blog"><img id="logo" src="https://lh3.googleusercontent.com/xixvv7cLV6yvbhxGP9ao-ont1jXmMcW2tHjAfPi151ubK3DPrFjTGo7PTTERIrqoV14Q2DepLeo3=w519-h778-no" /></a>
+</section>
+
+<section id="social">
+  
+
+  
+
+  
+
+  
+    <a href="https://github.com/king4sam" title="king4sam"><i class="fa fa-github fa-2x"></i></a>
+  
+
+  
+
+  
+</section>
+
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">jsuwp-9-73 ~ 9-80 Let's build a Framework/library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">jsuwp-8-69 ~ 8-72 Deep dive into jQuery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/20/jsuwp-7-65-odds-and-ends/">jsuwp-7-65 ~ 7-68 Odds and Ends</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/12/jsuwp-4-34-functions-are-objects/">jsuwp-4-34 functions are objects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/">jsuwp-4-33 Json and object literal</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/king4sam">@king4sam</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'king4sam',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Necisam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'necisam';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

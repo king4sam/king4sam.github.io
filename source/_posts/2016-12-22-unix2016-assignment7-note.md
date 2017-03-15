@@ -9,6 +9,7 @@ categories: unix2016
 # Requirements
 
 To implement Terminal Control and Signal Handling to support Job Control.
+<!--more-->
 
 - Signal Handling: user can terminate the running process with Ctrl+C without quitting from your shell
 - Background processes without resulting in zombies
@@ -17,7 +18,8 @@ To implement Terminal Control and Signal Handling to support Job Control.
     - "Jobs" allows users to view all the processes
     - "fg" <shell_assigned_process_id>” (You will need to handle the id by yourself)
 
-<!--more-->
+
+---
 
 #Implements
 

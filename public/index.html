@@ -9,7 +9,7 @@
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="Requirements To implement Terminal Control and Signal Handling to support Job Control. Signal Handling: user can terminate the running process with &hellip;">
+  <meta name="description" content="9-73 Requirements Greeter input : firstname lastname and optional language output : formal and informal greeting sentence language support English &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,7 +99,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/12/22/unix2016-assignment7-note/">Unix2016 Assignment7 Note</a></h1>
+      <h1 class="entry-title"><a href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">Jsuwp-9-73 ~ 9-80 Let's Build a Framework/library</a></h1>
     
     
       <p class="meta">
@@ -121,37 +121,270 @@
 
 
 
-<time class='entry-date' datetime='2016-12-22T10:49:25+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2016</span></span> <span class='time'>10:49 am</span></time>
+<time class='entry-date' datetime='2017-02-25T01:04:51+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>1:04 am</span></time>
         
-         | <a href="/blog/2016/12/22/unix2016-assignment7-note/#disqus_thread">Comments</a>
+         | <a href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h1 id="requirements">Requirements</h1>
-
-<p>To implement Terminal Control and Signal Handling to support Job Control.</p>
+  <div class="entry-content"><h1 id="requirements">9-73 Requirements</h1>
 
 <ul>
-  <li>Signal Handling: user can terminate the running process with Ctrl+C without quitting from your shell</li>
-  <li>Background processes without resulting in zombies</li>
-  <li>Foreground/Background Switching: Your shell is able to put the process to the background (“&amp;”) and bring background process back to the foreground by “fg” command</li>
-  <li>Built-in functions: jobs, fg
-    <ul>
-      <li>“Jobs” allows users to view all the processes</li>
-      <li>“fg” <shell_assigned_process_id>” (You will need to handle the id by yourself)</shell_assigned_process_id></li>
-    </ul>
-  </li>
+  <li>Greeter</li>
+  <li>input : firstname lastname and optional language</li>
+  <li>output : formal and informal greeting sentence</li>
+  <li>language support English and Spanish</li>
+  <li>reusable</li>
+  <li>just G$() to call (no ‘new’)</li>
+  <li>support jQuery(give selector, add greeting sentence to the selected element)</li>
 </ul>
 
+<figure class="code"><figcaption><span>Greeter.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="p">;(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">global</span><span class="p">,</span> <span class="nx">$</span><span class="p">){</span>
+</span><span class="line">  <span class="c1">// trick , avoid the problem caused by other lib that doesn&#39;t end with semicolon</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// trick to use our lib without new</span>
+</span><span class="line">  <span class="c1">// function declare, it is not actually run</span>
+</span><span class="line">  <span class="c1">// so we can set Greeter.init later</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">Greeter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="nx">lastName</span><span class="p">,</span><span class="nx">language</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="k">new</span> <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">firsname</span><span class="p">,</span><span class="nx">lastname</span><span class="p">,</span><span class="nx">language</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// setup prototype of greeter</span>
+</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">fullName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">;</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">validate</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">      <span class="k">if</span> <span class="p">(</span><span class="nx">supportedLangs</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;Invalid language&#39;</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">greeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">      <span class="k">return</span> <span class="nx">greetings</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">formalgreeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">      <span class="k">return</span> <span class="nx">formalgreetings</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fullName</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">greet</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">formal</span><span class="p">){</span>
+</span><span class="line">      <span class="kd">var</span> <span class="nx">msg</span> <span class="p">;</span>
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">formal</span><span class="p">){</span>
+</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="nx">formalgreeting</span><span class="p">();</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="k">else</span><span class="p">{</span>
+</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="nx">greeting</span><span class="p">();</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">console</span><span class="p">){</span>
+</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">log</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">console</span><span class="p">){</span>
+</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">logMessages</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; : &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fullName</span><span class="p">());</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">setLang</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lang</span><span class="p">){</span>
+</span><span class="line">      <span class="k">this</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">this</span><span class="p">.</span><span class="nx">validate</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// support jQuery</span>
+</span><span class="line">    <span class="nx">HTMLGreeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">formal</span><span class="p">){</span>
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">){</span>
+</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;jQuery isnot loaded&#39;</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">selector</span><span class="p">){</span>
+</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;Missing jQuery selector&#39;</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="kd">var</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class="line">      <span class="k">else</span><span class="p">{</span>
+</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">greeting</span><span class="p">()</span>
+</span><span class="line">        <span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">).</span><span class="nx">html</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// available in init function because of closeure</span>
+</span><span class="line">  <span class="c1">// but these var can&#39;t be access from global</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">supportedLangs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span><span class="s1">&#39;tw&#39;</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">var</span> <span class="nx">greetings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Hello&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;哈囉&#39;</span>
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">var</span> <span class="nx">formalgreetings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Greetings&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;你好&#39;</span>
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">var</span> <span class="nx">logMessages</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Logged in&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;登入&#39;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// real constructor</span>
+</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="nx">lastName</span><span class="p">,</span><span class="nx">language</span><span class="p">){</span>
+</span><span class="line">    <span class="c1">// safe this</span>
+</span><span class="line">    <span class="c1">// point to the object created by new ()init</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// setting default value</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">=</span> <span class="nx">firstName</span> <span class="o">||</span> <span class="s1">&#39;DefaultFirstname&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">lastName</span> <span class="o">=</span> <span class="nx">lastName</span> <span class="o">||</span> <span class="s1">&#39;DefaultLastname&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="nx">language</span> <span class="o">||</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">self</span><span class="p">.</span><span class="nx">validate</span><span class="p">();</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">//setup prototype chain of the object created by new init()</span>
+</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Greeter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">//expose greeter to the world</span>
+</span><span class="line">  <span class="nx">global</span><span class="p">.</span><span class="nx">Greeter</span> <span class="o">=</span> <span class="nx">global</span><span class="p">.</span><span class="nx">G$</span> <span class="o">=</span> <span class="nx">Greeter</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="p">}(</span><span class="nb">window</span><span class="p">,</span><span class="nx">jQuery</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/12/22/unix2016-assignment7-note/">繼續閱讀 &rarr;</a>
-    </footer>
   
 
 
@@ -162,7 +395,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2016/11/29/unix2016-assignment6-note/">Unix2016 Assignment6 Note</a></h1>
+      <h1 class="entry-title"><a href="/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">Jsuwp-8-69 ~ 8-72 Deep Dive Into jQuery</a></h1>
     
     
       <p class="meta">
@@ -184,410 +417,9 @@
 
 
 
-<time class='entry-date' datetime='2016-11-29T11:40:29+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:40 am</span></time>
+<time class='entry-date' datetime='2017-02-20T16:39:33+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>4:39 pm</span></time>
         
-         | <a href="/blog/2016/11/29/unix2016-assignment6-note/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1 id="requirements">Requirements</h1>
-
-<p>We will write a tiny shell (tsh) command processor like sh, bash, or csh for single line commands. Your shell’s main loop will display a prompt, read a line of input, and fork a child process to perform the indicated command.
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/11/29/unix2016-assignment6-note/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/11/08/unix2016-assignment4-note/">Unix2016 Assignment4 Note</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-11-08T10:43:31+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:43 am</span></time>
-        
-         | <a href="/blog/2016/11/08/unix2016-assignment4-note/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1 id="requirements">Requirements</h1>
-<p>Your tool will load this dictionary into memory, and tries to concatenate three words into the plaintext password candidate. Use the crypt library to find the actually password of a person. The TA will time how fast your code can break the password. The top 10% of the student will receive 2 bonus points.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/11/08/unix2016-assignment4-note/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/11/01/unix2016-assignment3-note/">Unix2016 Assignment3 Note</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-11-01T00:41:05+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>12:41 am</span></time>
-        
-         | <a href="/blog/2016/11/01/unix2016-assignment3-note/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1 id="requirements">Requirements</h1>
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/11/01/unix2016-assignment3-note/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/10/06/unix2016-assignment2-note/">Unix2016 Assignment2 Note</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-10-06T00:30:39+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:30 am</span></time>
-        
-         | <a href="/blog/2016/10/06/unix2016-assignment2-note/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1 id="requirements">Requirements</h1>
-
-<p>In this assignment, you will need to write your own dup2 function that behaves the same way as the dup2 function described in Section 3.12.
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/10/06/unix2016-assignment2-note/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/09/28/unix2016-assignment1-note/">Unix2016 Assignment1 Note</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-09-28T23:51:08+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:51 pm</span></time>
-        
-         | <a href="/blog/2016/09/28/unix2016-assignment1-note/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1 id="requirements">Requirements</h1>
-
-<p>Implement your  own light-weight  wc utility, called  lwc.c,  in  C (not  C++)
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/09/28/unix2016-assignment1-note/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/08/19/about-disqus-dot-dot-dot/">About Disqus...</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-08-19T18:45:44+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>6:45 pm</span></time>
-        
-         | <a href="/blog/2016/08/19/about-disqus-dot-dot-dot/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>困擾我很久的disqus終於在今天解開啦~
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/08/19/about-disqus-dot-dot-dot/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/08/05/themean-zhuang/">Theme安裝</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-08-05T10:52:06+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:52 am</span></time>
-        
-         | <a href="/blog/2016/08/05/themean-zhuang/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在安裝theme時遇到蠻多問題的</p>
-
-<p>所以再開一篇專門來討論
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/08/05/themean-zhuang/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/08/04/move-blog-to-github-dot-io/">Move Blog to github.io</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-08-04T23:46:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:46 pm</span></time>
-        
-         | <a href="/blog/2016/08/04/move-blog-to-github-dot-io/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>前兩天試著把部落格移到github.io</p>
-
-<p>一是因為heroku改<a href="https://devcenter.heroku.com/articles/free-dyno-hours">免費dyno的使用方式</a></p>
-
-<p>二還是想說有個遠端備份</p>
-
-<hr />
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2016/08/04/move-blog-to-github-dot-io/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2016/08/01/plugin-test/">Plugin Test</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2016-08-01T14:05:33+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>2:05 pm</span></time>
-        
-         | <a href="/blog/2016/08/01/plugin-test/#disqus_thread">Comments</a>
+         | <a href="/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/#disqus_thread">Comments</a>
         
       </p>
     
@@ -598,7 +430,385 @@
   
   
     <footer>
-      <a rel="full-article" href="/blog/2016/08/01/plugin-test/">繼續閱讀 &rarr;</a>
+      <a rel="full-article" href="/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/02/20/jsuwp-7-65-odds-and-ends/">Jsuwp-7-65 ~ 7-68 Odds and Ends</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-02-20T15:29:15+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>3:29 pm</span></time>
+        
+         | <a href="/blog/2017/02/20/jsuwp-7-65-odds-and-ends/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/20/jsuwp-7-65-odds-and-ends/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/02/12/jsuwp-4-34-functions-are-objects/">Jsuwp-4-34 Functions Are Objects</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-02-12T22:44:58+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>10:44 pm</span></time>
+        
+         | <a href="/blog/2017/02/12/jsuwp-4-34-functions-are-objects/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="functions-are-objects">4-34 functions are objects</h1>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/12/jsuwp-4-34-functions-are-objects/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/">Jsuwp-4-33 Json and Object Literal</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-02-12T00:51:29+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:51 am</span></time>
+        
+         | <a href="/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace/">Jsuwp-4-32 Framework Aside: Faking Namespace</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-02-12T00:43:18+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:43 am</span></time>
+        
+         | <a href="/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/02/12/jsuwp-4-30-objects-and-functions/">Jsuwp-4-30 Objects and Functions</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-02-12T00:06:26+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:06 am</span></time>
+        
+         | <a href="/blog/2017/02/12/jsuwp-4-30-objects-and-functions/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/12/jsuwp-4-30-objects-and-functions/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/02/09/jsuwp-3-28/">Jsuwp-3-28 Default Values</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-02-09T00:03:04+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:03 am</span></time>
+        
+         | <a href="/blog/2017/02/09/jsuwp-3-28/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/09/jsuwp-3-28/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/02/08/jsuwp-2-19/">Jsuwp 3-19 ~ 3-27 Types and Javascript</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-02-08T21:34:43+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>9:34 pm</span></time>
+        
+         | <a href="/blog/2017/02/08/jsuwp-2-19/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/08/jsuwp-2-19/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/02/04/jsuwp-2-18/">Jsuwp-2-18 What About Asynchronous Callback?</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-02-04T00:51:44+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:51 am</span></time>
+        
+         | <a href="/blog/2017/02/04/jsuwp-2-18/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/04/jsuwp-2-18/">繼續閱讀 &rarr;</a>
     </footer>
   
 
@@ -653,23 +863,23 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2016/12/22/unix2016-assignment7-note/">unix2016 assignment7 note</a>
+        <a href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">jsuwp-9-73 ~ 9-80 Let's build a Framework/library</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/11/29/unix2016-assignment6-note/">unix2016 assignment6 note</a>
+        <a href="/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">jsuwp-8-69 ~ 8-72 Deep dive into jQuery</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/11/08/unix2016-assignment4-note/">unix2016 assignment4 note</a>
+        <a href="/blog/2017/02/20/jsuwp-7-65-odds-and-ends/">jsuwp-7-65 ~ 7-68 Odds and Ends</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/11/01/unix2016-assignment3-note/">unix2016 assignment3 note</a>
+        <a href="/blog/2017/02/12/jsuwp-4-34-functions-are-objects/">jsuwp-4-34 functions are objects</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/10/06/unix2016-assignment2-note/">unix2016 assignment2 note</a>
+        <a href="/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/">jsuwp-4-33 Json and object literal</a>
       </li>
     
   </ul>
@@ -714,7 +924,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Necisam -
+  Copyright &copy; 2017 - Necisam -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Necisam's blog]]></title>
   <link href="https://king4sam.github.io/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2016-12-24T00:19:14+08:00</updated>
+  <updated>2017-03-15T22:52:58+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,478 +14,23 @@
 
   
   <entry>
-    <title type="html"><![CDATA[unix2016 assignment7 note]]></title>
-    <link href="https://king4sam.github.io/blog/2016/12/22/unix2016-assignment7-note/"/>
-    <updated>2016-12-22T10:49:25+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/12/22/unix2016-assignment7-note</id>
-    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
-
-<p>To implement Terminal Control and Signal Handling to support Job Control.</p>
+    <title type="html"><![CDATA[jsuwp-9-73 ~ 9-80 Let's build a Framework/library]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/"/>
+    <updated>2017-02-25T01:04:51+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library</id>
+    <content type="html"><![CDATA[<h1 id="requirements">9-73 Requirements</h1>
 
 <ul>
-  <li>Signal Handling: user can terminate the running process with Ctrl+C without quitting from your shell</li>
-  <li>Background processes without resulting in zombies</li>
-  <li>Foreground/Background Switching: Your shell is able to put the process to the background (“&amp;”) and bring background process back to the foreground by “fg” command</li>
-  <li>Built-in functions: jobs, fg
-    <ul>
-      <li>“Jobs” allows users to view all the processes</li>
-      <li>“fg” <shell_assigned_process_id>” (You will need to handle the id by yourself)</shell_assigned_process_id></li>
-    </ul>
-  </li>
+  <li>Greeter</li>
+  <li>input : firstname lastname and optional language</li>
+  <li>output : formal and informal greeting sentence</li>
+  <li>language support English and Spanish</li>
+  <li>reusable</li>
+  <li>just G$() to call (no ‘new’)</li>
+  <li>support jQuery(give selector, add greeting sentence to the selected element)</li>
 </ul>
 
-<!--more-->
-
-<h1 id="implements">Implements</h1>
-
-<ul>
-  <li>set tsh controlling process as current foreground process</li>
-</ul>
-
-<p>The function tcgetpgrp() returns the process group ID of the foreground process group on the terminal associated to fd, which must be the controlling terminal of the calling process.</p>
-
-<figure class="code"><figcaption><span>SYNOPSIS</span><a href="https://linux.die.net/man/3/tcgetpgrp">link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="kt">int</span> <span class="nf">tcsetpgrp</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">pid_t</span> <span class="n">pgrp</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<ul>
-  <li>
-    <p>signal hanlding</p>
-
-    <p>Control process should ignore terminate signal(SIGINT…)</p>
-
-    <p>Control process set child process as foreground to access STDIN, so that child process would receive the signal from STDIN.</p>
-
-    <p>Control process need to set signal handler for child process, preventing children becoming a zombie process</p>
-
-    <p>there some special func defined
-  - SIG_DFL is defalt handler
-  - SIG_IGN is to ignore the signal</p>
-  </li>
-</ul>
-
-<figure class="code"><figcaption><span>SYNOPSIS</span><a href="https://linux.die.net/man/3/signal">link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">signal</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">int</span><span class="p">)))(</span><span class="kt">int</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<ul>
-  <li>
-    <p>job control</p>
-
-    <p>implement a job queue to add/remove job while forking a new background process</p>
-  </li>
-  <li>
-    <p>fg cmd</p>
-
-    <p>control process set given jobid as foreground process and send SIGCONT to job to wake it</p>
-  </li>
-  <li>
-    <p>extra note</p>
-
-    <p>in SIGCHLD handler, use while to catch childe process’s return status.</p>
-  </li>
-</ul>
-
-<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment7">links to assignment7</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[unix2016 assignment6 note]]></title>
-    <link href="https://king4sam.github.io/blog/2016/11/29/unix2016-assignment6-note/"/>
-    <updated>2016-11-29T11:40:29+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/11/29/unix2016-assignment6-note</id>
-    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
-
-<p>We will write a tiny shell (tsh) command processor like sh, bash, or csh for single line commands. Your shell’s main loop will display a prompt, read a line of input, and fork a child process to perform the indicated command.
-<!--more-->
-Required capabilities:</p>
-
-<ol>
-  <li>
-    <p>Ordinary commands, consisting of an executable program name and an optional list of arguments, run in a separate process.</p>
-  </li>
-  <li>
-    <p>Two built-in commands: cd and pwd</p>
-  </li>
-  <li>
-    <p>Background processing, when the last token in the command line is “&amp;”.</p>
-  </li>
-</ol>
-
-<h1 id="implementation">Implementation</h1>
-
-<ol>
-  <li>
-    <p>get user input</p>
-  </li>
-  <li>
-    <p>parse oneline cmd , create command argv &amp;</p>
-  </li>
-  <li>
-    <p>if cmd is build-in cmd, call corresponding system call</p>
-  </li>
-  <li>
-    <p>if not, create a child process, and execvp the cmd</p>
-  </li>
-</ol>
-<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">The exec family of functions replaces the current process image with a new process image.</span></code></pre></td></tr></table></div></figure>
-
-<ol>
-  <li>if it is not a background process, use waitpid for childprocess</li>
-</ol>
-
-<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment6">links to assignment6</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[unix2016 assignment4 note]]></title>
-    <link href="https://king4sam.github.io/blog/2016/11/08/unix2016-assignment4-note/"/>
-    <updated>2016-11-08T10:43:31+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/11/08/unix2016-assignment4-note</id>
-    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
-<p>Your tool will load this dictionary into memory, and tries to concatenate three words into the plaintext password candidate. Use the crypt library to find the actually password of a person. The TA will time how fast your code can break the password. The top 10% of the student will receive 2 bonus points.</p>
-
-<!--more-->
-<ol>
-  <li>
-    <p>Your tool, say decrypt, that reads the hashed password from a file, and output the decrypted password. (sample test case can be downloaded from the iLms)</p>
-  </li>
-  <li>
-    <p>The password is composed of three random words from the given dictionary file.</p>
-  </li>
-  <li>
-    <p>You will need to check how to get a hashed string as explained during the lecture.</p>
-  </li>
-</ol>
-
-<h1 id="implementation">Implementation</h1>
-
-<ul>
-  <li>more detail on user password</li>
-</ul>
-
-<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">$6$naIJPKfO$SMkeSkFM36M6u3mZIyf2hAtt31WxuYtoTwLMjF9Fv49cprYPKtR1K88Ox5xvQdLdoBrAOmCnomRvaHc7VDiqQ0</span></code></pre></td></tr></table></div></figure>
-<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">$Algorithmid$Salt$Encryptedpassword</span></code></pre></td></tr></table></div></figure>
-
-<ul>
-  <li>algorithmid table</li>
-</ul>
-
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>MD5</td>
-    </tr>
-    <tr>
-      <td>2a</td>
-      <td>Blowfish (not in mainline glibc; added in some Linux distributions)</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>SHA-256 (since glibc 2.7)</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>SHA-512 (since glibc 2.7)</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li>dictionary attack</li>
-</ul>
-
-<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment4">links to assignment4</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[unix2016 assignment3 note]]></title>
-    <link href="https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note/"/>
-    <updated>2016-11-01T00:41:05+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note</id>
-    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
-<!--more-->
-<ol>
-  <li>Write a utility like cp(1), say lcp, that copies a file containing holes, without copying the hole to the target file. Instead, your utility writes “\0” to fill those holes in the target file.
-    <ul>
-      <li>lcp only needs to support basic copy feature; copying a file to another file. (usage : lcp <source_file> <destination_file>)</destination_file></source_file></li>
-      <li>Your output file should be identical to the original input file (size, content), but the block usage on the disk is different.</li>
-      <li>You need to check how to create a file with holes as explained in Chapter 3.</li>
-      <li>The test cases will be regular files, and you don’t have to handle any unusual exceptions.</li>
-    </ul>
-  </li>
-  <li>In Section 4.22, our version of ftw, called ftw8.c, never changes its directory. Modify this routine so that each time it encounters a directory, it uses the chdir function to change to that directory, allowing it to use the filename and not the pathname for each call to lstat. When all the entries in a directory have been processed, execute chdir(“..”). Compare the time consumed by this version and the version in the text book.
-    <ul>
-      <li>Trace the ftw8 source code given by TA. (compile with “make ftw8”)</li>
-      <li>Modify the code with chdir</li>
-    </ul>
-  </li>
-</ol>
-
-<h1 id="implementation">Implementation</h1>
-
-<ol>
-  <li>
-    <p>用read/write就符合需求了，唯一要注意的是lcp後的檔案權限也要跟原檔一樣</p>
-  </li>
-  <li>
-    <p>chdir()，不過給絕對路徑跟相對路徑在檔案數多時還是有效能的差距</p>
-  </li>
-</ol>
-
-<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment3">link to assignment3</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[unix2016 assignment2 note]]></title>
-    <link href="https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note/"/>
-    <updated>2016-10-06T00:30:39+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/10/06/unix2016-assignment2-note</id>
-    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
-
-<p>In this assignment, you will need to write your own dup2 function that behaves the same way as the dup2 function described in Section 3.12.
-<!--more-->
-- Your dup2 must copy the file descriptor oldfd and use the newfd as the target fd.
-- Make sure that the oldfd and the newfd point to the same file.
-- The return file descriptor should be the new newfd that points to the file table of oldfd. If error occurs, you have to return -1.
-- If newfd is not closed, you have to close the newfd before you copy the fds.
-- Your dup2 should handle invalid file descriptors (please check out the valid range of file descriptors online) and others error status.
-- Note that you can not use dup2, fcntl functions in your implementation.</p>
-
-<h1 id="implementation">Implementation</h1>
-<ol>
-  <li>
-    <p>KEYIDEA creates a copy of the file descriptor oldfd, using the lowest-numbered unused descriptor for the new descriptor.
-所以我們重複呼叫dup，直到用到目標fd，再將之前多複製的fd關掉，就可以實作出dup2的功能</p>
-  </li>
-  <li>
-    <p>呼叫sysconf(_SC_OPEN_MAX)太多次會crash，需將結果存下來</p>
-  </li>
-</ol>
-
-<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment2">link to assignment2</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[unix2016 assignment1 note]]></title>
-    <link href="https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note/"/>
-    <updated>2016-09-28T23:51:08+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/09/28/unix2016-assignment1-note</id>
-    <content type="html"><![CDATA[<h1 id="requirements">Requirements</h1>
-
-<p>Implement your  own light-weight  wc utility, called  lwc.c,  in  C (not  C++)
-<!--more-->
-1. lwc only  supports  three options -l, -w, and –c; lwc assumes at  least one option  is  provided; lwc only process  files (ignore stdin)
-2. lwc supports  multiple  options;  lwc ignore  the order of  options.  The no. lines is  always  printed first, followed by  the no. words and characters. run wc on Ubuntu  to  make  sure  that  your  outputs are identical to  it!
-3. If  an  invalid option  or  filename  is  given,  lwc prints  the same  error message wc would  print to  stderr, and return  the same  non-zero  exit  status</p>
-
-<h1 id="implementation">Implementation</h1>
-
-<ol>
-  <li>第一次知道有getopt()可以用 😂</li>
-</ol>
-
-<figure class="code"><figcaption><span>SYNOPSIS</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class="c"><span class="line"><span class="cp">#include &lt;unistd.h&gt;</span>
-</span><span class="line"><span class="kt">int</span> <span class="nf">getopt</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="n">argv</span><span class="p">[],</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">optstring</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<p>另外有些 extern 的變數</p>
-
-<ul>
-  <li>optind : The  variable optind is the index of the next element to be processed in argv.</li>
-  <li>opterr : The calling program may prevent the error message by setting opterr to 0.(defualt value is 1)</li>
-  <li>optopt : The variable optopt is set to the actual option character.</li>
-</ul>
-
-<ol>
-  <li>count的部分就沒有大問題，只有wordcount時注意一下連續空白就可以了</li>
-</ol>
-
-<p><a href="https://github.com/king4sam/nthu-unix2016/tree/master/assignment1">link to assignment1</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[about disqus...]]></title>
-    <link href="https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot/"/>
-    <updated>2016-08-19T18:45:44+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot</id>
-    <content type="html"><![CDATA[<p>困擾我很久的disqus終於在今天解開啦~
-<!--more-->
-因為octopress原本就有嵌入disqus，只要在disqus官網註冊好，設定好shortname</p>
-
-<p>在_config.yml 裡填入shortname就好了</p>
-
-<p>但在githubio上卻一直無法載入成功</p>
-
-<p>原本一直以為是code或設定的問題</p>
-
-<p>但直到我今天打開chrome 的 console……</p>
-
-<p>阿阿阿~因為githubio是提供 https</p>
-
-<p>但octopress預設是載入http的 cdn，所以因為安全性載入失敗啊</p>
-
-<p>只要改成https的cdn 就出現惹QQQQQ</p>
-
-<p>耍蠢</p>
-
-<p>只好紀念一下</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[theme安裝]]></title>
-    <link href="https://king4sam.github.io/blog/2016/08/05/themean-zhuang/"/>
-    <updated>2016-08-05T10:52:06+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/08/05/themean-zhuang</id>
-    <content type="html"><![CDATA[<p>在安裝theme時遇到蠻多問題的</p>
-
-<p>所以再開一篇專門來討論
-<!--more-->
-—</p>
-
-<h1 id="theme">theme</h1>
-
-<p>先上網找到第三方octopress 的theme</p>
-
-<p><a href="https://github.com/octothemes/cyan#applying-the-cyan-theme-to-your-blog">範例</a></p>
-
-<p>clone 下來後通常會是個sass sourse兩個資料夾</p>
-
-<p>安裝指令</p>
-
-<pre><code>rake install[themename]
-</code></pre>
-
-<p>再進一步進去rakefile看做了哪些事</p>
-
-<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">task :install, :theme do |t, args|
-</span><span class="line">  if File.directory?(source_dir) || File.directory?("sass")
-</span><span class="line">    abort("rake aborted!") if ask("A theme is already installed, proceeding will overwrite existing files. Are you sure?", ['y', 'n']) == 'n'
-</span><span class="line">  end
-</span><span class="line">  # copy theme into working Jekyll directories
-</span><span class="line">  theme = args.theme || 'classic'
-</span><span class="line">  puts "## Copying "+theme+" theme into ./#{source_dir} and ./sass"
-</span><span class="line">  mkdir_p source_dir
-</span><span class="line">  cp_r "#{themes_dir}/#{theme}/source/.", source_dir
-</span><span class="line">  mkdir_p "sass"
-</span><span class="line">  cp_r "#{themes_dir}/#{theme}/sass/.", "sass"
-</span><span class="line">  mkdir_p "#{source_dir}/#{posts_dir}"
-</span><span class="line">  mkdir_p public_dir
-</span><span class="line">end</span></code></pre></td></tr></table></div></figure>
-
-<p>default是安裝classic這個theme
-大致上只是將sass 跟source複製出來
-有自已改過樣式的話可以自行將這兩個資料夾備份</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[move blog to github.io]]></title>
-    <link href="https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
-    <updated>2016-08-04T23:46:00+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
-    <content type="html"><![CDATA[<p>前兩天試著把部落格移到github.io</p>
-
-<p>一是因為heroku改<a href="https://devcenter.heroku.com/articles/free-dyno-hours">免費dyno的使用方式</a></p>
-
-<p>二還是想說有個遠端備份</p>
-
-<hr />
-
-<!--more-->
-
-<h1 id="document">官方document</h1>
-
-<p><a href="http://octopress.org/docs/deploying/github/">here</a></p>
-
-<h2 id="create-new-repo">1. create new repo</h2>
-
-<p>Create a new Github repository and name the repository with the format username.github.io</p>
-
-<h2 id="set-up-github">2.  set up github</h2>
-
-<pre><code>rake setup_github_pages
-</code></pre>
-
-<p>輸入url後這指令還做了一些事</p>
-
-<ul>
-  <li>Rename the remote pointing to imathis/octopress from ‘origin’ to ‘octopress’</li>
-  <li>Add your Github Pages repository as the default origin remote.</li>
-  <li>Switch the active branch from master to source.</li>
-  <li>Configure your blog’s url according to your repository.</li>
-  <li>Setup a master branch in the _deploy directory for deployment.</li>
-</ul>
-
-<p>可以對照執行時的輸出</p>
-
-<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">Added remote git@github.com:username/username.github.io.git as origin
-</span><span class="line">Set origin as default remote
-</span><span class="line">Master branch renamed to 'source' for committing your blog source files
-</span><span class="line">rm -rf _deploy
-</span><span class="line">mkdir _deploy
-</span><span class="line">cd _deploy
-</span><span class="line">Initialized empty Git repository in /Users/username/Desktop/GIT/octopress/_deploy/.git/</span></code></pre></td></tr></table></div></figure>
-
-<h2 id="deploy-blog">3. deploy blog</h2>
-
-<pre><code>rake generate
-rake deploy
-</code></pre>
-
-<p>除了像之前generate出靜態網頁外，還需要delpoy</p>
-
-<p>一樣來看看這指令做了哪些事</p>
-
-<ul>
-  <li>copy the generated files into _deploy/</li>
-  <li>add them to git</li>
-  <li>commit</li>
-  <li>push them up to the master branch</li>
-</ul>
-
-<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<figure class="code"><figcaption><span>Greeter.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
@@ -500,166 +45,2447 @@ rake deploy
 <span class="line-number">13</span>
 <span class="line-number">14</span>
 <span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">## Deploying branch to Github Pages
-</span><span class="line">## Pulling any updates from Github Pages
-</span><span class="line">cd _deploy
-</span><span class="line">cd -
-</span><span class="line">rm -rf _deploy/index.html
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+<span class="line-number">86</span>
+<span class="line-number">87</span>
+<span class="line-number">88</span>
+<span class="line-number">89</span>
+<span class="line-number">90</span>
+<span class="line-number">91</span>
+<span class="line-number">92</span>
+<span class="line-number">93</span>
+<span class="line-number">94</span>
+<span class="line-number">95</span>
+<span class="line-number">96</span>
+<span class="line-number">97</span>
+<span class="line-number">98</span>
+<span class="line-number">99</span>
+<span class="line-number">100</span>
+<span class="line-number">101</span>
+<span class="line-number">102</span>
+<span class="line-number">103</span>
+<span class="line-number">104</span>
+<span class="line-number">105</span>
+<span class="line-number">106</span>
+<span class="line-number">107</span>
+<span class="line-number">108</span>
+<span class="line-number">109</span>
+<span class="line-number">110</span>
+<span class="line-number">111</span>
+<span class="line-number">112</span>
+<span class="line-number">113</span>
+<span class="line-number">114</span>
+<span class="line-number">115</span>
+<span class="line-number">116</span>
+<span class="line-number">117</span>
+<span class="line-number">118</span>
+<span class="line-number">119</span>
+<span class="line-number">120</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="p">;(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">global</span><span class="p">,</span> <span class="nx">$</span><span class="p">){</span>
+</span><span class="line">  <span class="c1">// trick , avoid the problem caused by other lib that doesn&#39;t end with semicolon</span>
 </span><span class="line">
-</span><span class="line">## Copying public to _deploy
-</span><span class="line">cp -r public/. _deploy
-</span><span class="line">cd _deploy
+</span><span class="line">  <span class="c1">// trick to use our lib without new</span>
+</span><span class="line">  <span class="c1">// function declare, it is not actually run</span>
+</span><span class="line">  <span class="c1">// so we can set Greeter.init later</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">Greeter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="nx">lastName</span><span class="p">,</span><span class="nx">language</span><span class="p">){</span>
+</span><span class="line">    <span class="k">return</span> <span class="k">new</span> <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">firsname</span><span class="p">,</span><span class="nx">lastname</span><span class="p">,</span><span class="nx">language</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
 </span><span class="line">
-</span><span class="line">## Committing: Site updated at 2016-08-02 08:54:10 UTC
-</span><span class="line">*
-</span><span class="line">## Pushing generated _deploy website
-</span><span class="line">To git@github.com:username/username.github.io.git
-</span><span class="line"> * [new branch]      master -&gt; master</span></code></pre></td></tr></table></div></figure>
-
-<h2 id="custom-domains">4. Custom Domains</h2>
-<p>沒申請過，等之後有再設定XD</p>
+</span><span class="line">  <span class="c1">// setup prototype of greeter</span>
+</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">fullName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">;</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">validate</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">      <span class="k">if</span> <span class="p">(</span><span class="nx">supportedLangs</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;Invalid language&#39;</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">greeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">      <span class="k">return</span> <span class="nx">greetings</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">formalgreeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">      <span class="k">return</span> <span class="nx">formalgreetings</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fullName</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">greet</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">formal</span><span class="p">){</span>
+</span><span class="line">      <span class="kd">var</span> <span class="nx">msg</span> <span class="p">;</span>
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">formal</span><span class="p">){</span>
+</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="nx">formalgreeting</span><span class="p">();</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="k">else</span><span class="p">{</span>
+</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="nx">greeting</span><span class="p">();</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">console</span><span class="p">){</span>
+</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">log</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">console</span><span class="p">){</span>
+</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">logMessages</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; : &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fullName</span><span class="p">());</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">setLang</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lang</span><span class="p">){</span>
+</span><span class="line">      <span class="k">this</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">this</span><span class="p">.</span><span class="nx">validate</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// support jQuery</span>
+</span><span class="line">    <span class="nx">HTMLGreeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">formal</span><span class="p">){</span>
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">){</span>
+</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;jQuery isnot loaded&#39;</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">selector</span><span class="p">){</span>
+</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;Missing jQuery selector&#39;</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="kd">var</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class="line">      <span class="k">else</span><span class="p">{</span>
+</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">greeting</span><span class="p">()</span>
+</span><span class="line">        <span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">).</span><span class="nx">html</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// available in init function because of closeure</span>
+</span><span class="line">  <span class="c1">// but these var can&#39;t be access from global</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">supportedLangs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span><span class="s1">&#39;tw&#39;</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">var</span> <span class="nx">greetings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Hello&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;哈囉&#39;</span>
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">var</span> <span class="nx">formalgreetings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Greetings&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;你好&#39;</span>
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">var</span> <span class="nx">logMessages</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Logged in&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;登入&#39;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// real constructor</span>
+</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="nx">lastName</span><span class="p">,</span><span class="nx">language</span><span class="p">){</span>
+</span><span class="line">    <span class="c1">// safe this</span>
+</span><span class="line">    <span class="c1">// point to the object created by new ()init</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// setting default value</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">=</span> <span class="nx">firstName</span> <span class="o">||</span> <span class="s1">&#39;DefaultFirstname&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">lastName</span> <span class="o">=</span> <span class="nx">lastName</span> <span class="o">||</span> <span class="s1">&#39;DefaultLastname&#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="nx">language</span> <span class="o">||</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">self</span><span class="p">.</span><span class="nx">validate</span><span class="p">();</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">//setup prototype chain of the object created by new init()</span>
+</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Greeter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">//expose greeter to the world</span>
+</span><span class="line">  <span class="nx">global</span><span class="p">.</span><span class="nx">Greeter</span> <span class="o">=</span> <span class="nx">global</span><span class="p">.</span><span class="nx">G$</span> <span class="o">=</span> <span class="nx">Greeter</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="p">}(</span><span class="nb">window</span><span class="p">,</span><span class="nx">jQuery</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[plugin test]]></title>
-    <link href="https://king4sam.github.io/blog/2016/08/01/plugin-test/"/>
-    <updated>2016-08-01T14:05:33+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/08/01/plugin-test</id>
+    <title type="html"><![CDATA[jsuwp-8-69 ~ 8-72 Deep dive into jQuery]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/"/>
+    <updated>2017-02-20T16:39:33+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery</id>
     <content type="html"><![CDATA[<!--more-->
 
-<h2 id="codeblock">Codeblock</h2>
+<h1 id="jquert-part12">8-70 8-71 jQuert Part1、2</h1>
 
-<h3 id="syntax">Syntax</h3>
-
-<pre><code>{% codeblock [lang:language] [title] [url] [link text] %}
-code snippet
-{% endcodeblock %}
-</code></pre>
-
-<h3 id="section">效果</h3>
-<figure class="code"><figcaption><span>Discover if a number is prime</span><a href="http://www.noulakaz.net/weblog/2007/03/18/a-regular-expression-to-check-for-prime-numbers/">Source Article</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<figure class="code"><figcaption><span>jQuery Structure</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
 <span class="line-number">3</span>
 <span class="line-number">4</span>
 <span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">class</span> <span class="nc">Fixnum</span>
-</span><span class="line">  <span class="k">def</span> <span class="nf">prime?</span>
-</span><span class="line">    <span class="p">(</span><span class="s1">&#39;1&#39;</span> <span class="o">*</span> <span class="nb">self</span><span class="p">)</span> <span class="o">!~</span> <span class="sr">/^1?$|^(11+?)\1+$/</span>
-</span><span class="line">  <span class="k">end</span>
-</span><span class="line"><span class="k">end</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+<span class="line-number">48</span>
+<span class="line-number">49</span>
+<span class="line-number">50</span>
+<span class="line-number">51</span>
+<span class="line-number">52</span>
+<span class="line-number">53</span>
+<span class="line-number">54</span>
+<span class="line-number">55</span>
+<span class="line-number">56</span>
+<span class="line-number">57</span>
+<span class="line-number">58</span>
+<span class="line-number">59</span>
+<span class="line-number">60</span>
+<span class="line-number">61</span>
+<span class="line-number">62</span>
+<span class="line-number">63</span>
+<span class="line-number">64</span>
+<span class="line-number">65</span>
+<span class="line-number">66</span>
+<span class="line-number">67</span>
+<span class="line-number">68</span>
+<span class="line-number">69</span>
+<span class="line-number">70</span>
+<span class="line-number">71</span>
+<span class="line-number">72</span>
+<span class="line-number">73</span>
+<span class="line-number">74</span>
+<span class="line-number">75</span>
+<span class="line-number">76</span>
+<span class="line-number">77</span>
+<span class="line-number">78</span>
+<span class="line-number">79</span>
+<span class="line-number">80</span>
+<span class="line-number">81</span>
+<span class="line-number">82</span>
+<span class="line-number">83</span>
+<span class="line-number">84</span>
+<span class="line-number">85</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// IIFE</span>
+</span><span class="line">
+</span><span class="line"><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">global</span><span class="p">,</span> <span class="nx">factory</span><span class="p">){</span>
+</span><span class="line">  <span class="p">...</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// invoked factory</span>
+</span><span class="line">  <span class="k">return</span> <span class="nx">factory</span><span class="p">(</span><span class="nx">global</span><span class="p">);</span>
+</span><span class="line"><span class="p">}(</span><span class="nb">window</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nx">noglobal</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">version</span> <span class="o">=</span> <span class="s2">&quot;1.11.2&quot;</span><span class="p">,</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// Define a local copy of jQuery</span>
+</span><span class="line">  <span class="nx">jQuery</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">context</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="k">new</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">context</span> <span class="p">);</span>
+</span><span class="line">  <span class="p">},</span>
+</span><span class="line">  <span class="p">.</span>
+</span><span class="line">  <span class="p">.</span>
+</span><span class="line">  <span class="p">.</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// nickname for prototype</span>
+</span><span class="line">  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span><span class="p">{</span>
+</span><span class="line">    <span class="p">...</span>
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">//Merge the contents of two or more objects together into the first object.</span>
+</span><span class="line">  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="p">...</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// jQurry habe makeArray property which is a function</span>
+</span><span class="line">    <span class="nx">makeArray</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">arr</span><span class="p">,</span> <span class="nx">results</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="nx">results</span> <span class="o">||</span> <span class="p">[];</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">if</span> <span class="p">(</span> <span class="nx">arr</span> <span class="o">!=</span> <span class="kc">null</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span> <span class="nx">isArraylike</span><span class="p">(</span> <span class="nb">Object</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">          <span class="nx">jQuery</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span> <span class="nx">ret</span><span class="p">,</span>
+</span><span class="line">            <span class="k">typeof</span> <span class="nx">arr</span> <span class="o">===</span> <span class="s2">&quot;string&quot;</span> <span class="o">?</span>
+</span><span class="line">            <span class="p">[</span> <span class="nx">arr</span> <span class="p">]</span> <span class="o">:</span> <span class="nx">arr</span>
+</span><span class="line">          <span class="p">);</span>
+</span><span class="line">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">          <span class="nx">push</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span> <span class="nx">ret</span><span class="p">,</span> <span class="nx">arr</span> <span class="p">);</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="p">...</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">//use extend to add properties on jQuery</span>
+</span><span class="line">  <span class="nx">jQuery</span><span class="p">.</span><span class="nx">extend</span><span class="p">({...});</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// Sizzle CSS Selector Engine</span>
+</span><span class="line">  <span class="c1">// another IIFE inside IIFE</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">Sizzle</span> <span class="o">=</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nb">window</span><span class="p">){});</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// real init funciton</span>
+</span><span class="line">  <span class="nx">init</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">context</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="p">...</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">    <span class="c1">// this point to the empty object, created by calling new function</span>
+</span><span class="line">    <span class="c1">// makeArray still return this</span>
+</span><span class="line">    <span class="k">return</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">makeArray</span><span class="p">(</span> <span class="nx">selector</span><span class="p">,</span> <span class="k">this</span> <span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// set up the new object&#39;s prototype ctreated by new</span>
+</span><span class="line">  <span class="nx">init</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">//window from line 8</span>
+</span><span class="line">  <span class="kd">var</span>
+</span><span class="line">  <span class="c1">// Map over jQuery in case of overwrite</span>
+</span><span class="line">  <span class="nx">_jQuery</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">jQuery</span><span class="p">,</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// Map over the $ in case of overwrite</span>
+</span><span class="line">  <span class="nx">_$</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">$</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// Expose jQuery and $ identifiers</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span> <span class="k">typeof</span> <span class="nx">noGlobal</span> <span class="o">===</span> <span class="nx">strundefined</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nb">window</span><span class="p">.</span><span class="nx">jQuery</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">$</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">return</span> <span class="nx">jQuery</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="p">}));</span>
 </span></code></pre></td></tr></table></div></figure>
-
-<h2 id="youtube-">Youtube 嵌入</h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/YCuk1kdQuNo" frameborder="0" allowfullscreen=""></iframe>
-
-<h2 id="image-tag">Image Tag</h2>
-
-<h3 id="syntax-1">Syntax</h3>
-
-<pre><code>{% img [class names] /path/to/image [width] [height] [title text [alt text]] %}
-</code></pre>
-
-<h3 id="section-1">效果</h3>
-
-<p><img class="[class names]" src="https://s3.graphiq.com/sites/default/files/465/media/images/t2/Shiba_Inu_5187048.jpg" /></p>
-
-<h2 id="mathjax">Mathjax</h2>
-
-<h3 id="allow-latex">allow Latex</h3>
-
-<script type="math/tex; mode=display">f'\left( x\right) = \lim _{x\rightarrow 0}\dfrac {f\left( x+\Delta x\right) - f\left( x\right)}{\Delta x}</script>
 
 <hr />
 
-<p>後記</p>
+<h1 id="jquert-part3">8-73 jQuert Part3</h1>
+
+<h2 id="bigword-alert--method-chaining">bigword alert : Method chaining</h2>
+<ul>
+  <li>calling one method after another, and each method affects the parent object.</li>
+  <li>obj.method1().method2()</li>
+</ul>
+
+<h2 id="how-to-implements--method-chain">how to implements  method chain</h2>
+<ul>
+  <li>functions return this</li>
+</ul>
+
+<figure class="code"><figcaption><span>jquery addClass function</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">addClass</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">value</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">classes</span><span class="p">,</span> <span class="nx">elem</span><span class="p">,</span> <span class="nx">cur</span><span class="p">,</span> <span class="nx">clazz</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">finalValue</span><span class="p">,</span>
+</span><span class="line">      <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class="line">      <span class="nx">len</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+</span><span class="line">      <span class="nx">proceed</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">value</span> <span class="o">===</span> <span class="s2">&quot;string&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">value</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span> <span class="nx">value</span> <span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">j</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="nx">jQuery</span><span class="p">(</span> <span class="k">this</span> <span class="p">).</span><span class="nx">addClass</span><span class="p">(</span> <span class="nx">value</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span> <span class="k">this</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">className</span> <span class="p">)</span> <span class="p">);</span>
+</span><span class="line">      <span class="p">});</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span> <span class="nx">proceed</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="c1">// The disjunction here is for better compressibility (see removeClass)</span>
+</span><span class="line">      <span class="nx">classes</span> <span class="o">=</span> <span class="p">(</span> <span class="nx">value</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span> <span class="p">).</span><span class="nx">match</span><span class="p">(</span> <span class="nx">rnotwhite</span> <span class="p">)</span> <span class="o">||</span> <span class="p">[];</span>
+</span><span class="line">
+</span><span class="line">      <span class="k">for</span> <span class="p">(</span> <span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="nx">elem</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span> <span class="nx">i</span> <span class="p">];</span>
+</span><span class="line">        <span class="nx">cur</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">===</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="p">(</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">className</span> <span class="o">?</span>
+</span><span class="line">          <span class="p">(</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">className</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="p">).</span><span class="nx">replace</span><span class="p">(</span> <span class="nx">rclass</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="p">)</span> <span class="o">:</span>
+</span><span class="line">          <span class="s2">&quot; &quot;</span>
+</span><span class="line">        <span class="p">);</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">if</span> <span class="p">(</span> <span class="nx">cur</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">          <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">          <span class="k">while</span> <span class="p">(</span> <span class="p">(</span><span class="nx">clazz</span> <span class="o">=</span> <span class="nx">classes</span><span class="p">[</span><span class="nx">j</span><span class="o">++</span><span class="p">])</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">            <span class="k">if</span> <span class="p">(</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">clazz</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">              <span class="nx">cur</span> <span class="o">+=</span> <span class="nx">clazz</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">;</span>
+</span><span class="line">            <span class="p">}</span>
+</span><span class="line">          <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">          <span class="c1">// only assign if different to avoid unneeded rendering.</span>
+</span><span class="line">          <span class="nx">finalValue</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">trim</span><span class="p">(</span> <span class="nx">cur</span> <span class="p">);</span>
+</span><span class="line">          <span class="k">if</span> <span class="p">(</span> <span class="nx">elem</span><span class="p">.</span><span class="nx">className</span> <span class="o">!==</span> <span class="nx">finalValue</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class="line">            <span class="nx">elem</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">finalValue</span><span class="p">;</span>
+</span><span class="line">          <span class="p">}</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-7-65 ~ 7-68 Odds and Ends]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/20/jsuwp-7-65-odds-and-ends/"/>
+    <updated>2017-02-20T15:29:15+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/20/jsuwp-7-65-odds-and-ends</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="initialization">7-65 Initialization</h1>
 
 <ul>
-  <li>install new theme oct2</li>
-  <li>excerpt_link 改為中文</li>
-  <li>include Mathjax</li>
-  <li>change markdown parser</li>
+  <li>use literal notaion to initialization</li>
+  <li>convenient for testing</li>
+  <li>js engine will check syntax for you</li>
+</ul>
+
+<figure class="code"><figcaption><span>simple initialization</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">people</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class="line">  <span class="p">{</span>
+</span><span class="line">    <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">address</span> <span class="o">:</span> <span class="p">[</span>
+</span><span class="line">      <span class="s1">&#39;111 Main St.&#39;</span><span class="p">,</span>
+</span><span class="line">      <span class="s1">&#39;others&#39;</span>
+</span><span class="line">    <span class="p">]</span>
+</span><span class="line">  <span class="p">},</span>
+</span><span class="line">  <span class="p">{</span>
+</span><span class="line">    <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Jane&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">greet</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">      <span class="k">return</span> <span class="s1">&#39;Hi &#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+<hr />
+
+<h1 id="typeof-instanceof">7-66 typeof instanceof</h1>
+
+<ul>
+  <li>
+    <p>typeof : return the type name in String</p>
+  </li>
+  <li>
+    <p>some unexpected result : [], undefined, null</p>
+  </li>
+  <li>
+    <p>instanceof : find in deeper prototype chain, check if the type in the chain</p>
+  </li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">b</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">c</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">d</span><span class="p">);</span> <span class="c1">// weird!</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">d</span><span class="p">));</span> <span class="c1">// better!</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Jane&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">e</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span> <span class="k">instanceof</span> <span class="nx">Person</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="kc">undefined</span><span class="p">);</span> <span class="c1">// makes sense</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="kc">null</span><span class="p">);</span> <span class="c1">// a bug since, like, forever...</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">z</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="p">};</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">z</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="strict-mode">7-67 Strict Mode</h1>
+
+<ul>
+  <li>optional</li>
+  <li>must be in the top of file or top of the function</li>
+  <li>not every js engine implement strict mode in the same way</li>
+</ul>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">strict mode reference</a></p>
+
+<ul>
+  <li>可能問題
+當多個js files合併時(produciton常用)，最開始的js file若使用了strict mode，則後面的files都會受到影響
+不能保證其它lib都遵守strict mode</li>
+</ul>
+
+<figure class="code"><figcaption><span>one circumstance that strict mode helps</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">//&#39;use strict&#39;;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">logNewPerson</span><span class="p">(){</span>
+</span><span class="line">  <span class="c1">//&#39;use strict&#39;;</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">var</span> <span class="nx">person2</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">persom2</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">persom2</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">person</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">persom</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">persom</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-4-34 functions are objects]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-34-functions-are-objects/"/>
+    <updated>2017-02-12T22:44:58+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-34-functions-are-objects</id>
+    <content type="html"><![CDATA[<h1 id="functions-are-objects">4-34 functions are objects</h1>
+
+<!--more-->
+
+<h2 id="bigword-alert--first-class-functions"><strong>bigword alert : first class functions</strong></h2>
+<ul>
+  <li>everything you can do with other types you can do with function</li>
+  <li>ex: assign them to variables, pass them around, create them on the fly …</li>
+  <li>js is not the only language that has first class function</li>
+</ul>
+
+<figure class="code"><figcaption><span>function can has properties</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">greet</span><span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">greet</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">.</span><span class="nx">language</span><span class="p">);</span>
+</span><span class="line"><span class="c1">// en</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="function-statement-and-function-expression">4-35 function statement and function expression</h1>
+
+<h2 id="bigword-alert--expression"><strong>bigword alert : expression</strong></h2>
+<ul>
+  <li>a unit of code that results in a value</li>
+  <li>statements just do the work, no return value</li>
+</ul>
+
+<figure class="code"><figcaption><span>statement and expression</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// function statements</span>
+</span><span class="line"><span class="nx">greet</span><span class="p">();</span> <span class="c1">//runable because of hoisting</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">greet</span> <span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">anonymousGreet</span><span class="p">();</span> <span class="c1">//only variable is hoisted</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// function expression</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">anonymousGreet</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>create function on the fly</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span><span class="line">  <span class="nx">a</span><span class="p">();</span> <span class="c1">//invoke it</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">log</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-4-33 Json and object literal]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/"/>
+    <updated>2017-02-12T00:51:29+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="json-and-object-literal">4-33 Json and object literal</h1>
+
+<ul>
+  <li>用xml傳送資料會有多餘且重複的字</li>
+  <li>嘿~, js object literal 拿來送資料好像不錯用噢~</li>
+  <li>property name “must” be quoted in JSON(In object literal, it could be quoted )</li>
+  <li>JSON is technically a subset of object literal syntax
+-&gt; valid json is also valid js object literal syntax</li>
+  <li>JSON is so popular that js has utilities to tranfer between the two.(JSON.stringtify, JSON.parse)</li>
 </ul>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Install octopress and deploy to heroku]]></title>
-    <link href="https://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku/"/>
-    <updated>2016-07-30T23:01:14+08:00</updated>
-    <id>https://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku</id>
-    <content type="html"><![CDATA[<p>部落開張啦~</p>
+    <title type="html"><![CDATA[jsuwp-4-32 Framework aside: Faking Namespace]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace/"/>
+    <updated>2017-02-12T00:43:18+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace</id>
+    <content type="html"><![CDATA[<!--more-->
 
-<p>以後疑難雜症或備忘錄就會記在這裡啦</p>
+<h1 id="faking-namespace">4-32 Faking Namespace</h1>
 
-<p>首先就是架設這個部落格</p>
+<h2 id="bigword-alert--namespace"><strong>bigword alert : Namespace</strong></h2>
+<ul>
+  <li>a container for variables and functions</li>
+</ul>
 
-<p>上網找了蠻久才決定用octopress</p>
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">greet</span> <span class="o">=</span> <span class="s1">&#39;Hello!&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">greet</span> <span class="o">=</span> <span class="s1">&#39;Hola!&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// greet collide</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">english</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">spanish</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">english</span><span class="p">.</span><span class="nx">greet</span> <span class="o">=</span> <span class="s1">&#39;Hello!&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">spanish</span><span class="p">.</span><span class="nx">greet</span> <span class="o">=</span> <span class="s1">&#39;Hola!&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">english</span><span class="p">.</span><span class="nx">greetings</span><span class="p">.</span><span class="nx">greet</span>  <span class="o">=</span> <span class="s1">&#39;Hello&#39;</span><span class="p">;</span> <span class="c1">// cannot creating on the fly</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">var english = {</span>
+</span><span class="line"><span class="cm">  greeting : {</span>
+</span><span class="line"><span class="cm">    basic : &#39;Hello!&#39;</span>
+</span><span class="line"><span class="cm">  }</span>
+</span><span class="line"><span class="cm">};</span>
+</span><span class="line"><span class="cm"> */</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-4-30 Objects and Functions]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-30-objects-and-functions/"/>
+    <updated>2017-02-12T00:06:26+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-30-objects-and-functions</id>
+    <content type="html"><![CDATA[<!--more-->
 
-<p>剛好是適合programmer用的</p>
+<h1 id="objects-and-the-dot">4-30 Objects and the DOT</h1>
 
-<p>用markdown寫文章，用git做版本控制，不用額外的db</p>
+<ul>
+  <li>[ ] (computed member access) is a operator</li>
+  <li>. (dot) is a operator too</li>
+  <li>both has left-to-right asscociativity</li>
+  <li>dot is recommended</li>
+</ul>
 
-<p>而且是ruby做的，可以順便研究一下科科</p>
+<figure class="code"><figcaption><span>computed member access</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;firstname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Tony&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;lastname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Alicea&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">firstNameProperty</span> <span class="o">=</span> <span class="s2">&quot;firstname&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">[</span><span class="nx">firstNameProperty</span><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<!--more-->
+<figure class="code"><figcaption><span>dot operator</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;firstname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Tony&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;lastname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Alicea&quot;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">firstname</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">person</span><span class="p">.</span><span class="nx">address</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+</span><span class="line"><span class="nx">person</span><span class="p">.</span><span class="nx">address</span><span class="p">.</span><span class="nx">stree</span> <span class="o">=</span> <span class="s2">&quot;111 Main St.&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">person</span><span class="p">.</span><span class="nx">address</span><span class="p">.</span><span class="nx">city</span> <span class="o">=</span> <span class="s2">&quot;New York&quot;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">person</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="s2">&quot;NY&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="object-and-object-literal">4-31 Object and object literal</h1>
+
+<ul>
+  <li>{} is NOT a operator</li>
+</ul>
+
+<figure class="code"><figcaption><span>object literal</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">var person {};</span>
+</span><span class="line"><span class="cm">= var person = new Object();</span>
+</span><span class="line"><span class="cm">*/</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">Tony</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Tony&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Alicea&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">address</span> <span class="o">:</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">stree</span> <span class="o">:</span> <span class="s1">&#39;111 Main St.&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">city</span> <span class="o">:</span> <span class="s1">&#39;New York&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">state</span> <span class="o">:</span> <span class="s1">&#39;NY&#39;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">gree</span><span class="p">(</span><span class="nx">person</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi &#39;</span> <span class="o">+</span> <span class="nx">person</span><span class="p">.</span><span class="nx">firstname</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">greet</span><span class="p">(</span><span class="nx">Tony</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// creating object on the fly</span>
+</span><span class="line"><span class="nx">greet</span><span class="p">({</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Mary&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span>
+</span><span class="line"><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-3-28 Default values]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/09/jsuwp-3-28/"/>
+    <updated>2017-02-09T00:03:04+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/09/jsuwp-3-28</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="default-values">3-28 Default values</h1>
+
+<ul>
+  <li>|| operator will return first one could be coerced to true or false</li>
+</ul>
+
+<figure class="code"><figcaption><span>js default value 小技巧</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">greet</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hello &#39;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">greet</span><span class="p">();</span> <span class="c1">// &#39;Hello undefined&#39;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">greet2</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">||</span> <span class="s1">&#39;&lt;Your name here&gt;&#39;</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hello &#39;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">greet2</span><span class="p">();</span> <span class="c1">// &#39;Hello &lt;Your name here&gt;&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="framework-aside-default-value">3-29 Framework aside: Default value</h1>
+
+<figure class="code"><figcaption><span>lib1.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">libname</span> <span class="o">=</span> <span class="s1">&#39;lib1&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>lib2.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">libname</span> <span class="o">=</span> <span class="s1">&#39;lib2&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// batter way</span>
+</span><span class="line"><span class="c1">// window.libname = window.libname || &#39;lib2&#39;;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>app.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">libname</span><span class="p">);</span>
+</span><span class="line"><span class="c1">//lib2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>index.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class="line"><span class="nt">&lt;html&gt;</span>
+</span><span class="line"><span class="nt">&lt;head&gt;</span>
+</span><span class="line">  <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+</span><span class="line"><span class="nt">&lt;/head&gt;</span>
+</span><span class="line"><span class="nt">&lt;body&gt;</span>
+</span><span class="line">  <span class="nt">&lt;script </span><span class="na">src =</span><span class="err"> </span><span class="s">lib1.js</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class="line">  <span class="nt">&lt;script </span><span class="na">src =</span><span class="err"> </span><span class="s">lib2.js</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class="line">  <span class="nt">&lt;script </span><span class="na">src =</span><span class="err"> </span><span class="s">app.js</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class="line"><span class="nt">&lt;/body&gt;</span>
+</span><span class="line"><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp 3-19 ~ 3-27 Types and javascript]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/08/jsuwp-2-19/"/>
+    <updated>2017-02-08T21:34:43+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/08/jsuwp-2-19</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="types-and-javascript">3-19 Types and javascript</h1>
+
+<h2 id="bigword-alert--dynamic-typing"><strong>bigword alert : Dynamic typing</strong></h2>
+<ul>
+  <li>you don’t tell the engine what type of data a variable holds</li>
+  <li>it figures it out while your code is running</li>
+</ul>
+
+<h1 id="primitive-types">3-20 Primitive types</h1>
+
+<h2 id="bigword-alert--primitive-type"><strong>bigword alert : Primitive type</strong></h2>
+<ul>
+  <li>a type of data that represents a single value</li>
+  <li>(not a object)</li>
+</ul>
+
+<h2 id="list-of-primitive-types-in-javascript">List of primitive types in javascript</h2>
+
+<ol>
+  <li>
+    <p>undefined
+  lack of existence(note that you shouldn’t set avariable to this)</p>
+  </li>
+  <li>
+    <p>null
+  lack of existence(you can set a variable to this)</p>
+  </li>
+  <li>
+    <p>boolean
+  true or false</p>
+  </li>
+  <li>
+    <p>number
+  floating point number</p>
+  </li>
+  <li>
+    <p>string
+  sequence of characters</p>
+  </li>
+  <li>
+    <p>symbol
+  new feature in ES6, 略</p>
+  </li>
+</ol>
+
+<h1 id="operators">3-21 Operators</h1>
+
+<h2 id="bigword-alert--operator"><strong>bigword alert : operator</strong></h2>
+<ul>
+  <li>a special function that is syntactically (written) differently</li>
+</ul>
+
+<figure class="code"><figcaption><span>add operator</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>recall : postfix, prefix, infix</li>
+</ul>
+
+<h1 id="operator-precedence-and-associativity">3-22 Operator precedence and associativity</h1>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Operator_Precedence">operator precedence and Associativity table</a></p>
+
+<h2 id="bigword-alert--operator-precedence"><strong>bigword alert : operator precedence</strong></h2>
+<ul>
+  <li>which operator function get called first</li>
+  <li>higer precedence wins</li>
+</ul>
+
+<h2 id="bigword-alert--associativity"><strong>bigword alert : associativity</strong></h2>
+<ul>
+  <li>when function have the same precedence, what order operator function get called in</li>
+  <li>left-to-right or right-to-left</li>
+</ul>
+
+<figure class="code"><figcaption><span>precedence and associativity</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class="line"><span class="c1">// precedence</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class="line"><span class="nx">a</span> <span class="o">=</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">c</span><span class="p">;</span>
+</span><span class="line"><span class="c1">// associativity</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="coercion">3-24 Coercion</h1>
+
+<h2 id="bigword-alert--coercion"><strong>bigword alert : Coercion</strong></h2>
+<ul>
+  <li>converting a value from one type to another</li>
+</ul>
+
+<figure class="code"><figcaption><span>Coercion</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/* bunch of codes */</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="comparison-operator">3-25 Comparison operator</h1>
+
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Equality_comparisons_and_sameness">Comparsion result table</a></p>
+
+<ul>
+  <li>Recalls : associativity, operator, coercion</li>
+</ul>
+
+<figure class="code"><figcaption><span>try it out</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">3</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">3 &lt; 2 &lt; 1 //associativity</span>
+</span><span class="line"><span class="cm">false &lt; 1 //coercion</span>
+</span><span class="line"><span class="cm">0 &lt; 1 //operator</span>
+</span><span class="line"><span class="cm">true</span>
+</span><span class="line">
+</span><span class="line"><span class="cm"> */</span>
+</span><span class="line">
+</span><span class="line"><span class="nb">Number</span><span class="p">(</span><span class="kc">undefined</span><span class="p">)</span> <span class="c1">// NaN</span>
+</span><span class="line"><span class="nb">Number</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span> <span class="c1">// 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>weird equal operator</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="s1">&#39;3&#39;</span> <span class="o">==</span> <span class="mi">3</span> <span class="c1">//true</span>
+</span><span class="line"><span class="kc">false</span> <span class="o">==</span> <span class="mi">0</span> <span class="c1">//true</span>
+</span><span class="line"><span class="kc">null</span> <span class="o">==</span> <span class="mi">0</span> <span class="c1">//false, what!?</span>
+</span><span class="line"><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="mi">0</span> <span class="c1">//true</span>
+</span><span class="line"><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="kc">false</span> <span class="c1">//true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>In javascript, == will do coercion</li>
+  <li>Strict equality (===) is going to save your life !!</li>
+  <li>99% of the time, use ===</li>
+</ul>
+
+<h1 id="existence-adn-booleans">3-27 Existence adn Booleans</h1>
+
+<figure class="code"><figcaption><span>how coercion could be useful</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nb">Boolean</span><span class="p">(</span><span class="kc">undefined</span><span class="p">);</span> <span class="c1">//false</span>
+</span><span class="line"><span class="nb">Boolean</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span> <span class="c1">//false</span>
+</span><span class="line"><span class="nb">Boolean</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span> <span class="c1">//false</span>
+</span><span class="line"><span class="nb">Boolean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">//false</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">a</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*goes internet and looks for a value*/</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// a is coercion to boolean</span>
+</span><span class="line"><span class="c1">// if a could be 0, addtional comparsion is need</span>
+</span><span class="line"><span class="k">if</span> <span class="p">(</span><span class="nx">a</span> <span class="o">||</span> <span class="nx">a</span> <span class="o">===</span> <span class="mi">0</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Something is there.&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-18 What about asynchronous callback?]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/04/jsuwp-2-18/"/>
+    <updated>2017-02-04T00:51:44+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/04/jsuwp-2-18</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="what-about-asynchronous-callback">2-18 What about asynchronous callback?</h1>
+
+<h2 id="bigword-alert--asynchronous">bigword alert : asynchronous</h2>
+<ul>
+  <li>more than one at a time</li>
+</ul>
+
+<p><img src="https://king4sam.github.io/images/studynotes/asynchronous.png" /></p>
+
+<ul>
+  <li>asking other elements -&gt; asynchronous</li>
+  <li>inside js -&gt; synchronous</li>
+</ul>
+
+<h2 id="example--event-queue">Example : Event Queue</h2>
+<ul>
+  <li>js engine looks at the queue periodically only when stack is empty</li>
+  <li>browser puts the event asynchronously</li>
+  <li>js run the event handler line by line</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// long running function</span>
+</span><span class="line"><span class="kd">function</span> <span class="nx">waitThreeSeconds</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">ms</span> <span class="o">=</span> <span class="mi">3000</span> <span class="o">+</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class="line">    <span class="k">while</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nx">ms</span><span class="p">){}</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;finished function&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">clickHandler</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;click event!&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// listen for the click event</span>
+</span><span class="line"><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">clickHandler</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="nx">waitThreeSeconds</span><span class="p">();</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;finished execution&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-14-2-16 functions, context adn variables]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/03/jsuwp-2-14/"/>
+    <updated>2017-02-03T23:36:10+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/03/jsuwp-2-14</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="function-invocation-and-the-execution-stack">2-14 function invocation and the execution stack</h1>
+
+<h2 id="bigword-alert--invocation">bigword alert : invocation</h2>
+<ul>
+  <li>running a function</li>
+  <li>in js, using parenthesis ()</li>
+</ul>
+
+<h2 id="execution-stack">圖解 execution stack</h2>
+<p><img src="https://king4sam.github.io/images/studynotes/executionstack.png" /></p>
+
+<ul>
+  <li>
+    <p>每次function被執行，都會建立新的 execution context，即使是呼叫自己</p>
+  </li>
+  <li>
+    <p>stack 最上層的context正在被執行</p>
+  </li>
+</ul>
 
 <hr />
 
-<h2 id="install">install</h2>
+<h1 id="functions-context-adn-variables">2-15 functions, context adn variables</h1>
 
-<p>基本上沒遇到問題</p>
+<h2 id="bigword-alert--variable-environment">bigword alert : variable environment</h2>
+<ul>
+  <li>where the variables live</li>
+</ul>
 
-<p>ruby環境之前的弄好了</p>
+<h2 id="bigword-alert--scope">bigword alert : scope</h2>
+<ul>
+  <li>where a variable is available in your code</li>
+</ul>
 
-<p>只要照著<a href="http://octopress.org/docs/setup/">官網</a></p>
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">b</span><span class="p">(){</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">myvar</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myvar</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">a</span><span class="p">(){</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">myvar</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myvar</span><span class="p">);</span>
+</span><span class="line">  <span class="nx">b</span><span class="p">();</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">myvar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myvar</span><span class="p">);</span>
+</span><span class="line"><span class="nx">a</span><span class="p">();</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myvar</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">1</span>
+</span><span class="line"><span class="cm">2</span>
+</span><span class="line"><span class="cm">undefined</span>
+</span><span class="line"><span class="cm">1</span>
+</span><span class="line"><span class="cm"> */</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<pre><code>    clone git clone git://github.com/imathis/octopress.git octopress
-    cd octopress
-    bundle install
-    rake install
-</code></pre>
+<h2 id="try-to-draw-a-picture-below">try to draw a picture below</h2>
 
-<p>就完成了</p>
+<p><img src="https://king4sam.github.io/images/studynotes/myvar.png" /></p>
 
-<h2 id="post-article">post article</h2>
-<p>rake 裡有寫好一些task可以用，要po文章可以用</p>
+<hr />
 
-<pre><code>	rake new_post["title"]
-</code></pre>
+<h1 id="scope-chain">2-16 Scope Chain</h1>
 
-<p>再用markdown語法，撰寫文章內章</p>
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">b</span><span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myvar</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">a</span><span class="p">(){</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">myvar</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">b</span><span class="p">();</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">myvar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="nx">a</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">1</span>
+</span><span class="line"><span class="cm">why?</span>
+</span><span class="line"><span class="cm">*/</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<pre><code>	rake generate
-</code></pre>
+<h2 id="ans">Ans</h2>
 
-<p>會幫忙把.markdown檔編成html</p>
+<p><img src="https://king4sam.github.io/images/studynotes/outerenv.png" /></p>
 
-<p>並且放到public/blog裡</p>
+<ul>
+  <li>
+    <p>如果var 不在該execution context，js engine 會到outer environment 找</p>
+  </li>
+  <li>
+    <p>outer environment is depend on where the function sits lecically(set up in creation phase)</p>
+  </li>
+  <li>
+    <p>note : 不是到stack下一層找</p>
+  </li>
+</ul>
 
-<pre><code>	rake preview
-</code></pre>
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">a</span><span class="p">(){</span>
+</span><span class="line">  <span class="kd">function</span> <span class="nx">b</span><span class="p">(){</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myvar</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">var</span> <span class="nx">myvar</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">b</span><span class="p">();</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">myvar</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class="line"><span class="nx">a</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">2</span>
+</span><span class="line"><span class="cm">*/</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>會在localhost:4000 可以預覽</p>
+<p><img src="https://king4sam.github.io/images/studynotes/outerenv2.png" /></p>
 
-<p>之後再繼續研究有哪些方便的task可以用 😅</p>
+<hr />
 
-<p>在這邊遇到的問題的rake aborted</p>
+<h1 id="scope-es6-and-let">2-17 scope ES6 and let</h1>
 
-<pre><code>	rake aborted!
-	Gem::LoadError: You have already activated rake 11.2.2, but your Gemfile requires rake 10.5.0. Prepending `bundle exec` to your command may solve this. 因為我之前rail有裝過更新版的rake，目前似乎只能gem uninstall不符的版本，或是在指令前都加上bundle exec
-</code></pre>
+<h2 id="recall-bigword-alert-scpoe">(Recall) bigword alert :scpoe</h2>
+<ul>
+  <li>where a variable is available in your code</li>
+</ul>
 
-<p>例如</p>
+<h2 id="let">let</h2>
+<ul>
+  <li>block scoping</li>
+  <li>not allow to use the variable (access undefined) until the line ofcode is run</li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-13 single thread, synchronous execution]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/03/jsuwp-2-13/"/>
+    <updated>2017-02-03T21:52:58+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/03/jsuwp-2-13</id>
+    <content type="html"><![CDATA[<!--more-->
+<p># 2-13 Single thread, Synchronous execution</p>
 
-<pre><code>bundle exec rake preview
-</code></pre>
+<h2 id="bigword-alert--single-thread">bigword alert : single thread</h2>
+<ul>
+  <li>one command at a time</li>
+  <li>under the hood of the brower, maybe not</li>
+</ul>
 
-<h2 id="deploy-to-heroku">deploy to heroku</h2>
-<p>因為沒有放到github上，所以目前先用local git，直接push 到heroku上</p>
+<h2 id="bigwod-alert--synchronous">bigwod alert : synchronous</h2>
+<ul>
+  <li>one at a time, and in order</li>
+</ul>
 
-<p>這邊就不贅述</p>
+<h2 id="js-single-thread-synchronous">講師霸氣的說:現在先相信我，js是 single thread, synchronous</h2>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-12 code execution]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/03/jsuwp-2-12/"/>
+    <updated>2017-02-03T21:43:46+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/03/jsuwp-2-12</id>
+    <content type="html"><![CDATA[<!--more-->
 
+<h1 id="code-execution">2-12 Code execution</h1>
+
+<h2 id="recall--two-phases-to-run-a-js-code">Recall : two phases to run a js code</h2>
+<ol>
+  <li>creation phase : set up global object , setup variables, outer environments …</li>
+  <li>execution phase : execution the code “line by line”</li>
+</ol>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-11 undefined]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/03/jsuwp-2-11/"/>
+    <updated>2017-02-03T21:28:09+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/03/jsuwp-2-11</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="undefined">2-11 Undefined</h1>
+
+<h2 id="undefinedundefinedjs-engine-debug">千萬不要自己將變數的值設成undefined，以保證undefined都是js engine 所設的，方便debug</h2>
+
+<h2 id="notset--">作者覺得叫notset 比較合適 😤</h2>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">//Uncaught ReferenceError: a is not defined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>a does not exist in memory</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">//undefined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>a exists in memory, but is set to a special value - undefined</li>
+</ul>
+
+<figure class="code"><figcaption><span>testing undefined value</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">if</span> <span class="p">(</span><span class="nx">a</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;a is not defined&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="k">else</span><span class="p">{</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;a is definded&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-10 Creation and hoisting]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/02/jsuwp-2-10/"/>
+    <updated>2017-02-02T00:11:33+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/02/jsuwp-2-10</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="creation-and-hoisting">2-10 Creation and hoisting</h1>
+
+<ul>
+  <li>hoisting : before js code is run line by line, js engine set memory space for the variables</li>
+  <li>all variables is initialized to undefined in js</li>
+</ul>
+
+<p><img src="https://king4sam.github.io/images/studynotes/creationphase.png" /></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">b</span><span class="p">();</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;Bello&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="kd">function</span> <span class="nx">b</span> <span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;called b&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">called b</span>
+</span><span class="line"><span class="cm">undefined</span>
+</span><span class="line"><span class="cm"> */</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">b</span><span class="p">();</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">b</span> <span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;called b&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">called b</span>
+</span><span class="line"><span class="cm">Error!!</span>
+</span><span class="line"><span class="cm">*/</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-9 Global environment and Global object]]></title>
+    <link href="https://king4sam.github.io/blog/2017/01/20/jsuwp-2-8/"/>
+    <updated>2017-01-20T11:45:46+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/01/20/jsuwp-2-8</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="global-environment-and-global-object">2-9 Global environment and Global object</h1>
+
+<ul>
+  <li>Global objects(Ex: window, on browser) and “this” is created by javascript engine</li>
+  <li>At globle level, ‘this’ is equal to ‘window’ inside browser</li>
+  <li>the global (values and functions) are attached to global objects</li>
+</ul>
+
+<p><img src="https://king4sam.github.io/images/studynotes/Globalcontext_overview.png" /></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">b</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-7 Name/Value pairs and Objects]]></title>
+    <link href="https://king4sam.github.io/blog/2017/01/20/jsuwp-2-7/"/>
+    <updated>2017-01-20T11:39:32+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/01/20/jsuwp-2-7</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="namevalue-pairs-and-objects">2-7 Name/Value pairs and Objects</h1>
+
+<h2 id="bigword-alert--namevalue-pair">bigword alert : Name/Value pair</h2>
+<ul>
+  <li>a name which maps to an unique value</li>
+  <li>the name may be defined more than once, but only can have one value in any given context</li>
+  <li>value could be another key/value pari</li>
+</ul>
+
+<h2 id="bigword-alert--objectin-javascript">bigword alert : Object(In javascript)</h2>
+<ul>
+  <li>a collection of Name/Value pairs</li>
+</ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jsuwp-2-6 Syntax Parser, Execution Contex and Lexical Environment]]></title>
+    <link href="https://king4sam.github.io/blog/2017/01/20/jsuwp-2-6/"/>
+    <updated>2017-01-20T11:28:05+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/01/20/jsuwp-2-6</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="syntax-parser-execution-contex-and-lexical-environment">2-6 Syntax Parser, Execution Contex and Lexical Environment</h1>
+
+<h2 id="bigword-alert--syntax-parser">bigword alert : Syntax Parser</h2>
+<ul>
+  <li>A program that read your code, determines what it does, and if it’s grama valid</li>
+</ul>
+
+<h2 id="bigword-alert--lexical-environment">bigword alert : Lexical Environment</h2>
+<ul>
+  <li>where something sits physically in the code you write</li>
+  <li>where you write something is IMPORTANT</li>
+</ul>
+
+<h2 id="bigword-alert--execution-contex">bigword alert : Execution Contex</h2>
+<ul>
+  <li>a wrapper to help manage the code that is running</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JS understanding the weird parts 6-57 ~ 6-64 building objects]]></title>
+    <link href="https://king4sam.github.io/blog/2017/01/17/jsuwp-5-57/"/>
+    <updated>2017-01-17T23:35:42+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/01/17/jsuwp-5-57</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="function-creator-new-and-the-history-of-javascript">6-57 Function creator ‘new’, and the history of javascript</h1>
+
+<h2 id="history-time">history time</h2>
+
+<ul>
+  <li>javascript 之所以叫 javascript，為了吸引 Java programmer XDD</li>
+  <li>new constructor 也是從 Java 搬來的 (笑)</li>
+</ul>
+
+<h2 id="new">new</h2>
+
+<ul>
+  <li>a operator</li>
+  <li>‘new’ create a empty object</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span> <span class="nx">lastname</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="c1">//Person{}, a new empty object</span>
+</span><span class="line">  <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">=</span> <span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line">  <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">=</span> <span class="nx">lastname</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;this function is invoked&quot;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Doe&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">jane</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="s1">&#39;Doe&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jane</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<ol>
+  <li>new create a brand new empty object</li>
+  <li>the function Person() is called</li>
+  <li>this in the function is point to the new empty object</li>
+  <li>if the function doesn’t return a value, js engine return the new object</li>
+</ol>
+
+<h2 id="bigword-alert--function-constructors">bigword alert : Function Constructors</h2>
+<ul>
+  <li>A normal function that is used to construct objects.</li>
+  <li>‘this’ points to a new empty object.</li>
+  <li>the new empty object is returned from the funciton automatically.</li>
+</ul>
+
+<p>後記:
+我到現在才知道在js裡，new後面的是一個function…囧</p>
+
+<hr />
+
+<h1 id="function-constructor-and-prototype">6-58 Function constructor and ‘.prototype’</h1>
+
+<h2 id="recall">Recall</h2>
+<p><img src="https://king4sam.github.io/images/studynotes/dotprototype.jpg" /></p>
+
+<ul>
+  <li>
+    <p>.prototype (property) is used only by functions</p>
+  </li>
+  <li>
+    <p>.property is the prototype of any object created(use ‘new’)</p>
+  </li>
+  <li>
+    <p>__proto__  is in all objects(includeing functions)</p>
+  </li>
+  <li>
+    <p>__proto__ is the prototype of the the object</p>
+  </li>
+</ul>
+
+<p>.prototype 是改變所有new 出來的新object 的 prototype</p>
+
+<p>看下面例子，john.__proto__ 指向 Person.prototype</p>
+
+<ul>
+  <li>good js code sets properties inside the function constructor. But methods are set on the prototype.</li>
+</ul>
+
+<p>∵ methods(function) 也是object，放在function contstrctor，變成每個new 出來的都有一份 methods 的copy
+但它們只做一樣的事情 -&gt; 浪費記憶體</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span> <span class="nx">lastname</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">=</span> <span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">=</span> <span class="nx">lastname</span><span class="p">;</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;This function is invoked.&#39;</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getFullName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Doe&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">jane</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="s1">&#39;Doe&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jane</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getFormalFullName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">.</span><span class="nx">getFormalFullName</span><span class="p">());</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="dangerous-aside--new-and-function">6-59 Dangerous aside : new and function</h1>
+
+<ul>
+  <li>
+    <p>if we invoked a function constructor without new , the function is still run. However, the function will return undefined in default.</p>
+  </li>
+  <li>
+    <p>use capital letter for function constructor</p>
+  </li>
+</ul>
+
+<h1 id="conceuptual-aside--build-in-function-constructor">6-60 conceuptual Aside : build-in function constructor</h1>
+
+<h2 id="autobox">autobox</h2>
+
+<figure class="code"><figcaption><span>build-in function constructor</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Number</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span class="line"><span class="c1">// creating Number object, not primitive type</span>
+</span><span class="line">
+</span><span class="line"><span class="s2">&quot;John&quot;</span><span class="p">.</span><span class="nx">length</span> <span class="c1">//4</span>
+</span><span class="line"><span class="c1">// primitive has no methods</span>
+</span><span class="line"><span class="c1">//js engine autobox the primitive string into Object String</span>
+</span><span class="line">
+</span><span class="line"><span class="mi">3</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">;</span> <span class="c1">//err, js doesn&#39;t do autobox on numbers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>js easy enhance</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// add new method to origin String Object</span>
+</span><span class="line"><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">isLengthGreaterThan</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">limit</span><span class="p">){</span>
+</span><span class="line">  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">limit</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">.</span><span class="nx">isLengthGreaterThan</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span> <span class="c1">//true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="dangerous-aside-build-in-function-constructor">6-61 Dangerous Aside: build-in function constructor</h1>
+
+<ul>
+  <li>is better not to use (primitive tpye) built-in function constructors</li>
+  <li>deal with date : moment.js</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Number</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">a</span> <span class="o">==</span> <span class="nx">b</span> <span class="c1">//true</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">a</span> <span class="o">===</span> <span class="nx">b</span> <span class="c1">// false</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">);</span> <span class="c1">//convert string to primitive number</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="dangerous-aside--arrays-and-forin">6-62 Dangerous Aside : Arrays and for…in</h1>
+
+<ul>
+  <li>index(0,1,2…) is the property name</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// Array.prototype.myCustomFeature = &#39;cool!&#39;;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;John&#39;</span><span class="p">,</span><span class="s1">&#39;Jane&#39;</span><span class="p">,</span><span class="s1">&#39;Jim&#39;</span><span class="p">];</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">arr</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">prop</span> <span class="o">+</span> <span class="s1">&#39; : &#39;</span> <span class="o">+</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">prop</span><span class="p">]);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">0 : John</span>
+</span><span class="line"><span class="cm">1 : Jane</span>
+</span><span class="line"><span class="cm">2 : Jim</span>
+</span><span class="line"><span class="cm"> */</span>
+</span><span class="line">
+</span><span class="line"><span class="cm">/*</span>
+</span><span class="line"><span class="cm">0 : John</span>
+</span><span class="line"><span class="cm">1 : Jane</span>
+</span><span class="line"><span class="cm">2 : Jim</span>
+</span><span class="line"><span class="cm">myCustomFeature : cool!</span>
+</span><span class="line"><span class="cm"> */</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// use standard for loop to avoid this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="objectcreate-and-pure-prototypal-inheritance">6-63 Object.create and Pure Prototypal Inheritance</h1>
+
+<ul>
+  <li>Pure Prototypal Inheritance</li>
+  <li>Object.create create a empty object with prototype point to the argument</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">greet</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">    <span class="k">return</span> <span class="s1">&#39;Hi&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line">    <span class="c1">// this point to the object person</span>
+</span><span class="line">    <span class="c1">// if there is no this, js engine would find firstname in greet function&#39;s execution context</span>
+</span><span class="line">    <span class="c1">// then find firstname in outer environment(in this case, it&#39;s global object)</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">);</span>
+</span><span class="line"><span class="c1">// john has default name!! because of the prototype</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">john</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">=</span> <span class="s1">&#39;John&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">john</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">=</span> <span class="s1">&#39;Doe&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>if browser doesn’t support Object.create… Polyfill!!</p>
+
+<h2 id="bigword-alert--polyfill">bigword alert : Polyfill</h2>
+<ul>
+  <li>code that adds a feature the engine may lack</li>
+</ul>
+
+<figure class="code"><figcaption><span>object.create polyfill</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">//if object.create not exist, undefined</span>
+</span><span class="line"><span class="c1">// undefined is coerced to boolean</span>
+</span><span class="line"><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Object.create implementation&#39;</span>
+</span><span class="line">      <span class="o">+</span> <span class="s1">&#39; only accepts the first parameter.&#39;</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="kd">function</span> <span class="nx">F</span><span class="p">()</span> <span class="p">{}</span>
+</span><span class="line">    <span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">o</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+</span><span class="line">  <span class="p">};</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">firstname</span><span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">lastname</span><span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">greet</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="k">return</span> <span class="s1">&#39;Hi &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+</span><span class="line"><span class="nx">john</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">=</span> <span class="s1">&#39;John&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">john</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">=</span> <span class="s1">&#39;Doe&#39;</span><span class="p">;</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="es6-and-classes">6-64 ES6 and Classes</h1>
+
+<ul>
+  <li>ES6 has new keywords : class</li>
+  <li>但作者認為這只是個syntatic sugur, 本質上還是 prototypal inheritance</li>
+  <li>仍然建議使用prototypal inheritance 的方式</li>
+</ul>
+
+<figure class="code"><figcaption><span>ES6 class</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// note that this is a Object, a created object</span>
+</span><span class="line"><span class="c1">// it exist in memory already</span>
+</span><span class="line"><span class="kr">class</span> <span class="nx">Person</span><span class="p">{</span>
+</span><span class="line">  <span class="nx">constructor</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span> <span class="nx">lastname</span><span class="p">){</span>
+</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">=</span> <span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">=</span> <span class="nx">lastname</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="nx">greet</span><span class="p">(){</span>
+</span><span class="line">  <span class="k">return</span> <span class="s1">&#39;Hi &#39;</span> <span class="o">+</span> <span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"> <span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Doe&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JS understanding the weird parts 5-53 ~ 5-56 Object-oriented javascript and prototypal inheritance]]></title>
+    <link href="https://king4sam.github.io/blog/2017/01/15/jsuwp-5-53/"/>
+    <updated>2017-01-15T23:01:35+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/01/15/jsuwp-5-53</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="classical-vs-prototypal-ingeritance">5-53 Classical vs prototypal ingeritance</h1>
+
+<h2 id="bigword-alert--inheritance">bigword alert : Inheritance</h2>
+<ul>
+  <li>one object gets access to the properties and methods of another object</li>
+</ul>
+
+<hr />
+
+<h1 id="understanding-prototype">5-54 Understanding Prototype</h1>
+
+<ul>
+  <li>every object in js has a property called proto</li>
+  <li>proto is a object too.</li>
+  <li>js engine do the search in prototype chain for the properties and methods</li>
+  <li>this in __proto__ point to the origin object, not the __proto__ object</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">getFullName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">jane</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Jane&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// don&#39;t do this EVER! for demo purposes only!!</span>
+</span><span class="line"><span class="c1">// performance issue</span>
+</span><span class="line"><span class="nx">john</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
+</span><span class="line"><span class="nx">jane</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">.</span><span class="nx">getFullName</span><span class="p">());</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">.</span><span class="nx">firstname</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jane</span><span class="p">.</span><span class="nx">getFullName</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="every-things-is-an-objector-a-primitive">5-55 Every things is an object(or a primitive)</h1>
+
+<ul>
+  <li>all thing has __proto__, except basic object</li>
+  <li>Object is the bottom of prototype chain</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">a</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">//object{}</span>
+</span><span class="line"><span class="nx">b</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">//Empty(){}</span>
+</span><span class="line"><span class="nx">c</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">//[]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="reflection-and-extend">5-56 Reflection and Extend</h1>
+
+<h2 id="bigword-alert--reflection">bigword alert : Reflection</h2>
+<ul>
+  <li>an object can look at itself, listing and changing its properties and methods.</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">getFullName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// don&#39;t do this EVER! for demo purposes only!!</span>
+</span><span class="line"><span class="nx">john</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">john</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">prop</span> <span class="o">+</span> <span class="s1">&#39; : &#39;</span> <span class="o">+</span> <span class="nx">john</span><span class="p">[</span><span class="nx">prop</span><span class="p">]);</span><span class="c1">//show all properties including proto&#39;s</span>
+</span><span class="line">  <span class="c1">//use object.hasOwnProperty to check</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>underscore extend</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// require underscore</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">jane</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">address</span> <span class="o">:</span> <span class="s1">&#39;111 Main St.&#39;</span><span class="p">;</span>
+</span><span class="line">  <span class="nx">getformalFullName</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">jim</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">getFirstName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">    <span class="k">return</span> <span class="nx">firstname</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">john</span><span class="p">,</span> <span class="nx">jane</span><span class="p">,</span> <span class="nx">jim</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>source code of _</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line">  <span class="c1">// Extend a given object with all the properties in passed-in object(s).</span>
+</span><span class="line">  <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="nx">createAssigner</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">allKeys</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// An internal function for creating assigner functions.</span>
+</span><span class="line">  <span class="kd">var</span> <span class="nx">createAssigner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">keysFunc</span><span class="p">,</span> <span class="nx">undefinedOnly</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">      <span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+</span><span class="line">      <span class="k">if</span> <span class="p">(</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">||</span> <span class="nx">obj</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+</span><span class="line">      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">index</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">        <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">index</span><span class="p">],</span>
+</span><span class="line">            <span class="nx">keys</span> <span class="o">=</span> <span class="nx">keysFunc</span><span class="p">(</span><span class="nx">source</span><span class="p">),</span>
+</span><span class="line">            <span class="nx">l</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+</span><span class="line">        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">          <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+</span><span class="line">          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">undefinedOnly</span> <span class="o">||</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">===</span> <span class="k">void</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">source</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">      <span class="p">}</span>
+</span><span class="line">      <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+</span><span class="line">    <span class="p">};</span>
+</span><span class="line">  <span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
 ]]></content>
   </entry>
   

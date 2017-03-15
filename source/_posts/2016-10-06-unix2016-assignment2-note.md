@@ -17,6 +17,8 @@ In this assignment, you will need to write your own dup2 function that behaves t
 - Your dup2 should handle invalid file descriptors (please check out the valid range of file descriptors online) and others error status.
 - Note that you can not use dup2, fcntl functions in your implementation.
 
+---
+
 # Implementation
 1. KEYIDEA creates a copy of the file descriptor oldfd, using the lowest-numbered unused descriptor for the new descriptor.
 所以我們重複呼叫dup，直到用到目標fd，再將之前多複製的fd關掉，就可以實作出dup2的功能

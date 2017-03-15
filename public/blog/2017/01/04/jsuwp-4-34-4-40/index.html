@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>JS understanding the weird parts 4-34 ~ 4-40 function - Necisam's blog</title>
+  <meta name="author" content="Necisam">
+
+  
+  <meta name="description" content="4-34 Functions are Objects bigword alert : FIRST CLASS FUNCTIONS every things you can do with other types you can do with functions. assignthem to &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="https://king4sam.github.io/blog/2017/01/04/jsuwp-4-34-4-40/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Necisam's blog" type="application/atom+xml">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:200,300,400,500,600,700,900' rel='stylesheet' type='text/css'>
+
+
+	<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$$','$$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'ENV["GAnumber"]']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+  <style>html{background: url(/images/background.png) no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;}</style>
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+</hgroup>
+
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">JS Understanding the Weird Parts 4-34 ~ 4-40 Function</h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-04T15:20:42+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>3:20 pm</span></time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><!--more-->
+
+<h1 id="functions-are-objects">4-34 Functions are Objects</h1>
+
+<h2 id="bigword-alert--first-class-functions"><strong>bigword alert : FIRST CLASS FUNCTIONS</strong></h2>
+<ul>
+  <li>every things you can do with other types you can do with functions.</li>
+  <li>assignthem to variables, pass them around, create them on the fly.</li>
+  <li>js is not the only language that has first class function</li>
+</ul>
+
+<hr />
+
+<p>function has more properties than object</p>
+
+<ul>
+  <li>Name(optional)</li>
+  <li>Code</li>
+  <li>use () to invoke a function</li>
+</ul>
+
+<p><img src="/images/studynotes/functions.png" /></p>
+
+<figure class="code"><figcaption><span>Functions are Objects</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">//declare a function</span>
+</span><span class="line"><span class="kd">function</span> <span class="nx">greet</span><span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">greet</span><span class="p">.</span><span class="nx">languague</span> <span class="o">=</span> <span class="s2">&quot;English&quot;</span><span class="p">;</span> <span class="c1">//add property to function!!!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="function-statements-and-function-expressions">4-35 Function statements and function Expressions</h1>
+
+<h2 id="bigword-alert--expression"><strong>bigword alert : Expression</strong></h2>
+<ul>
+  <li>a unit of code that results in a value</li>
+  <li>statement just do the work</li>
+</ul>
+
+<figure class="code"><figcaption><span>function express vs statement</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">greet</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">//function statement</span>
+</span><span class="line"><span class="kd">function</span> <span class="nx">greet</span><span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">//function express, return a object to var</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">anonymousGreet</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">anonymousGreet</span><span class="p">();</span> <span class="c1">//use () to invoke a function</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>function hoisting</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">anonymousGreet</span><span class="p">();</span> <span class="c1">//error : anonymousGreet is undefined this line</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">anonymousGreet</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){</span> <span class="c1">//anonymousGreet is set to a function</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>pass function as parameter</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">log</span><span class="p">(</span><span class="kd">function</span> <span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="by-value-and-by-reference">4-36 By value and By reference</h1>
+
+<ul>
+  <li>In js, primitives are by value</li>
+  <li>In js, objects(includes functions) are by reference</li>
+  <li>沒有選擇餘地，就是這樣</li>
+</ul>
+
+<h2 id="by-value">by value</h2>
+<p><img src="/images/studynotes/byvalue.png" /></p>
+
+<h2 id="by-reference">by reference</h2>
+<p><img src="/images/studynotes/byreference.png" /></p>
+
+<h2 id="bigword-alert--mutate">bigword alert : Mutate</h2>
+<ul>
+  <li>to change sth</li>
+  <li>Immutable means it can’t be changed</li>
+</ul>
+
+<figure class="code"><figcaption><span>by value/reference</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// by value (primitives)</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">b</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+</span><span class="line"><span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// by reference (all objects (including functions))</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">greeting</span><span class="o">:</span> <span class="s1">&#39;hi&#39;</span> <span class="p">};</span>
+</span><span class="line"><span class="kd">var</span> <span class="nx">d</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">d</span> <span class="o">=</span> <span class="nx">c</span><span class="p">;</span>
+</span><span class="line"><span class="nx">c</span><span class="p">.</span><span class="nx">greeting</span> <span class="o">=</span> <span class="s1">&#39;hello&#39;</span><span class="p">;</span> <span class="c1">// mutate</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// by reference (even as parameters)</span>
+</span><span class="line"><span class="kd">function</span> <span class="nx">changeGreeting</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">obj</span><span class="p">.</span><span class="nx">greeting</span> <span class="o">=</span> <span class="s1">&#39;Hola&#39;</span><span class="p">;</span> <span class="c1">// mutate</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">changeGreeting</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="c1">// equals operator sets up new memory space (new address)</span>
+</span><span class="line"><span class="nx">c</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">greeting</span><span class="o">:</span> <span class="s1">&#39;howdy&#39;</span> <span class="p">};</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="object-functionsand-this">4-37 Object, functions,and this</h1>
+
+<ul>
+  <li>‘this’ is depending on how the funciton is called</li>
+</ul>
+
+<ol>
+  <li>In the global execution context -&gt; global object</li>
+  <li>In function context, simple call (ex : f1() ) -&gt; global object</li>
+  <li>As an object method -&gt; the object</li>
+</ol>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this">whole document</a></p>
+
+<figure class="code"><figcaption><span>what is this</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="c1">// window</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">a</span> <span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">a</span><span class="p">()</span><span class="c1">// window</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">b</span><span class="p">()</span><span class="c1">//window</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">name</span><span class="o">:</span><span class="s2">&quot;the c object&quot;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">log</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;updated c object&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="c1">//c object</span>
+</span><span class="line">
+</span><span class="line">    <span class="kd">var</span> <span class="nx">setname</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newname</span><span class="p">){</span>
+</span><span class="line">      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">newname</span><span class="p">;</span><span class="c1">// the global object ,windows!!!</span>
+</span><span class="line">      <span class="c1">// a lot of people think it&#39;s wrong</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="nx">setname</span><span class="p">(</span><span class="s1">&#39;updated again!!&#39;</span><span class="p">);</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">//c object with name : &quot;updated c object&quot;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">c</span><span class="p">.</span><span class="nx">log</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>tips avoiding weird this</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">name</span><span class="o">:</span><span class="s2">&quot;the c object&quot;</span><span class="p">,</span>
+</span><span class="line">  <span class="nx">log</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span> <span class="c1">//save this(c object) address in var self</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">self</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;updated c object&quot;</span><span class="p">;</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">self</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="kd">var</span> <span class="nx">setname</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newname</span><span class="p">){</span>
+</span><span class="line">      <span class="nx">self</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">newname</span><span class="p">;</span><span class="c1">// self point to the c objects</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line">    <span class="nx">setname</span><span class="p">(</span><span class="s1">&#39;updated again!!&#39;</span><span class="p">);</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">self</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">c</span><span class="p">.</span><span class="nx">log</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="array-collection-of-anything">4-38 Array-collection of anything</h1>
+
+<ul>
+  <li>In javascript, array is typeless. You can put anything into it(Even a function = special object).</li>
+</ul>
+
+<figure class="code"><figcaption><span>array contains everything</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class="line">  <span class="mi">1</span><span class="p">,</span>
+</span><span class="line">  <span class="kc">true</span><span class="p">,</span>
+</span><span class="line">  <span class="p">{</span>
+</span><span class="line">    <span class="nx">name</span><span class="o">:</span><span class="s1">&#39;sam&#39;</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">phone</span><span class="o">:</span><span class="s1">&#39;0911111111&#39;</span>
+</span><span class="line">  <span class="p">},</span>
+</span><span class="line">  <span class="kd">function</span> <span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="s1">&#39;Hello &#39;</span><span class="p">;</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greeting</span> <span class="o">+</span> <span class="nx">name</span><span class="p">);</span>
+</span><span class="line">  <span class="p">},</span>
+</span><span class="line">  <span class="s2">&quot;bello&quot;</span>
+</span><span class="line"><span class="p">]</span>
+</span><span class="line"><span class="nx">arr</span><span class="p">[</span><span class="mi">3</span><span class="p">](</span><span class="nx">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// &quot;Hello sam&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="arguments-and-spreads">4-39 arguments and spreads</h1>
+<ul>
+  <li>arguments keyword contains all the function arguments</li>
+  <li>arguments is array-like, not exactly regular array</li>
+  <li>arguments will become deprecated</li>
+  <li>spread parameter(…) //資料查到是叫<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters">Rest parameters</a></li>
+</ul>
+
+<figure class="code"><figcaption><span>use arguments</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">greet</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span><span class="nx">lastname</span><span class="p">,</span><span class="nx">language</span><span class="p">){</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">firstname</span><span class="p">);</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">lastname</span><span class="p">);</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">language</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">greet</span><span class="p">()</span> <span class="c1">// undefined undefined undefined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>spreadparams</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">greet</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span><span class="nx">lastname</span><span class="p">,</span><span class="nx">language</span><span class="p">,</span> <span class="p">...</span><span class="nx">other</span><span class="p">){</span>
+</span><span class="line">  <span class="c1">// additional params are put into an array called other</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="function-overloading">4-40 function overloading</h1>
+<ul>
+  <li>js don’t have function overloading</li>
+  <li>In js, funtion is an object</li>
+  <li>In js, there are firstclass function</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">greet</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span> <span class="nx">lastname</span><span class="p">,</span> <span class="nx">language</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">language</span> <span class="o">=</span> <span class="nx">language</span> <span class="o">||</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nx">language</span> <span class="o">===</span> <span class="s1">&#39;en&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hello &#39;</span> <span class="o">+</span> <span class="nx">firstname</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">lastname</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="nx">language</span> <span class="o">===</span> <span class="s1">&#39;es&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hola &#39;</span> <span class="o">+</span> <span class="nx">firstname</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">lastname</span><span class="p">);</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kd">function</span> <span class="nx">greetEnglish</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span> <span class="nx">lastname</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">greet</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span> <span class="nx">lastname</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="kd">function</span> <span class="nx">greetSpanish</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span> <span class="nx">lastname</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">greet</span><span class="p">(</span><span class="nx">firstname</span><span class="p">,</span> <span class="nx">lastname</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line"><span class="nx">greetEnglish</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Doe&#39;</span><span class="p">);</span>
+</span><span class="line"><span class="nx">greetSpanish</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Doe&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Necisam</span></span>
+
+      <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-01-04T15:20:42+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>3:20 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/studynote/'>studynote</a>, <a class='category' href='/blog/categories/udemy/'>udemy</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://king4sam.github.io/blog/2017/01/04/jsuwp-4-34-4-40/" data-via="" data-counturl="https://king4sam.github.io/blog/2017/01/04/jsuwp-4-34-4-40/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/12/22/unix2016-assignment7-note/" title="Previous Post: unix2016 assignment7 note">&laquo; unix2016 assignment7 note</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2017/01/05/jsuwp-4-41-4-42/" title="Next Post: JS understanding the weird parts 4-41 ~ 4-42 ASI">JS understanding the weird parts 4-41 ~ 4-42 ASI &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Pleassssssssse enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <ul id="nav_iconssss">
+      <li class="post">
+      <a href="/index.html" alt="Home"><img src="/images/Home.png"></a>
+      <a href="/archives/" alt="Archives"><img src="/images/Calendar.png"></a>
+      <a href="mailto:king4sam990816@gmail.com" alt="E-Mail"><img src="/images/Envelope.png"></a>
+      <a href="/about-me" alt="About me"><img src="/images/aboutme.png"></a>
+      </li>
+  </ul>
+</section>
+<section id="titles">
+  <h1 id="site_title"><a href="/index.html" title="Necisam's blog">Necisam's blog</a></h1>
+  <h3 id="site_subtitle">Ruby starter</h3>
+  <a href="/index.html" title="Necisam's blog"><img id="logo" src="https://lh3.googleusercontent.com/xixvv7cLV6yvbhxGP9ao-ont1jXmMcW2tHjAfPi151ubK3DPrFjTGo7PTTERIrqoV14Q2DepLeo3=w519-h778-no" /></a>
+</section>
+
+<section id="social">
+  
+
+  
+
+  
+
+  
+    <a href="https://github.com/king4sam" title="king4sam"><i class="fa fa-github fa-2x"></i></a>
+  
+
+  
+
+  
+</section>
+
+
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">jsuwp-9-73 ~ 9-80 Let's build a Framework/library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">jsuwp-8-69 ~ 8-72 Deep dive into jQuery</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/20/jsuwp-7-65-odds-and-ends/">jsuwp-7-65 ~ 7-68 Odds and Ends</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/12/jsuwp-4-34-functions-are-objects/">jsuwp-4-34 functions are objects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/">jsuwp-4-33 Json and object literal</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/king4sam">@king4sam</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'king4sam',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Necisam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'necisam';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://king4sam.github.io/blog/2017/01/04/jsuwp-4-34-4-40/';
+        var disqus_url = 'https://king4sam.github.io/blog/2017/01/04/jsuwp-4-34-4-40/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
