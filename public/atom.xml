@@ -4,7 +4,7 @@
   <title><![CDATA[Necisam's blog]]></title>
   <link href="https://king4sam.github.io/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-15T22:52:58+08:00</updated>
+  <updated>2017-03-20T21:57:50+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -12,6 +12,184 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Gitimmersion Notes]]></title>
+    <link href="https://king4sam.github.io/blog/2017/03/20/gitimmersion/"/>
+    <updated>2017-03-20T14:34:51+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/03/20/gitimmersion</id>
+    <content type="html"><![CDATA[<p>之前用git時有些指令常常忘記，還來跳出去查一下
+趁這次SS的機會，把常忘記的做個筆記</p>
+
+<!--more-->
+
+<hr />
+
+<h1 id="git-command-alias">git command alias</h1>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">vim ~/.gitconfig
+</span><span class="line">/
+</span><span class="line">[alias]
+</span><span class="line">  co = checkout
+</span><span class="line">  ci = commit
+</span><span class="line">  st = status
+</span><span class="line">  br = branch
+</span><span class="line">  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+</span><span class="line">  type = cat-file -t
+</span><span class="line">  dump = cat-file -p
+</span><span class="line"> */</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="some-useful-pretty-log-config">some useful pretty log config</h1>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git log --pretty=oneline --max-count=2
+</span><span class="line">git log --pretty=oneline --since='5 minutes ago'
+</span><span class="line">git log --pretty=oneline --until='5 minutes ago'
+</span><span class="line">git log --pretty=oneline --author=&lt;your name&gt;
+</span><span class="line">git log --pretty=oneline --all
+</span><span class="line">git log --all --pretty=format:'%h %cd %s (%an)' --since='7 days ago'
+</span><span class="line">git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="tag">tag</h1>
+
+<p>git tag -d <tag></tag></p>
+
+<h1 id="recover-modified-files">recover modified files</h1>
+
+<ul>
+  <li>before staging</li>
+</ul>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">checkout &lt;file&gt;</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>before commit</li>
+</ul>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git reset HEAD file //unstage the change.
+</span><span class="line">git checkout file //</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>after commit</li>
+</ul>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">- git revert HEAD // creating a new commit that reverses the unwanted changes.
+</span><span class="line">- git reset --hard &lt;hash&gt;</span></code></pre></td></tr></table></div></figure>
+
+<figure class="code"><figcaption><span>quick fix on last commit</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git commit --amend</span></code></pre></td></tr></table></div></figure>
+
+<p>They(bad commits) are still in the repository. It’s just that they are no longer listed in the master branch. If we hadn’t tagged them, they would still be in the repository, but there would be no way to reference them other than using their hash names.</p>
+
+<ul>
+  <li>after push</li>
+</ul>
+
+<p><strong>DON’T DO IT</strong></p>
+
+<h1 id="moverm-file">move/rm file</h1>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git mv file dir
+</span><span class="line">/* equals
+</span><span class="line">mv &lt;file&gt; &lt;dir&gt;
+</span><span class="line">git add &lt;dir&gt; &lt;file&gt;
+</span><span class="line">git rm &lt;file&gt;
+</span><span class="line">*/</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="explore-git-internal">Explore git internal</h1>
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">// in .git
+</span><span class="line">git cat-file -t &lt;hash&gt;</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="merge-vs-rebase">merge vs rebase</h1>
+<p>Don’t use rebase …</p>
+
+<ul>
+  <li>If the branch is public and shared with others. Rewriting publicly shared branches will tend to screw up other members of the team.</li>
+  <li>When the exact history of the commit branch is important (since rebase rewrites the commit history).</li>
+</ul>
+
+<h1 id="branch">branch</h1>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">// show all branch
+</span><span class="line">git branch -a</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="add-a-local-branch-that-tracks-a-remote-branch">Add a local branch that tracks a remote branch.</h1>
+
+<ul>
+  <li>跟蹤分支是一種和某個遠端分支有直接聯繫的本地分支。</li>
+  <li>在跟蹤分支裡輸入 git push，Git 會自行推斷應該向哪個伺服器的哪個分支推送資料。</li>
+  <li>同樣，在這些分支裡運行 git pull 會獲取所有遠端索引，並把它們的資料都合併到本地分支中來</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git branch --track greet origin/greet</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="create-a-bare-repository">Create a bare repository.</h1>
+<ul>
+  <li>a git repo withoud working directory</li>
+  <li>It is usually used for sharing.</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">cd ..
+</span><span class="line">git clone --bare hello hello.git
+</span><span class="line">ls hello.git</span></code></pre></td></tr></table></div></figure>
+
+<h1 id="keeping-a-forked-repo-updated">Keeping a forked repo updated</h1>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">//add remote repo
+</span><span class="line">git remote add upstream &lt;gitrepo&gt;
+</span><span class="line">
+</span><span class="line">// at master branch
+</span><span class="line">git checkout master
+</span><span class="line">git fetch upstream
+</span><span class="line">git rebase upstream/master
+</span></code></pre></td></tr></table></div></figure>
+
+<p><a href="http://gitimmersion.com">Refernce</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[jsuwp-9-73 ~ 9-80 Let's build a Framework/library]]></title>
@@ -29,6 +207,8 @@
   <li>just G$() to call (no ‘new’)</li>
   <li>support jQuery(give selector, add greeting sentence to the selected element)</li>
 </ul>
+
+<!--more-->
 
 <figure class="code"><figcaption><span>Greeter.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -2244,247 +2424,6 @@
 </span><span class="line"><span class="p">}</span>
 </span><span class="line">
 </span><span class="line"> <span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Doe&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JS understanding the weird parts 5-53 ~ 5-56 Object-oriented javascript and prototypal inheritance]]></title>
-    <link href="https://king4sam.github.io/blog/2017/01/15/jsuwp-5-53/"/>
-    <updated>2017-01-15T23:01:35+08:00</updated>
-    <id>https://king4sam.github.io/blog/2017/01/15/jsuwp-5-53</id>
-    <content type="html"><![CDATA[<!--more-->
-
-<h1 id="classical-vs-prototypal-ingeritance">5-53 Classical vs prototypal ingeritance</h1>
-
-<h2 id="bigword-alert--inheritance">bigword alert : Inheritance</h2>
-<ul>
-  <li>one object gets access to the properties and methods of another object</li>
-</ul>
-
-<hr />
-
-<h1 id="understanding-prototype">5-54 Understanding Prototype</h1>
-
-<ul>
-  <li>every object in js has a property called proto</li>
-  <li>proto is a object too.</li>
-  <li>js engine do the search in prototype chain for the properties and methods</li>
-  <li>this in __proto__ point to the origin object, not the __proto__ object</li>
-</ul>
-
-<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">getFullName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">jane</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Jane&#39;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// don&#39;t do this EVER! for demo purposes only!!</span>
-</span><span class="line"><span class="c1">// performance issue</span>
-</span><span class="line"><span class="nx">john</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
-</span><span class="line"><span class="nx">jane</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">.</span><span class="nx">getFullName</span><span class="p">());</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">.</span><span class="nx">firstname</span><span class="p">);</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">jane</span><span class="p">.</span><span class="nx">getFullName</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<hr />
-
-<h1 id="every-things-is-an-objector-a-primitive">5-55 Every things is an object(or a primitive)</h1>
-
-<ul>
-  <li>all thing has __proto__, except basic object</li>
-  <li>Object is the bottom of prototype chain</li>
-</ul>
-
-<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">a</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">//object{}</span>
-</span><span class="line"><span class="nx">b</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">//Empty(){}</span>
-</span><span class="line"><span class="nx">c</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">//[]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<hr />
-
-<h1 id="reflection-and-extend">5-56 Reflection and Extend</h1>
-
-<h2 id="bigword-alert--reflection">bigword alert : Reflection</h2>
-<ul>
-  <li>an object can look at itself, listing and changing its properties and methods.</li>
-</ul>
-
-<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Default&#39;</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">getFullName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// don&#39;t do this EVER! for demo purposes only!!</span>
-</span><span class="line"><span class="nx">john</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">john</span><span class="p">){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">prop</span> <span class="o">+</span> <span class="s1">&#39; : &#39;</span> <span class="o">+</span> <span class="nx">john</span><span class="p">[</span><span class="nx">prop</span><span class="p">]);</span><span class="c1">//show all properties including proto&#39;s</span>
-</span><span class="line">  <span class="c1">//use object.hasOwnProperty to check</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<figure class="code"><figcaption><span>underscore extend</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// require underscore</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">john</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">firstname</span> <span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
-</span><span class="line">  <span class="nx">lastname</span> <span class="o">:</span> <span class="s1">&#39;Doe&#39;</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">jane</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">address</span> <span class="o">:</span> <span class="s1">&#39;111 Main St.&#39;</span><span class="p">;</span>
-</span><span class="line">  <span class="nx">getformalFullName</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastname</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstname</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">jim</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">  <span class="nx">getFirstName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">    <span class="k">return</span> <span class="nx">firstname</span><span class="p">;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">john</span><span class="p">,</span> <span class="nx">jane</span><span class="p">,</span> <span class="nx">jim</span><span class="p">);</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">john</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<figure class="code"><figcaption><span>source code of _</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line">  <span class="c1">// Extend a given object with all the properties in passed-in object(s).</span>
-</span><span class="line">  <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="nx">createAssigner</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">allKeys</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">  <span class="c1">// An internal function for creating assigner functions.</span>
-</span><span class="line">  <span class="kd">var</span> <span class="nx">createAssigner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">keysFunc</span><span class="p">,</span> <span class="nx">undefinedOnly</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">      <span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-</span><span class="line">      <span class="k">if</span> <span class="p">(</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">||</span> <span class="nx">obj</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
-</span><span class="line">      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">index</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">index</span><span class="p">],</span>
-</span><span class="line">            <span class="nx">keys</span> <span class="o">=</span> <span class="nx">keysFunc</span><span class="p">(</span><span class="nx">source</span><span class="p">),</span>
-</span><span class="line">            <span class="nx">l</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-</span><span class="line">        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">          <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-</span><span class="line">          <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">undefinedOnly</span> <span class="o">||</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">===</span> <span class="k">void</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">source</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">      <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
-</span><span class="line">    <span class="p">};</span>
-</span><span class="line">  <span class="p">};</span>
 </span></code></pre></td></tr></table></div></figure>
 ]]></content>
   </entry>

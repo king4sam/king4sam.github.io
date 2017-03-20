@@ -9,7 +9,8 @@
   <meta name="author" content="Necisam">
 
   
-  <meta name="description" content="9-73 Requirements Greeter input : firstname lastname and optional language output : formal and informal greeting sentence language support English &hellip;">
+  <meta name="description" content="之前用git時有些指令常常忘記，還來跳出去查一下
+趁這次SS的機會，把常忘記的做個筆記 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,6 +100,56 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2017/03/20/gitimmersion/">Gitimmersion Notes</a></h1>
+    
+    
+      <p class="meta">
+        <!-- 
+
+
+
+
+
+
+<p>hahah</p>
+
+  
+
+<p>hahah</p>
+ -->
+
+
+
+
+
+<time class='entry-date' datetime='2017-03-20T14:34:51+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>2:34 pm</span></time>
+        
+         | <a href="/blog/2017/03/20/gitimmersion/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>之前用git時有些指令常常忘記，還來跳出去查一下
+趁這次SS的機會，把常忘記的做個筆記</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/03/20/gitimmersion/">繼續閱讀 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">Jsuwp-9-73 ~ 9-80 Let's Build a Framework/library</a></h1>
     
     
@@ -142,249 +193,12 @@
   <li>support jQuery(give selector, add greeting sentence to the selected element)</li>
 </ul>
 
-<figure class="code"><figcaption><span>Greeter.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-<span class="line-number">40</span>
-<span class="line-number">41</span>
-<span class="line-number">42</span>
-<span class="line-number">43</span>
-<span class="line-number">44</span>
-<span class="line-number">45</span>
-<span class="line-number">46</span>
-<span class="line-number">47</span>
-<span class="line-number">48</span>
-<span class="line-number">49</span>
-<span class="line-number">50</span>
-<span class="line-number">51</span>
-<span class="line-number">52</span>
-<span class="line-number">53</span>
-<span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-<span class="line-number">68</span>
-<span class="line-number">69</span>
-<span class="line-number">70</span>
-<span class="line-number">71</span>
-<span class="line-number">72</span>
-<span class="line-number">73</span>
-<span class="line-number">74</span>
-<span class="line-number">75</span>
-<span class="line-number">76</span>
-<span class="line-number">77</span>
-<span class="line-number">78</span>
-<span class="line-number">79</span>
-<span class="line-number">80</span>
-<span class="line-number">81</span>
-<span class="line-number">82</span>
-<span class="line-number">83</span>
-<span class="line-number">84</span>
-<span class="line-number">85</span>
-<span class="line-number">86</span>
-<span class="line-number">87</span>
-<span class="line-number">88</span>
-<span class="line-number">89</span>
-<span class="line-number">90</span>
-<span class="line-number">91</span>
-<span class="line-number">92</span>
-<span class="line-number">93</span>
-<span class="line-number">94</span>
-<span class="line-number">95</span>
-<span class="line-number">96</span>
-<span class="line-number">97</span>
-<span class="line-number">98</span>
-<span class="line-number">99</span>
-<span class="line-number">100</span>
-<span class="line-number">101</span>
-<span class="line-number">102</span>
-<span class="line-number">103</span>
-<span class="line-number">104</span>
-<span class="line-number">105</span>
-<span class="line-number">106</span>
-<span class="line-number">107</span>
-<span class="line-number">108</span>
-<span class="line-number">109</span>
-<span class="line-number">110</span>
-<span class="line-number">111</span>
-<span class="line-number">112</span>
-<span class="line-number">113</span>
-<span class="line-number">114</span>
-<span class="line-number">115</span>
-<span class="line-number">116</span>
-<span class="line-number">117</span>
-<span class="line-number">118</span>
-<span class="line-number">119</span>
-<span class="line-number">120</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="p">;(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">global</span><span class="p">,</span> <span class="nx">$</span><span class="p">){</span>
-</span><span class="line">  <span class="c1">// trick , avoid the problem caused by other lib that doesn&#39;t end with semicolon</span>
-</span><span class="line">
-</span><span class="line">  <span class="c1">// trick to use our lib without new</span>
-</span><span class="line">  <span class="c1">// function declare, it is not actually run</span>
-</span><span class="line">  <span class="c1">// so we can set Greeter.init later</span>
-</span><span class="line">  <span class="kd">var</span> <span class="nx">Greeter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="nx">lastName</span><span class="p">,</span><span class="nx">language</span><span class="p">){</span>
-</span><span class="line">    <span class="k">return</span> <span class="k">new</span> <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">firsname</span><span class="p">,</span><span class="nx">lastname</span><span class="p">,</span><span class="nx">language</span><span class="p">);</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="c1">// setup prototype of greeter</span>
-</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">fullName</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">;</span>
-</span><span class="line">    <span class="p">},</span>
-</span><span class="line">
-</span><span class="line">    <span class="nx">validate</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
-</span><span class="line">      <span class="k">if</span> <span class="p">(</span><span class="nx">supportedLangs</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
-</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;Invalid language&#39;</span><span class="p">;</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">    <span class="p">},</span>
-</span><span class="line">
-</span><span class="line">    <span class="nx">greeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">      <span class="k">return</span> <span class="nx">greetings</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="nx">formalgreeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">      <span class="k">return</span> <span class="nx">formalgreetings</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fullName</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="nx">greet</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">formal</span><span class="p">){</span>
-</span><span class="line">      <span class="kd">var</span> <span class="nx">msg</span> <span class="p">;</span>
-</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">formal</span><span class="p">){</span>
-</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="nx">formalgreeting</span><span class="p">();</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">      <span class="k">else</span><span class="p">{</span>
-</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="nx">greeting</span><span class="p">();</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">console</span><span class="p">){</span>
-</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-</span><span class="line">    <span class="p">},</span>
-</span><span class="line">
-</span><span class="line">    <span class="nx">log</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">(){</span>
-</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="nx">console</span><span class="p">){</span>
-</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">logMessages</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">language</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; : &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fullName</span><span class="p">());</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">    <span class="nx">setLang</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lang</span><span class="p">){</span>
-</span><span class="line">      <span class="k">this</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">      <span class="k">this</span><span class="p">.</span><span class="nx">validate</span><span class="p">();</span>
-</span><span class="line">
-</span><span class="line">      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-</span><span class="line">    <span class="p">},</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1">// support jQuery</span>
-</span><span class="line">    <span class="nx">HTMLGreeting</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">formal</span><span class="p">){</span>
-</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">){</span>
-</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;jQuery isnot loaded&#39;</span><span class="p">;</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">selector</span><span class="p">){</span>
-</span><span class="line">        <span class="k">throw</span> <span class="s1">&#39;Missing jQuery selector&#39;</span><span class="p">;</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">      <span class="kd">var</span> <span class="nx">msg</span><span class="p">;</span>
-</span><span class="line">      <span class="k">else</span><span class="p">{</span>
-</span><span class="line">        <span class="nx">msg</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">greeting</span><span class="p">()</span>
-</span><span class="line">        <span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">).</span><span class="nx">html</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-</span><span class="line">      <span class="p">}</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="p">};</span>
-</span><span class="line">
-</span><span class="line">  <span class="c1">// available in init function because of closeure</span>
-</span><span class="line">  <span class="c1">// but these var can&#39;t be access from global</span>
-</span><span class="line">  <span class="kd">var</span> <span class="nx">supportedLangs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span><span class="s1">&#39;tw&#39;</span><span class="p">];</span>
-</span><span class="line">
-</span><span class="line">  <span class="kd">var</span> <span class="nx">greetings</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Hello&#39;</span><span class="p">,</span>
-</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;哈囉&#39;</span>
-</span><span class="line">  <span class="p">};</span>
-</span><span class="line">
-</span><span class="line">  <span class="kd">var</span> <span class="nx">formalgreetings</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Greetings&#39;</span><span class="p">,</span>
-</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;你好&#39;</span>
-</span><span class="line">  <span class="p">};</span>
-</span><span class="line">
-</span><span class="line">  <span class="kd">var</span> <span class="nx">logMessages</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class="line">    <span class="nx">en</span> <span class="o">:</span> <span class="s1">&#39;Logged in&#39;</span><span class="p">,</span>
-</span><span class="line">    <span class="nx">tw</span> <span class="o">:</span> <span class="s1">&#39;登入&#39;</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="c1">// real constructor</span>
-</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="nx">lastName</span><span class="p">,</span><span class="nx">language</span><span class="p">){</span>
-</span><span class="line">    <span class="c1">// safe this</span>
-</span><span class="line">    <span class="c1">// point to the object created by new ()init</span>
-</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1">// setting default value</span>
-</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">=</span> <span class="nx">firstName</span> <span class="o">||</span> <span class="s1">&#39;DefaultFirstname&#39;</span><span class="p">;</span>
-</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">lastName</span> <span class="o">=</span> <span class="nx">lastName</span> <span class="o">||</span> <span class="s1">&#39;DefaultLastname&#39;</span><span class="p">;</span>
-</span><span class="line">    <span class="kd">var</span> <span class="nx">self</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="nx">language</span> <span class="o">||</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">    <span class="nx">self</span><span class="p">.</span><span class="nx">validate</span><span class="p">();</span>
-</span><span class="line">  <span class="p">}</span>
-</span><span class="line">
-</span><span class="line">  <span class="c1">//setup prototype chain of the object created by new init()</span>
-</span><span class="line">  <span class="nx">Greeter</span><span class="p">.</span><span class="nx">init</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Greeter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line">  <span class="c1">//expose greeter to the world</span>
-</span><span class="line">  <span class="nx">global</span><span class="p">.</span><span class="nx">Greeter</span> <span class="o">=</span> <span class="nx">global</span><span class="p">.</span><span class="nx">G$</span> <span class="o">=</span> <span class="nx">Greeter</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="p">}(</span><span class="nb">window</span><span class="p">,</span><span class="nx">jQuery</span><span class="p">));</span>
-</span></code></pre></td></tr></table></div></figure>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">繼續閱讀 &rarr;</a>
+    </footer>
   
 
 
@@ -768,53 +582,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2017/02/04/jsuwp-2-18/">Jsuwp-2-18 What About Asynchronous Callback?</a></h1>
-    
-    
-      <p class="meta">
-        <!-- 
-
-
-
-
-
-
-<p>hahah</p>
-
-  
-
-<p>hahah</p>
- -->
-
-
-
-
-
-<time class='entry-date' datetime='2017-02-04T00:51:44+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:51 am</span></time>
-        
-         | <a href="/blog/2017/02/04/jsuwp-2-18/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"></div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2017/02/04/jsuwp-2-18/">繼續閱讀 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -863,6 +630,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2017/03/20/gitimmersion/">Gitimmersion Notes</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">jsuwp-9-73 ~ 9-80 Let's build a Framework/library</a>
       </li>
     
@@ -876,10 +647,6 @@
     
       <li class="post">
         <a href="/blog/2017/02/12/jsuwp-4-34-functions-are-objects/">jsuwp-4-34 functions are objects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/">jsuwp-4-33 Json and object literal</a>
       </li>
     
   </ul>

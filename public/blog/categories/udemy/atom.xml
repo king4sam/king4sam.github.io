@@ -4,7 +4,7 @@
   <title><![CDATA[Category: udemy | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/udemy/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-15T22:52:58+08:00</updated>
+  <updated>2017-03-20T21:57:50+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -29,6 +29,8 @@
   <li>just G$() to call (no ‘new’)</li>
   <li>support jQuery(give selector, add greeting sentence to the selected element)</li>
 </ul>
+
+<!--more-->
 
 <p>``` javascript Greeter.js</p>
 

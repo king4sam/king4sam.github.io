@@ -17,6 +17,8 @@ categories: StudyNote javascript udemy
 - just G$() to call (no 'new')
 - support jQuery(give selector, add greeting sentence to the selected element)
 
+<!--more-->
+
 ``` javascript Greeter.js
 
 ;(function (global, $){

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://king4sam.github.io/blog/2017/03/20/gitimmersion/</loc>
+<lastmod>2017-03-20T14:34:51+08:00</lastmod>
+</url>
+<url>
 <loc>https://king4sam.github.io/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/</loc>
 <lastmod>2017-02-25T01:04:51+08:00</lastmod>
 </url>
@@ -202,5 +206,8 @@
 </url>
 <url>
 <loc>https://king4sam.github.io/blog/categories/udemy/</loc>
+</url>
+<url>
+<loc>https://king4sam.github.io/blog/categories/git/</loc>
 </url>
 </urlset>
