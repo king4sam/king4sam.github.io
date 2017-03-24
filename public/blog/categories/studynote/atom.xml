@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: studynote | Necisam's blog]]></title>
+  <title><![CDATA[Category: Studynote | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/studynote/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-20T21:57:50+08:00</updated>
+  <updated>2017-03-24T14:13:29+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-9-73 ~ 9-80 Let's build a Framework/library]]></title>
+    <title type="html"><![CDATA[Jsuwp-9-73 ~ 9-80 Let's Build a Framework/library]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/"/>
     <updated>2017-02-25T01:04:51+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library</id>
@@ -161,7 +161,7 @@ self.validate();   }
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-8-69 ~ 8-72 Deep dive into jQuery]]></title>
+    <title type="html"><![CDATA[Jsuwp-8-69 ~ 8-72 Deep Dive Into jQuery]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/"/>
     <updated>2017-02-20T16:39:33+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery</id>
@@ -319,7 +319,7 @@ return this;   }
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-7-65 ~ 7-68 Odds and Ends]]></title>
+    <title type="html"><![CDATA[Jsuwp-7-65 ~ 7-68 Odds and Ends]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/20/jsuwp-7-65-odds-and-ends/"/>
     <updated>2017-02-20T15:29:15+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/20/jsuwp-7-65-odds-and-ends</id>
@@ -439,74 +439,7 @@ console.log(persom);</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-4-34 functions are objects]]></title>
-    <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-34-functions-are-objects/"/>
-    <updated>2017-02-12T22:44:58+08:00</updated>
-    <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-34-functions-are-objects</id>
-    <content type="html"><![CDATA[<h1 id="functions-are-objects">4-34 functions are objects</h1>
-
-<!--more-->
-
-<h2 id="bigword-alert--first-class-functions"><strong>bigword alert : first class functions</strong></h2>
-<ul>
-  <li>everything you can do with other types you can do with function</li>
-  <li>ex: assign them to variables, pass them around, create them on the fly …</li>
-  <li>js is not the only language that has first class function</li>
-</ul>
-
-<p>``` javascript function can has properties</p>
-
-<p>function greet(){
-  console.log(‘Hi’);
-}</p>
-
-<p>greet.language = ‘en’;
-console.log(greet.language);
-// en</p>
-
-<p>```</p>
-
-<h1 id="function-statement-and-function-expression">4-35 function statement and function expression</h1>
-
-<h2 id="bigword-alert--expression"><strong>bigword alert : expression</strong></h2>
-<ul>
-  <li>a unit of code that results in a value</li>
-  <li>statements just do the work, no return value</li>
-</ul>
-
-<p>``` javascript statement and expression
-// function statements
-greet(); //runable because of hoisting</p>
-
-<p>function greet (){
-  console.log(‘Hi’);
-}</p>
-
-<p>anonymousGreet(); //only variable is hoisted</p>
-
-<p>// function expression
-var anonymousGreet = function (){
-  console.log(‘Hi’);
-}</p>
-
-<p>```</p>
-
-<p>``` javascript create function on the fly</p>
-
-<p>function log(a){
-  console.log(a);
-  a(); //invoke it
-}</p>
-
-<p>log(function(){
-  console.log(‘Hi’);
-})
-```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[jsuwp-4-33 Json and object literal]]></title>
+    <title type="html"><![CDATA[Jsuwp-4-33 Json and Object Literal]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/"/>
     <updated>2017-02-12T00:51:29+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb</id>
@@ -522,6 +455,48 @@ var anonymousGreet = function (){
 -&gt; valid json is also valid js object literal syntax</li>
   <li>JSON is so popular that js has utilities to tranfer between the two.(JSON.stringtify, JSON.parse)</li>
 </ul>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Jsuwp-4-32 Framework Aside: Faking Namespace]]></title>
+    <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace/"/>
+    <updated>2017-02-12T00:43:18+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="faking-namespace">4-32 Faking Namespace</h1>
+
+<h2 id="bigword-alert--namespace"><strong>bigword alert : Namespace</strong></h2>
+<ul>
+  <li>a container for variables and functions</li>
+</ul>
+
+<p>``` javascript</p>
+
+<p>greet = ‘Hello!’;
+greet = ‘Hola!’;</p>
+
+<p>// greet collide
+console.log(greet);</p>
+
+<p>var english = {};
+var spanish = {};</p>
+
+<p>english.greet = ‘Hello!’;
+spanish.greet = ‘Hola!’;</p>
+
+<p>english.greetings.greet  = ‘Hello’; // cannot creating on the fly</p>
+
+<p>/*
+var english = {
+  greeting : {
+    basic : ‘Hello!’
+  }
+};
+ */</p>
+
+<p>```</p>
 ]]></content>
   </entry>
   

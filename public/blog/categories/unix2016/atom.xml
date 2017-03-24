@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: unix2016 | Necisam's blog]]></title>
+  <title><![CDATA[Category: Unix2016 | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/unix2016/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-20T21:57:50+08:00</updated>
+  <updated>2017-03-24T14:13:29+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[unix2016 assignment10 note]]></title>
+    <title type="html"><![CDATA[Unix2016 Assignment10 Note]]></title>
     <link href="https://king4sam.github.io/blog/2017/01/11/unix2016-assignment10-note/"/>
     <updated>2017-01-11T17:36:45+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/01/11/unix2016-assignment10-note</id>
@@ -85,7 +85,7 @@ printf("num of process : %d", si.proc);
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[unix2016 assignment7 note]]></title>
+    <title type="html"><![CDATA[Unix2016 Assignment7 Note]]></title>
     <link href="https://king4sam.github.io/blog/2016/12/22/unix2016-assignment7-note/"/>
     <updated>2016-12-22T10:49:25+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/12/22/unix2016-assignment7-note</id>
@@ -163,7 +163,7 @@ void (*signal(int sig, void (*func)(int)))(int);
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[unix2016 assignment6 note]]></title>
+    <title type="html"><![CDATA[Unix2016 Assignment6 Note]]></title>
     <link href="https://king4sam.github.io/blog/2016/11/29/unix2016-assignment6-note/"/>
     <updated>2016-11-29T11:40:29+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/11/29/unix2016-assignment6-note</id>
@@ -215,7 +215,7 @@ The exec family of functions replaces the current process image with a new proce
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[unix2016 assignment4 note]]></title>
+    <title type="html"><![CDATA[Unix2016 Assignment4 Note]]></title>
     <link href="https://king4sam.github.io/blog/2016/11/08/unix2016-assignment4-note/"/>
     <updated>2016-11-08T10:43:31+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/11/08/unix2016-assignment4-note</id>
@@ -290,7 +290,7 @@ $Algorithmid$Salt$Encryptedpassword
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[unix2016 assignment3 note]]></title>
+    <title type="html"><![CDATA[Unix2016 Assignment3 Note]]></title>
     <link href="https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note/"/>
     <updated>2016-11-01T00:41:05+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/11/01/unix2016-assignment3-note</id>

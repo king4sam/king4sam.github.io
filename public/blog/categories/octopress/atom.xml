@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: octopress | Necisam's blog]]></title>
+  <title><![CDATA[Category: Octopress | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-20T21:57:50+08:00</updated>
+  <updated>2017-03-24T14:13:29+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[about disqus...]]></title>
+    <title type="html"><![CDATA[About Disqus...]]></title>
     <link href="https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot/"/>
     <updated>2016-08-19T18:45:44+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot</id>
@@ -43,7 +43,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[theme安裝]]></title>
+    <title type="html"><![CDATA[Theme安裝]]></title>
     <link href="https://king4sam.github.io/blog/2016/08/05/themean-zhuang/"/>
     <updated>2016-08-05T10:52:06+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/05/themean-zhuang</id>
@@ -93,7 +93,7 @@ end
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[move blog to github.io]]></title>
+    <title type="html"><![CDATA[Move Blog to github.io]]></title>
     <link href="https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
     <updated>2016-08-04T23:46:00+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
@@ -183,7 +183,7 @@ To git@github.com:username/username.github.io.git
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[plugin test]]></title>
+    <title type="html"><![CDATA[Plugin Test]]></title>
     <link href="https://king4sam.github.io/blog/2016/08/01/plugin-test/"/>
     <updated>2016-08-01T14:05:33+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/01/plugin-test</id>
@@ -241,7 +241,7 @@ end
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Install octopress and deploy to heroku]]></title>
+    <title type="html"><![CDATA[Install Octopress and Deploy to Heroku]]></title>
     <link href="https://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku/"/>
     <updated>2016-07-30T23:01:14+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/07/30/install-octopress-and-deploy-to-heroku</id>

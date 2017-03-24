@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: git | Necisam's blog]]></title>
+  <title><![CDATA[Category: Git | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/git/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-20T21:57:50+08:00</updated>
+  <updated>2017-03-24T14:13:29+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -12,6 +12,106 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git Branching Tutorial]]></title>
+    <link href="https://king4sam.github.io/blog/2017/03/23/git-branching-tutorial/"/>
+    <updated>2017-03-23T15:17:35+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/03/23/git-branching-tutorial</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="git-reset-vs-git-revert">git reset vs git revert</h1>
+
+<ul>
+  <li>reset : rewriting the commit history. DON’T use it on pushed branches</li>
+  <li>revert : creat a new commit, but it reverse changes.</li>
+</ul>
+
+<p><img src="/images/studynotes/gitreset.png" /></p>
+
+<p><img src="/images/studynotes/gitrevert.png" /></p>
+
+<h1 id="git-cherry-pick">git cherry-pick</h1>
+
+<ul>
+  <li>you would like to copy a series of commits below your current location (HEAD).</li>
+</ul>
+
+<p><code>
+// master/HEAD is at C5
+// pick C2 and C4 , add them to master
+git cherry-pick C2 C4
+</code></p>
+
+<p><img src="/images/studynotes/cherrypick.png" /></p>
+
+<ul>
+  <li>useage</li>
+</ul>
+
+<p><img src="/images/studynotes/debug.png" /></p>
+
+<h1 id="git-describe">git describe</h1>
+
+<ul>
+  <li>Describe a commit using the most recent tag reachable from it</li>
+</ul>
+
+<h1 id="mixed">mixed</h1>
+
+<h2 id="situation">situation</h2>
+
+<p>I want to do a slight modify on newImage, then move master to C3</p>
+
+<ul>
+  <li>starting</li>
+</ul>
+
+<p><img src="/images/studynotes/situation1_b.png" /></p>
+
+<ul>
+  <li>goal</li>
+</ul>
+
+<p><img src="/images/studynotes/situation1_a.png" /></p>
+
+<ul>
+  <li>sol1</li>
+</ul>
+
+<ol>
+  <li>
+    <p>re-order the commits (rebase -i)</p>
+  </li>
+  <li>
+    <p>commit –amend to make the slight modification on newImage</p>
+  </li>
+  <li>
+    <p>re-order the commits back(git rebase -i)</p>
+  </li>
+  <li>
+    <p>move master(git branch -f master <target>)</target></p>
+  </li>
+</ol>
+
+<ul>
+  <li>sol2</li>
+</ul>
+
+<ol>
+  <li>
+    <p>git cherry-pick C2</p>
+  </li>
+  <li>
+    <p>commit –amend to make the slight modification on newImage</p>
+  </li>
+  <li>
+    <p>git cherry-pick C3</p>
+  </li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Gitimmersion Notes]]></title>

@@ -15,6 +15,10 @@ categories: StudyNote javascript udemy
 -  both has left-to-right asscociativity
 - dot is recommended
 
+## types of object properties
+
+<img src="{{root_url}}/images/studynotes/object_properties.PNG">
+
 ``` javascript computed member access
 
 var person = new Object();

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://king4sam.github.io/blog/2017/03/23/git-branching-tutorial/</loc>
+<lastmod>2017-03-23T15:17:35+08:00</lastmod>
+</url>
+<url>
 <loc>https://king4sam.github.io/blog/2017/03/20/gitimmersion/</loc>
 <lastmod>2017-03-20T14:34:51+08:00</lastmod>
 </url>
@@ -15,10 +19,6 @@
 <url>
 <loc>https://king4sam.github.io/blog/2017/02/20/jsuwp-7-65-odds-and-ends/</loc>
 <lastmod>2017-02-20T15:29:15+08:00</lastmod>
-</url>
-<url>
-<loc>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-34-functions-are-objects/</loc>
-<lastmod>2017-02-12T22:44:58+08:00</lastmod>
 </url>
 <url>
 <loc>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/</loc>
@@ -163,16 +163,13 @@
 <loc>https://king4sam.github.io/archives/</loc>
 </url>
 <url>
-<loc>https://king4sam.github.io/</loc>
-</url>
-<url>
 <loc>https://king4sam.github.io/arquivos/</loc>
 </url>
 <url>
-<loc>https://king4sam.github.io/about/</loc>
+<loc>https://king4sam.github.io/</loc>
 </url>
 <url>
-<loc>https://king4sam.github.io/about-me/</loc>
+<loc>https://king4sam.github.io/about/</loc>
 </url>
 <url>
 <loc>https://king4sam.github.io/blog/categories/octopress/</loc>

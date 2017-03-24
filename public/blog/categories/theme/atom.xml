@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: theme | Necisam's blog]]></title>
+  <title><![CDATA[Category: Theme | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/theme/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-20T21:57:50+08:00</updated>
+  <updated>2017-03-24T14:13:29+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[theme安裝]]></title>
+    <title type="html"><![CDATA[Theme安裝]]></title>
     <link href="https://king4sam.github.io/blog/2016/08/05/themean-zhuang/"/>
     <updated>2016-08-05T10:52:06+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/05/themean-zhuang</id>

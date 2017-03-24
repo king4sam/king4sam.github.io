@@ -4,7 +4,7 @@
   <title><![CDATA[Necisam's blog]]></title>
   <link href="https://king4sam.github.io/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-20T21:57:50+08:00</updated>
+  <updated>2017-03-24T14:13:29+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git Branching Tutorial]]></title>
+    <link href="https://king4sam.github.io/blog/2017/03/23/git-branching-tutorial/"/>
+    <updated>2017-03-23T15:17:35+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/03/23/git-branching-tutorial</id>
+    <content type="html"><![CDATA[<!--more-->
+
+<h1 id="git-reset-vs-git-revert">git reset vs git revert</h1>
+
+<ul>
+  <li>reset : rewriting the commit history. DON’T use it on pushed branches</li>
+  <li>revert : creat a new commit, but it reverse changes.</li>
+</ul>
+
+<p><img src="https://king4sam.github.io/images/studynotes/gitreset.png" /></p>
+
+<p><img src="https://king4sam.github.io/images/studynotes/gitrevert.png" /></p>
+
+<h1 id="git-cherry-pick">git cherry-pick</h1>
+
+<ul>
+  <li>you would like to copy a series of commits below your current location (HEAD).</li>
+</ul>
+
+<figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">// master/HEAD is at C5
+</span><span class="line">// pick C2 and C4 , add them to master
+</span><span class="line">git cherry-pick C2 C4</span></code></pre></td></tr></table></div></figure>
+
+<p><img src="https://king4sam.github.io/images/studynotes/cherrypick.png" /></p>
+
+<ul>
+  <li>useage</li>
+</ul>
+
+<p><img src="https://king4sam.github.io/images/studynotes/debug.png" /></p>
+
+<h1 id="git-describe">git describe</h1>
+
+<ul>
+  <li>Describe a commit using the most recent tag reachable from it</li>
+</ul>
+
+<h1 id="mixed">mixed</h1>
+
+<h2 id="situation">situation</h2>
+
+<p>I want to do a slight modify on newImage, then move master to C3</p>
+
+<ul>
+  <li>starting</li>
+</ul>
+
+<p><img src="https://king4sam.github.io/images/studynotes/situation1_b.png" /></p>
+
+<ul>
+  <li>goal</li>
+</ul>
+
+<p><img src="https://king4sam.github.io/images/studynotes/situation1_a.png" /></p>
+
+<ul>
+  <li>sol1</li>
+</ul>
+
+<ol>
+  <li>
+    <p>re-order the commits (rebase -i)</p>
+  </li>
+  <li>
+    <p>commit –amend to make the slight modification on newImage</p>
+  </li>
+  <li>
+    <p>re-order the commits back(git rebase -i)</p>
+  </li>
+  <li>
+    <p>move master(git branch -f master <target>)</target></p>
+  </li>
+</ol>
+
+<ul>
+  <li>sol2</li>
+</ul>
+
+<ol>
+  <li>
+    <p>git cherry-pick C2</p>
+  </li>
+  <li>
+    <p>commit –amend to make the slight modification on newImage</p>
+  </li>
+  <li>
+    <p>git cherry-pick C3</p>
+  </li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Gitimmersion Notes]]></title>
@@ -192,7 +293,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-9-73 ~ 9-80 Let's build a Framework/library]]></title>
+    <title type="html"><![CDATA[Jsuwp-9-73 ~ 9-80 Let's Build a Framework/library]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/"/>
     <updated>2017-02-25T01:04:51+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library</id>
@@ -455,7 +556,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-8-69 ~ 8-72 Deep dive into jQuery]]></title>
+    <title type="html"><![CDATA[Jsuwp-8-69 ~ 8-72 Deep Dive Into jQuery]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/"/>
     <updated>2017-02-20T16:39:33+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/20/jsuwp-8-70-deep-dive-into-jquery</id>
@@ -739,7 +840,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-7-65 ~ 7-68 Odds and Ends]]></title>
+    <title type="html"><![CDATA[Jsuwp-7-65 ~ 7-68 Odds and Ends]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/20/jsuwp-7-65-odds-and-ends/"/>
     <updated>2017-02-20T15:29:15+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/20/jsuwp-7-65-odds-and-ends</id>
@@ -909,95 +1010,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-4-34 functions are objects]]></title>
-    <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-34-functions-are-objects/"/>
-    <updated>2017-02-12T22:44:58+08:00</updated>
-    <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-34-functions-are-objects</id>
-    <content type="html"><![CDATA[<h1 id="functions-are-objects">4-34 functions are objects</h1>
-
-<!--more-->
-
-<h2 id="bigword-alert--first-class-functions"><strong>bigword alert : first class functions</strong></h2>
-<ul>
-  <li>everything you can do with other types you can do with function</li>
-  <li>ex: assign them to variables, pass them around, create them on the fly …</li>
-  <li>js is not the only language that has first class function</li>
-</ul>
-
-<figure class="code"><figcaption><span>function can has properties</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">greet</span><span class="p">(){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">greet</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greet</span><span class="p">.</span><span class="nx">language</span><span class="p">);</span>
-</span><span class="line"><span class="c1">// en</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<h1 id="function-statement-and-function-expression">4-35 function statement and function expression</h1>
-
-<h2 id="bigword-alert--expression"><strong>bigword alert : expression</strong></h2>
-<ul>
-  <li>a unit of code that results in a value</li>
-  <li>statements just do the work, no return value</li>
-</ul>
-
-<figure class="code"><figcaption><span>statement and expression</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="c1">// function statements</span>
-</span><span class="line"><span class="nx">greet</span><span class="p">();</span> <span class="c1">//runable because of hoisting</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">function</span> <span class="nx">greet</span> <span class="p">(){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">anonymousGreet</span><span class="p">();</span> <span class="c1">//only variable is hoisted</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// function expression</span>
-</span><span class="line"><span class="kd">var</span> <span class="nx">anonymousGreet</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<figure class="code"><figcaption><span>create function on the fly</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
-</span><span class="line">  <span class="nx">a</span><span class="p">();</span> <span class="c1">//invoke it</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">log</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="p">})</span>
-</span></code></pre></td></tr></table></div></figure>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[jsuwp-4-33 Json and object literal]]></title>
+    <title type="html"><![CDATA[Jsuwp-4-33 Json and Object Literal]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb/"/>
     <updated>2017-02-12T00:51:29+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-33-json-and-object-literalb</id>
@@ -1017,7 +1030,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-4-32 Framework aside: Faking Namespace]]></title>
+    <title type="html"><![CDATA[Jsuwp-4-32 Framework Aside: Faking Namespace]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace/"/>
     <updated>2017-02-12T00:43:18+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-32-framework-aside-faking-namespace</id>
@@ -1077,7 +1090,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-4-30 Objects and Functions]]></title>
+    <title type="html"><![CDATA[Jsuwp-4-30 Objects and Functions]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/12/jsuwp-4-30-objects-and-functions/"/>
     <updated>2017-02-12T00:06:26+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/12/jsuwp-4-30-objects-and-functions</id>
@@ -1091,6 +1104,10 @@
   <li>both has left-to-right asscociativity</li>
   <li>dot is recommended</li>
 </ul>
+
+<h2 id="types-of-object-properties">types of object properties</h2>
+
+<p><img src="https://king4sam.github.io/images/studynotes/object_properties.PNG" /></p>
 
 <figure class="code"><figcaption><span>computed member access</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -1199,7 +1216,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-3-28 Default values]]></title>
+    <title type="html"><![CDATA[Jsuwp-3-28 Default Values]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/09/jsuwp-3-28/"/>
     <updated>2017-02-09T00:03:04+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/09/jsuwp-3-28</id>
@@ -1286,7 +1303,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp 3-19 ~ 3-27 Types and javascript]]></title>
+    <title type="html"><![CDATA[Jsuwp 3-19 ~ 3-27 Types and Javascript]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/08/jsuwp-2-19/"/>
     <updated>2017-02-08T21:34:43+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/08/jsuwp-2-19</id>
@@ -1488,7 +1505,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-18 What about asynchronous callback?]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-18 What About Asynchronous Callback?]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/04/jsuwp-2-18/"/>
     <updated>2017-02-04T00:51:44+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/04/jsuwp-2-18</id>
@@ -1554,7 +1571,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-14-2-16 functions, context adn variables]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-14-2-16 Functions, Context Adn Variables]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/03/jsuwp-2-14/"/>
     <updated>2017-02-03T23:36:10+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/03/jsuwp-2-14</id>
@@ -1756,7 +1773,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-13 single thread, synchronous execution]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-13 Single Thread, Synchronous Execution]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/03/jsuwp-2-13/"/>
     <updated>2017-02-03T21:52:58+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/03/jsuwp-2-13</id>
@@ -1779,7 +1796,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-12 code execution]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-12 Code Execution]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/03/jsuwp-2-12/"/>
     <updated>2017-02-03T21:43:46+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/03/jsuwp-2-12</id>
@@ -1796,7 +1813,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-11 undefined]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-11 Undefined]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/03/jsuwp-2-11/"/>
     <updated>2017-02-03T21:28:09+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/03/jsuwp-2-11</id>
@@ -1857,7 +1874,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-10 Creation and hoisting]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-10 Creation and Hoisting]]></title>
     <link href="https://king4sam.github.io/blog/2017/02/02/jsuwp-2-10/"/>
     <updated>2017-02-02T00:11:33+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/02/02/jsuwp-2-10</id>
@@ -1923,7 +1940,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-9 Global environment and Global object]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-9 Global Environment and Global Object]]></title>
     <link href="https://king4sam.github.io/blog/2017/01/20/jsuwp-2-8/"/>
     <updated>2017-01-20T11:45:46+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/01/20/jsuwp-2-8</id>
@@ -1955,7 +1972,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-7 Name/Value pairs and Objects]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-7 Name/Value Pairs and Objects]]></title>
     <link href="https://king4sam.github.io/blog/2017/01/20/jsuwp-2-7/"/>
     <updated>2017-01-20T11:39:32+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/01/20/jsuwp-2-7</id>
@@ -1978,7 +1995,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[jsuwp-2-6 Syntax Parser, Execution Contex and Lexical Environment]]></title>
+    <title type="html"><![CDATA[Jsuwp-2-6 Syntax Parser, Execution Contex and Lexical Environment]]></title>
     <link href="https://king4sam.github.io/blog/2017/01/20/jsuwp-2-6/"/>
     <updated>2017-01-20T11:28:05+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/01/20/jsuwp-2-6</id>
@@ -2006,7 +2023,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[JS understanding the weird parts 6-57 ~ 6-64 building objects]]></title>
+    <title type="html"><![CDATA[JS Understanding the Weird Parts 6-57 ~ 6-64 Building Objects]]></title>
     <link href="https://king4sam.github.io/blog/2017/01/17/jsuwp-5-57/"/>
     <updated>2017-01-17T23:35:42+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/01/17/jsuwp-5-57</id>

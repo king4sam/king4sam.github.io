@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: disqus | Necisam's blog]]></title>
+  <title><![CDATA[Category: Disqus | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/disqus/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-20T21:57:50+08:00</updated>
+  <updated>2017-03-24T14:13:29+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[about disqus...]]></title>
+    <title type="html"><![CDATA[About Disqus...]]></title>
     <link href="https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot/"/>
     <updated>2016-08-19T18:45:44+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/19/about-disqus-dot-dot-dot</id>

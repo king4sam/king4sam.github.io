@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: github | Necisam's blog]]></title>
+  <title><![CDATA[Category: Github | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/github/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-20T21:57:50+08:00</updated>
+  <updated>2017-03-24T14:13:29+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[move blog to github.io]]></title>
+    <title type="html"><![CDATA[Move Blog to github.io]]></title>
     <link href="https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io/"/>
     <updated>2016-08-04T23:46:00+08:00</updated>
     <id>https://king4sam.github.io/blog/2016/08/04/move-blog-to-github-dot-io</id>
