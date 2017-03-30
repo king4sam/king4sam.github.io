@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Service_security | Necisam's blog]]></title>
+  <link href="https://king4sam.github.io/blog/categories/service-security/atom.xml" rel="self"/>
+  <link href="https://king4sam.github.io/"/>
+  <updated>2017-03-31T00:02:29+08:00</updated>
+  <id>https://king4sam.github.io/</id>
+  <author>
+    <name><![CDATA[Necisam]]></name>
+    <email><![CDATA[king4sam990816@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[SS Week5]]></title>
+    <link href="https://king4sam.github.io/blog/2017/03/27/ss-week5/"/>
+    <updated>2017-03-27T14:19:35+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/03/27/ss-week5</id>
+    <content type="html"><![CDATA[<h1 id="symmetric-cryptographycont">Symmetric Cryptography(Con’t)</h1>
+
+<!--more-->
+
+<h2 id="stream-ciphers">Stream Ciphers</h2>
+
+<ol>
+  <li>A5/1 Cipher (GSM)
+    <ul>
+      <li>Produces keystream bit at each step</li>
+      <li>Easy to implement in hardware</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/images/studynotes/a51.png">
+2. RC4 Cipher</p>
+
+<ul>
+  <li>Produces keystream byte at each step</li>
+  <li>One of the most widely used software stream ciphers
+    <ul>
+      <li>in older implementations of SSL /TLS; WEP(!)</li>
+      <li>removed from major browsers in 2015</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="block-ciphers">Block Ciphers</h2>
+
+<ol>
+  <li>Feistel Cipher
+    <ul>
+      <li>key will change every round</li>
+      <li>function F must be reversible</li>
+      <li>multiple “rounds”</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/images/studynotes/feistel.png"></p>
+
+<h2 id="block-cipher-modes">Block Cipher Modes</h2>
+
+<ol>
+  <li>Electronic Code Book (ECB) Mode
+  <img src="/images/studynotes/ecb.png">
+    <ul>
+      <li>將plain text切成 blocks</li>
+      <li>分別對每個block做Block Ciphers</li>
+      <li>缺點:同樣的block會被加密成同樣的cipher</li>
+      <li>diffusion較差</li>
+    </ul>
+  </li>
+  <li>Cipher Block Chaining (CBC) Mode
+  <img src="/images/studynotes/cbc.png">
+    <ul>
+      <li>跟ECB類似</li>
+      <li>在做完Block Ciphers，會在跟前一個block的結果做xor，成為最後加密的結果</li>
+      <li>改善diffusion</li>
+      <li>最後一個block可以當<a href="#data-integrity-mac-blocksmessage-authentication-code">MAC</a> blocks(包含整個plain text的資訊)</li>
+    </ul>
+  </li>
+  <li>Comparison</li>
+</ol>
+
+<p>ECB   V.S  CBC</p>
+
+<p><img src="/images/studynotes/ecbgirl.png" width="280"><img src="/images/studynotes/cbcgirl.png" width="280"></p>
+
+<h2 id="aes-cipher">AES Cipher</h2>
+<ul>
+  <li>most popular nowadays</li>
+</ul>
+
+<p><img src="/images/studynotes/aes.png"></p>
+
+<h2 id="symmetric-key-ciphers-and-key-reuse">Symmetric Key Ciphers and Key Reuse</h2>
+
+<ul>
+  <li>Depth Attacks : Giving attackers deeper information about your plaintext or key
+    <ul>
+      <li>例如之前的one-time pad ，當key重複使用時，攻擊者可以得知P1 ⊕ P2</li>
+    </ul>
+
+    <p><img src="/images/studynotes/depthattack.png"></p>
+  </li>
+  <li>Replay Attacks:
+    <ul>
+      <li>當攻擊者監聽到一個Ciphers，傳送給對應的人，一樣可以得到正確的回覆</li>
+    </ul>
+
+    <p><img src="/images/studynotes/replyattack.png"></p>
+  </li>
+</ul>
+
+<h2 id="using-a-nonceone-time-use-random-bytes">Using a Nonce(one-time use random bytes)</h2>
+
+<ul>
+  <li>
+    <p>Countering Depth Attacks :
+  當key重複使用時，還是可以因為nonce不同，而加密成不同的cipher</p>
+  </li>
+  <li>
+    <p>Countering Replay Attacks :
+  當攻擊者監聽到一個Ciphers，想要重送時，會因為Nonce不同，而被拒絕。</p>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="hashing">Hashing</h1>
+
+<ul>
+  <li>No key from the user (built-in key)</li>
+  <li>One-way function only (cannot reverse/decrypt)</li>
+  <li>Compresses data to fixed length (e.g., 128-bits)</li>
+  <li>Collisions exist, but should be extremely rare</li>
+</ul>
+
+<h2 id="non-cryptographic-hashing">Non-cryptographic Hashing</h2>
+
+<ul>
+  <li>Cyclic Redundancy Check (CRC)
+    <ul>
+      <li>👍 Data Lookup</li>
+      <li>👎 Data integrity</li>
+    </ul>
+
+    <p><strong>pro</strong></p>
+
+    <ul>
+      <li>simple to perform in hardware</li>
+      <li>can catch common, unintentional errors</li>
+    </ul>
+
+    <p><strong>cons</strong></p>
+
+    <ul>
+      <li>cannot catch intentional manipulation</li>
+      <li>easy to revers</li>
+      <li>crc(x⊕y⊕z) = crc(x) ⊕ crc(y) ⊕ crc(z)
+well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="cryptographic-hashing">Cryptographic Hashing</h2>
+<ul>
+  <li>Sha1 sha2</li>
+  <li>md5</li>
+  <li>…</li>
+</ul>
+
+<h2 id="data-integrity-mac-blocksmessage-authentication-code">Data Integrity: MAC blocks(Message Authentication Code)</h2>
+<ul>
+  <li>protects both a message’s data integrity as well as its authenticity, by allowing verifiers to detect any changes to the message content.</li>
+  <li>在解密前先驗證資料來源及正確性(有沒有被變更)</li>
+  <li>沒有先驗證就解密的話，攻擊者能從更改後的cipher跟plaintext中得到額外的訊息</li>
+</ul>
+
+<h3 id="approaches-to-authenticated-encryption">Approaches to Authenticated Encryption</h3>
+
+<ol>
+  <li>MAC-and-Encrypt
+    <ul>
+      <li>encrypy the plaintextthen calculate MAC on plaintext</li>
+    </ul>
+  </li>
+  <li>MAC-then-Encrypt (MtE)
+    <ul>
+      <li>calculate MAC on plaintext and encrypt plaintext + MAC</li>
+      <li>vulnerable to Decryption Oracle Attack</li>
+      <li>∵ you have to perform decryption before Authenticated</li>
+    </ul>
+  </li>
+  <li>Encrypt-then-MAC
+    <ul>
+      <li>encrypy the plaintext then calculate MAC on cipher</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="coding-time-">Coding time ~</h1>
+
+<p>So many things to care about</p>
+
+<ul>
+  <li>which algorithm to apply(must be not broken yet)</li>
+  <li>implements a algorithm wihout making mistake</li>
+  <li>generate different keys</li>
+  <li>use nonce</li>
+  <li>Authenticated Encryption order</li>
+</ul>
+
+<p><img src="/images/fun/Jackie-chan-meme.jpg"></p>
+
+<h2 id="developers-should-know-about-cryptography"><strong><em>Developers should know about cryptography!</em></strong></h2>
+
+<h2 id="but-only-cryptographers-should-write-ciphers"><strong><em>But only cryptographers should write ciphers!</em></strong></h2>
+
+<h2 id="nacl">NaCl</h2>
+
+<ul>
+  <li>NaCl : a new easy-to-use highspeed software library for network communication, encryption, decryption, signatures, etc.</li>
+</ul>
+
+<p>Implemented in C</p>
+
+<ul>
+  <li>libSodium :  portable, cross-compilable, installable, packageable fork of NaCl</li>
+</ul>
+
+<p>Implemented in C</p>
+
+<ul>
+  <li>RbNaCl : Ruby binding to the Networking and Cryptography (NaCl) library</li>
+</ul>
+
+<p>Implemented in Ruby, but you have to install libSodium yourself</p>
+
+<ul>
+  <li>rbnacl-libsodium : packages the libsodium library as a Ruby Gem</li>
+</ul>
+
+<p>Implemented in Ruby, the only thing to do is
+<code>gem install rbnacl-libsodium</code></p>
+
+<p><a href="https://github.com/cryptosphere/rbnacl/wiki">Document of RbNaCl</a></p>
+
+<p>灑花(<em>￣▽￣)/‧☆</em>”’ *-.,<em>,.-*’`“*-.,</em>☆</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SS Week4]]></title>
+    <link href="https://king4sam.github.io/blog/2017/03/25/ss-week4/"/>
+    <updated>2017-03-25T23:42:33+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/03/25/ss-week4</id>
+    <content type="html"><![CDATA[<h1 id="cryptography-begining">Cryptography Begining</h1>
+
+<!--more-->
+
+<h2 id="symmetric-key-cryptography">Symmetric Key Cryptography</h2>
+
+<ul>
+  <li>use the same key to encrypt and decrypt</li>
+</ul>
+
+<p><img src="/images/studynotes/samekey.png" /></p>
+
+<h2 id="confusion-and-diffusion-of-information">Confusion and Diffusion of Information</h2>
+
+<ul>
+  <li>
+    <p>Confusion : key 改變一個bit，cipher改變的程度</p>
+  </li>
+  <li>
+    <p>Diffusion : plaintext 改變1個bit，cipher 改變的程度</p>
+  </li>
+</ul>
+
+<p><img src="/images/studynotes/condiff.png" /></p>
+
+<h2 id="what-makes-a-cipher-secure-">What makes a cipher “secure” ?</h2>
+
+<ul>
+  <li>
+    <p>There are no shortcut attacks. Exhaustive key search required.</p>
+  </li>
+  <li>
+    <p>It(the cryptography system) must not be required to be secret, and it must be able to fall into the hands of the enemy without inconvenience.
+<em>(Kerckhoffs Principle)</em></p>
+  </li>
+</ul>
+
+<h2 id="sk-cryptography">SK-Cryptography</h2>
+
+<p><strong>1. Caeser Cipher</strong></p>
+
+<p>shift each char by n</p>
+
+<p><img src="/images/studynotes/caeser.png">
+<strong>2. Permutation Cipher</strong></p>
+
+<p>把原文的char一組做順序上的掉換</p>
+
+<p><img src="/images/studynotes/permutation.png"></p>
+
+<p>破解 : Frequency attack<br />
+<strong>3. Codebook Cipher</strong></p>
+
+<p>建表查表XDD</p>
+
+<p><img src="/images/studynotes/codebook.png">
+<strong>4. Double Transposition Cipher</strong></p>
+
+<p><img src="/images/studynotes/dtrans.png">
+<strong>5. One-time Pad Cipher</strong></p>
+
+<p>Encrypt : P ⊕ K = C</p>
+
+<p>Decrypt : C ⊕ K = P</p>
+
+<p>Note : when reusing the same key gives attackers additional information</p>
+
+<p>∵ C1 ⊕ C2 = P1 ⊕ K ⊕ P2 ⊕ K = P1 ⊕ P2</p>
+
+<p>當攻擊者得知你任一個plaintext，就能解出所有plaintext</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SS Week6]]></title>
+    <link href="https://king4sam.github.io/blog/2017/03/24/ss-week6/"/>
+    <updated>2017-03-24T14:16:54+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/03/24/ss-week6</id>
+    <content type="html"><![CDATA[<h1 id="public-key-cryptography">Public Key Cryptography</h1>
+
+<!--more-->
+
+<p>之前所討論的symmetric cryptography最終都有一個無法解決的問題:
+如何交換key</p>
+
+<p>大概只能打扮成
+<br />
+<img src="/images/fun/heisenberg.jpg" height="200px" width="200px" /></p>
+
+<p>然後到咖啡店
+<br />
+<img src="/images/fun/behind_newspaper.jpg" /></p>
+
+<p>跟對方面交XDD</p>
+
+<p>因為加解密都用同一把key，所以key沒有辦法透過公開網路交換</p>
+
+<hr />
+
+<h2 id="what-is-public-key-pk-cryptography">What is Public-Key (PK) Cryptography</h2>
+<p>則是一個是私人金鑰，另一個則是公開金鑰</p>
+
+<p>公開金鑰可以再公開網路中傳輪</p>
+
+<p>私有金鑰則自己保管</p>
+
+<p>主要有兩種用途</p>
+
+<ul>
+  <li>加密資訊</li>
+</ul>
+
+<p><img src="/images/studynotes/secure.png" /></p>
+
+<ul>
+  <li>數位簽章(驗證來源是否正確)</li>
+</ul>
+
+<p><img src="/images/studynotes/signing.png" /></p>
+
+<p>如果要同時加密資訊並驗證來源</p>
+
+<p><img src="/images/studynotes/confidentiality_non-repu.png" /></p>
+
+<p><strong>NOTE</strong>: Does the order matter?</p>
+
+<p><strong>Sure!!</strong></p>
+
+<p>如果先用對方public key加密，再用自己private 簽名</p>
+
+<p>對方收到後先驗證來源後，只能保證加密後的資料是你的</p>
+
+<p>但plain text來源無法驗證</p>
+
+<hr />
+
+<h2 id="graphic-pk-cryptography-example">Graphic PK cryptography example</h2>
+
+<p>Ice cream vandor problem</p>
+
+<p><img src="/images/studynotes/icecreamvendor.png" /></p>
+
+<p>Q:</p>
+
+<ul>
+  <li>
+    <p>What is the minimum number of vans we need?</p>
+  </li>
+  <li>
+    <p>At which intersections would we base our vans?</p>
+  </li>
+</ul>
+
+<p>This problem is hard to solve:</p>
+
+<p><em>O(n choose k) = O(n!/k!(n-k)!)</em></p>
+
+<p>However, this solution is easy to check:</p>
+
+<p><em>O(n)</em></p>
+
+<h3 id="encrypt">Encrypt</h3>
+
+<p><img src="/images/studynotes/pkencry.png" /></p>
+
+<h3 id="decrypt">Decrypt</h3>
+
+<p><img src="/images/studynotes/pkdecry.png" /></p>
+
+<hr />
+
+<h2 id="real-world-pk-crypt-algorithm">real-world PK crypt algorithm</h2>
+
+<ol>
+  <li>knapsack problem</li>
+</ol>
+
+<ul>
+  <li>it has been broken 😰</li>
+</ul>
+
+<p><img src="/images/studynotes/knapsackkeygen.png" /></p>
+
+<p><img src="/images/studynotes/knapsackencry.png" /></p>
+
+<p><img src="/images/studynotes/knapsackdecry.png" /></p>
+
+<ol>
+  <li>RSA algorithm</li>
+</ol>
+
+<p><img src="/images/studynotes/rsakeygen.png" /></p>
+
+<p><img src="/images/studynotes/rsaencry.png" /></p>
+
+<p><img src="/images/studynotes/rsadecry.png" /></p>
+
+<hr />
+
+<h2 id="performance">Performance</h2>
+
+<p>那既然有了 PK , 那我們還需要symmetric cryptography幹麻?</p>
+
+<p>大家可以安全的交換隱密資訊了💪💪💪</p>
+
+<p>What a wonderful world ~~</p>
+
+<p>.</p>
+
+<p>.</p>
+
+<p>.</p>
+
+<p>但事實是</p>
+
+<p>非對稱的加密非常~慢</p>
+
+<p><img src="/images/studynotes/aesrsabench.png" /></p>
+
+<p><a href="https://github.com/ISS-Security/demo_crypto/blob/master/sk_vs_pk_bench.rb">benchmark</a></p>
+
+<p>於是美好世界</p>
+
+<p><img src="https://media.giphy.com/media/ZNKzkUzkRx75C/giphy.gif" /></p>
+
+<hr />
+
+<h2 id="in-practice">In practice</h2>
+
+<p>當然不是這樣世界就毀了</p>
+
+<p>現實中將對稱跟非對稱一起用</p>
+
+<p>用對稱加密資訊，再用非對稱加密key，這樣資訊跟key都可以在網路上傳輸啦~</p>
+
+<p>同時又兼顧效能</p>
+
+<p>whole picture
+<img src="/images/studynotes/pkplussk.png" /></p>
+
+<hr />
+
+<h2 id="coding-time">Coding Time~</h2>
+
+<ul>
+  <li>
+    <p>騙你的，只要用library就好</p>
+  </li>
+  <li>
+    <p>rbnacl都做完所有該做的事了</p>
+  </li>
+</ul>
+
+<p>``` ruby rbnacl-pk-simple_box https://github.com/ISS-Security/demo_crypto/blob/master/rbnacl/rbnacl-pk-simple_box.rb</p>
+
+<p>require ‘rbnacl/libsodium’</p>
+
+<h1 id="key-creation">KEY CREATION</h1>
+<p>personA_private_key = RbNaCl::PrivateKey.generate
+personA_public_key  = personA_private_key.public_key</p>
+
+<p>personB_private_key = RbNaCl::PrivateKey.generate
+personB_public_key  = personB_private_key.public_key</p>
+
+<h1 id="key-exchange">KEY EXCHANGE</h1>
+<p>personA_box = RbNaCl::SimpleBox.from_keypair(
+  personB_public_key,
+  personA_private_key
+)</p>
+
+<p>personB_box = RbNaCl::SimpleBox.from_keypair(
+  personA_public_key,
+  personB_private_key
+)</p>
+
+<h1 id="sending">SENDING</h1>
+<p>message = “secret”
+ciphertext = personA_box.encrypt(message)</p>
+
+<h1 id="receiving">RECEIVING</h1>
+<p>plaintext = personB_box.decrypt(ciphertext)
+```</p>
+
+<hr />
+
+<p>最近會儘快把前幾週的上課筆記給補起來👻👻👻</p>
+]]></content>
+  </entry>
+  
+</feed>

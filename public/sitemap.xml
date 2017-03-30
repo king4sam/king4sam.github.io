@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://king4sam.github.io/blog/2017/03/27/ss-week5/</loc>
+<lastmod>2017-03-27T14:19:35+08:00</lastmod>
+</url>
+<url>
+<loc>https://king4sam.github.io/blog/2017/03/25/ss-week4/</loc>
+<lastmod>2017-03-25T23:42:33+08:00</lastmod>
+</url>
+<url>
+<loc>https://king4sam.github.io/blog/2017/03/24/ss-week6/</loc>
+<lastmod>2017-03-24T14:16:54+08:00</lastmod>
+</url>
+<url>
 <loc>https://king4sam.github.io/blog/2017/03/23/git-branching-tutorial/</loc>
 <lastmod>2017-03-23T15:17:35+08:00</lastmod>
 </url>
@@ -157,10 +169,10 @@
 <lastmod>2016-07-30T23:01:14+08:00</lastmod>
 </url>
 <url>
-<loc>https://king4sam.github.io/blog/archives/</loc>
+<loc>https://king4sam.github.io/archives/</loc>
 </url>
 <url>
-<loc>https://king4sam.github.io/archives/</loc>
+<loc>https://king4sam.github.io/blog/archives/</loc>
 </url>
 <url>
 <loc>https://king4sam.github.io/arquivos/</loc>
@@ -206,5 +218,20 @@
 </url>
 <url>
 <loc>https://king4sam.github.io/blog/categories/git/</loc>
+</url>
+<url>
+<loc>https://king4sam.github.io/blog/categories/service-security/</loc>
+</url>
+<url>
+<loc>https://king4sam.github.io/posts/2/</loc>
+</url>
+<url>
+<loc>https://king4sam.github.io/posts/3/</loc>
+</url>
+<url>
+<loc>https://king4sam.github.io/posts/4/</loc>
+</url>
+<url>
+<loc>https://king4sam.github.io/posts/5/</loc>
 </url>
 </urlset>
