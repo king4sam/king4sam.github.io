@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Ss-week7 - Necisam's blog</title>
+  <title>SS-week7 - Necisam's blog</title>
   <meta name="author" content="Necisam">
 
    <meta name="description" content="so happy so funny"> 
@@ -22,7 +22,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://king4sam.github.io/blog/2017/03/31/ss-week7/">
-  <meta property="og:title" content="Ss-week7 - Necisam's blog">
+  <meta property="og:title" content="SS-week7 - Necisam's blog">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
@@ -131,7 +131,7 @@
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Ss-week7
+        SS-week7
         
     </h1>
     
@@ -343,6 +343,50 @@ GET parameter is saved in url so that you can save the search result as a bookma
 </span><span class="line"><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
+<hr />
+
+<h2 id="security-threats">Security Threats</h2>
+
+<p>當然目前的服務很簡單，也有很多漏洞
+下面列了一些，之後我們都會一個一個來解決</p>
+
+<ul>
+  <li>Threat: Confidentiality
+    <ul>
+      <li>Stored resources could be stolen if server is compromised</li>
+      <li>Vulnerability: User resources are not being encrypted</li>
+      <li>Vector: Attacker with access to server can read whole data store</li>
+    </ul>
+  </li>
+  <li>Threat: Authorization, Authentication
+    <ul>
+      <li>Information about resources is not private</li>
+      <li>Vulnerability: App does not check if user is authorized to see resource</li>
+      <li>Vector: Anyone can access any data by knowing its public URL</li>
+    </ul>
+  </li>
+  <li>Threat: Integrity, Bug
+    <ul>
+      <li>:id random key generator could produce collisions</li>
+      <li>Vulnerability: random key generator produces same keys within given second</li>
+      <li>Vector: send multiple POST ‘/resource’ requests within same second</li>
+    </ul>
+  </li>
+  <li>Threat: Integrity
+    <ul>
+      <li>User could destroy earlier resources</li>
+      <li>Vulnerability: app does not check if :id key is being sent along with POST request</li>
+      <li>Vector: send :id along with POST request to see if app overwrite earlier resource</li>
+    </ul>
+  </li>
+  <li>Threat: All dimensions
+    <ul>
+      <li>Dependencies (gems) could have vulnerabilities</li>
+      <li>Vulnerability: gems could allow attacks (denial of service, remote code execution, etc.)</li>
+      <li>Vector: send a payload to a route that will likely invoke a particular dependency (gem)</li>
+    </ul>
+  </li>
+</ul>
 </div>
 
 
@@ -449,6 +493,18 @@ GET parameter is saved in url so that you can save the search result as a bookma
                 </a>
               
             
+            
+            
+              
+              <a href="/blog/2017/04/19/ss-week1/" class="col-xs-12 col-md-4 btn btn-default pull-right" title="Next Post: SS-week1">
+                <div class="text-muted">
+                  <small>Next Post</small>
+                </div>
+                <div class="pager-title">
+                  <h4>SS-week1</h4>
+                </div>
+              </a>
+              
             
             
           </div>

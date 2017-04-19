@@ -4,7 +4,7 @@
   <title><![CDATA[Necisam's blog]]></title>
   <link href="https://king4sam.github.io/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-04-19T23:18:46+08:00</updated>
+  <updated>2017-04-20T00:47:14+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,7 +14,91 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ss-week7]]></title>
+    <title type="html"><![CDATA[SS-week1]]></title>
+    <link href="https://king4sam.github.io/blog/2017/04/19/ss-week1/"/>
+    <updated>2017-04-19T23:37:56+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/04/19/ss-week1</id>
+    <content type="html"><![CDATA[<h1 id="security-and-service">Security and Service</h1>
+
+<!--more-->
+
+<p>既然課名都叫 Security and Security
+一開始當然是先討論什麼是 Security，什麼是 Security</p>
+
+<h2 id="security">security</h2>
+
+<ul>
+  <li>Scenario A: Traveling in a foreign country</li>
+  <li>Scenario B: Shopping online at a new website</li>
+</ul>
+
+<p>年代久遠，我忘記當初到底討論出哪些點了 😩</p>
+
+<p>總之寫了四分之一黑板</p>
+
+<p>而這些點最後又被歸類為以下六個面向</p>
+
+<h2 id="information-security-dimensions">Information Security Dimensions</h2>
+<ul>
+  <li>Availability : available for operation and use
+<br />可用性</li>
+  <li>Authentication : prove who you are
+<br />身份驗證</li>
+  <li>Authorization : the accessment to the information
+<br />授權</li>
+  <li>Confidentiality : confidential is protected
+<br />保密</li>
+  <li>Integrity : the quality of being honest
+<br />可以偵測資料是否被竄改過</li>
+  <li>Non-repudiation :
+<br />不可否認性(ex 發票證明交易確實發生過)</li>
+</ul>
+
+<p>最後再提供一些新聞，大家討論問題是發生在哪個面向</p>
+
+<p><img src="https://king4sam.github.io/images/ss/hospital_robbed.png" />
+<img src="https://king4sam.github.io/images/ss/zomato.png" /></p>
+
+<h2 id="service">Service</h2>
+
+<p>沒有討論太多，記得是認為</p>
+
+<p>providing values 就是個 Service</p>
+
+<p><del>順便幫下學期的soa打個廣告XDD<del></del></del></p>
+
+<hr />
+
+<h2 id="meet-your-tools">Meet Your Tools</h2>
+
+<p>這學期會用的都有以下特質</p>
+
+<ul>
+  <li>Free</li>
+  <li>Open Source</li>
+  <li>Low-level Mastery</li>
+</ul>
+
+<h2 id="ruby">ruby</h2>
+
+<p>老師說他最愛readable的特性</p>
+
+<h2 id="linux">linux</h2>
+<p>身為攻城獅你說你不會用linux?</p>
+
+<p>大三屁孩或用mac裝潮的就算了</p>
+
+<p>我絕對不是說當助教時遇到的奇葩學生</p>
+
+<h2 id="codecademy">Codecademy</h2>
+<p>Learn to code interactively, for free.</p>
+
+<h2 id="canvas-and-slack">Canvas and Slack</h2>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SS-week7]]></title>
     <link href="https://king4sam.github.io/blog/2017/03/31/ss-week7/"/>
     <updated>2017-03-31T10:37:03+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/03/31/ss-week7</id>
@@ -223,6 +307,50 @@ GET parameter is saved in url so that you can save the search result as a bookma
 </span><span class="line"><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 
+<hr />
+
+<h2 id="security-threats">Security Threats</h2>
+
+<p>當然目前的服務很簡單，也有很多漏洞
+下面列了一些，之後我們都會一個一個來解決</p>
+
+<ul>
+  <li>Threat: Confidentiality
+    <ul>
+      <li>Stored resources could be stolen if server is compromised</li>
+      <li>Vulnerability: User resources are not being encrypted</li>
+      <li>Vector: Attacker with access to server can read whole data store</li>
+    </ul>
+  </li>
+  <li>Threat: Authorization, Authentication
+    <ul>
+      <li>Information about resources is not private</li>
+      <li>Vulnerability: App does not check if user is authorized to see resource</li>
+      <li>Vector: Anyone can access any data by knowing its public URL</li>
+    </ul>
+  </li>
+  <li>Threat: Integrity, Bug
+    <ul>
+      <li>:id random key generator could produce collisions</li>
+      <li>Vulnerability: random key generator produces same keys within given second</li>
+      <li>Vector: send multiple POST ‘/resource’ requests within same second</li>
+    </ul>
+  </li>
+  <li>Threat: Integrity
+    <ul>
+      <li>User could destroy earlier resources</li>
+      <li>Vulnerability: app does not check if :id key is being sent along with POST request</li>
+      <li>Vector: send :id along with POST request to see if app overwrite earlier resource</li>
+    </ul>
+  </li>
+  <li>Threat: All dimensions
+    <ul>
+      <li>Dependencies (gems) could have vulnerabilities</li>
+      <li>Vulnerability: gems could allow attacks (denial of service, remote code execution, etc.)</li>
+      <li>Vector: send a payload to a route that will likely invoke a particular dependency (gem)</li>
+    </ul>
+  </li>
+</ul>
 ]]></content>
   </entry>
   
@@ -2641,72 +2769,6 @@ well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
 </span><span class="line"><span class="k">else</span><span class="p">{</span>
 </span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;a is definded&quot;</span><span class="p">);</span>
 </span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Jsuwp-2-10 Creation and Hoisting]]></title>
-    <link href="https://king4sam.github.io/blog/2017/02/02/jsuwp-2-10/"/>
-    <updated>2017-02-02T00:11:33+08:00</updated>
-    <id>https://king4sam.github.io/blog/2017/02/02/jsuwp-2-10</id>
-    <content type="html"><![CDATA[<!--more-->
-
-<h1 id="creation-and-hoisting">2-10 Creation and hoisting</h1>
-
-<ul>
-  <li>hoisting : before js code is run line by line, js engine set memory space for the variables</li>
-  <li>all variables is initialized to undefined in js</li>
-</ul>
-
-<p><img src="https://king4sam.github.io/images/studynotes/creationphase.png" /></p>
-
-<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">b</span><span class="p">();</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;Bello&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="kd">function</span> <span class="nx">b</span> <span class="p">(){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;called b&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line"><span class="cm">/*</span>
-</span><span class="line"><span class="cm">called b</span>
-</span><span class="line"><span class="cm">undefined</span>
-</span><span class="line"><span class="cm"> */</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">b</span><span class="p">();</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">function</span> <span class="nx">b</span> <span class="p">(){</span>
-</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;called b&#39;</span><span class="p">);</span>
-</span><span class="line"><span class="p">}</span>
-</span><span class="line">
-</span><span class="line"><span class="cm">/*</span>
-</span><span class="line"><span class="cm">called b</span>
-</span><span class="line"><span class="cm">Error!!</span>
-</span><span class="line"><span class="cm">*/</span>
 </span></code></pre></td></tr></table></div></figure>
 ]]></content>
   </entry>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Service_security | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/service-security/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-04-19T23:18:46+08:00</updated>
+  <updated>2017-04-20T00:47:14+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ss-week7]]></title>
+    <title type="html"><![CDATA[SS-week7]]></title>
     <link href="https://king4sam.github.io/blog/2017/03/31/ss-week7/"/>
     <updated>2017-03-31T10:37:03+08:00</updated>
     <id>https://king4sam.github.io/blog/2017/03/31/ss-week7</id>
@@ -210,6 +210,50 @@ end</p>
 
 <p>```</p>
 
+<hr />
+
+<h2 id="security-threats">Security Threats</h2>
+
+<p>當然目前的服務很簡單，也有很多漏洞
+下面列了一些，之後我們都會一個一個來解決</p>
+
+<ul>
+  <li>Threat: Confidentiality
+    <ul>
+      <li>Stored resources could be stolen if server is compromised</li>
+      <li>Vulnerability: User resources are not being encrypted</li>
+      <li>Vector: Attacker with access to server can read whole data store</li>
+    </ul>
+  </li>
+  <li>Threat: Authorization, Authentication
+    <ul>
+      <li>Information about resources is not private</li>
+      <li>Vulnerability: App does not check if user is authorized to see resource</li>
+      <li>Vector: Anyone can access any data by knowing its public URL</li>
+    </ul>
+  </li>
+  <li>Threat: Integrity, Bug
+    <ul>
+      <li>:id random key generator could produce collisions</li>
+      <li>Vulnerability: random key generator produces same keys within given second</li>
+      <li>Vector: send multiple POST ‘/resource’ requests within same second</li>
+    </ul>
+  </li>
+  <li>Threat: Integrity
+    <ul>
+      <li>User could destroy earlier resources</li>
+      <li>Vulnerability: app does not check if :id key is being sent along with POST request</li>
+      <li>Vector: send :id along with POST request to see if app overwrite earlier resource</li>
+    </ul>
+  </li>
+  <li>Threat: All dimensions
+    <ul>
+      <li>Dependencies (gems) could have vulnerabilities</li>
+      <li>Vulnerability: gems could allow attacks (denial of service, remote code execution, etc.)</li>
+      <li>Vector: send a payload to a route that will likely invoke a particular dependency (gem)</li>
+    </ul>
+  </li>
+</ul>
 ]]></content>
   </entry>
   
