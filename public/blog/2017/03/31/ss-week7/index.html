@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>SS Week5 - Necisam's blog</title>
+  <title>Ss-week7 - Necisam's blog</title>
   <meta name="author" content="Necisam">
 
    <meta name="description" content="so happy so funny"> 
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="https://king4sam.github.io/blog/2017/03/27/ss-week5/">
+  <link rel="canonical" href="https://king4sam.github.io/blog/2017/03/31/ss-week7/">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Necisam's blog" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://king4sam.github.io/blog/2017/03/27/ss-week5/">
-  <meta property="og:title" content="SS Week5 - Necisam's blog">
+  <meta property="og:url" content="https://king4sam.github.io/blog/2017/03/31/ss-week7/">
+  <meta property="og:title" content="Ss-week7 - Necisam's blog">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
@@ -122,7 +122,7 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-27T14:19:35+08:00"  data-updated="true" itemprop="datePublished dateCreated">Mon 27 Mar 2017,  2:19 PM</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-31T10:37:03+08:00"  data-updated="true" itemprop="datePublished dateCreated">Fri 31 Mar 2017, 10:37 AM</time>
         
            | <a href="#disqus_thread" itemprop="discussionUrl"
              data-disqus-identifier="https://king4sam.github.io">Comments</a>
@@ -131,246 +131,218 @@
     
     
     <h1 class="entry-title" itemprop="name headline">
-        SS Week5
+        Ss-week7
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><h1 id="symmetric-cryptographycont">Symmetric Cryptography(Con’t)</h1>
+<div class="entry-content clearfix" itemprop="articleBody description"><h1 id="web-services-and-security">Web Services and Security</h1>
 
 <!--more-->
 
-<h2 id="stream-ciphers">Stream Ciphers</h2>
-
-<ol>
-  <li>A5/1 Cipher (GSM)
-    <ul>
-      <li>Produces keystream bit at each step</li>
-      <li>Easy to implement in hardware</li>
-    </ul>
-  </li>
-</ol>
-
-<p><img src="/images/studynotes/a51.png" />
-2. RC4 Cipher</p>
+<h2 id="internet-and-tcpip">Internet and TCP/IP</h2>
 
 <ul>
-  <li>Produces keystream byte at each step</li>
-  <li>One of the most widely used software stream ciphers
-    <ul>
-      <li>in older implementations of SSL /TLS; WEP(!)</li>
-      <li>removed from major browsers in 2015</li>
-    </ul>
-  </li>
+  <li><a href="http://www.youtube.com/watch?v=9hIQjrMHTv4">科普時間</a></li>
+  <li>但老師連字幕都沒開變成在聽力測驗QQ</li>
 </ul>
 
-<h2 id="block-ciphers">Block Ciphers</h2>
-
-<ol>
-  <li>Feistel Cipher
-    <ul>
-      <li>key will change every round</li>
-      <li>function F must be reversible</li>
-      <li>multiple “rounds”</li>
-    </ul>
-  </li>
-</ol>
-
-<p><img src="/images/studynotes/feistel.png" /></p>
-
-<h2 id="block-cipher-modes">Block Cipher Modes</h2>
-
-<ol>
-  <li>Electronic Code Book (ECB) Mode
-  <img src="/images/studynotes/ecb.png" />
-    <ul>
-      <li>將plain text切成 blocks</li>
-      <li>分別對每個block做Block Ciphers</li>
-      <li>缺點:同樣的block會被加密成同樣的cipher</li>
-      <li>diffusion較差</li>
-    </ul>
-  </li>
-  <li>Cipher Block Chaining (CBC) Mode
-  <img src="/images/studynotes/cbc.png" />
-    <ul>
-      <li>跟ECB類似</li>
-      <li>在做完Block Ciphers，會在跟前一個block的結果做xor，成為最後加密的結果</li>
-      <li>改善diffusion</li>
-      <li>最後一個block可以當<a href="#data-integrity-mac-blocksmessage-authentication-code">MAC</a> blocks(包含整個plain text的資訊)</li>
-    </ul>
-  </li>
-  <li>Comparison</li>
-</ol>
-
-<p>ECB   V.S  CBC</p>
-
-<p><img src="/images/studynotes/ecbgirl.png" width="280" /><img src="/images/studynotes/cbcgirl.png" width="280" /></p>
-
-<h2 id="aes-cipher">AES Cipher</h2>
-<ul>
-  <li>most popular nowadays</li>
-</ul>
-
-<p><img src="/images/studynotes/aes.png" /></p>
-
-<h2 id="symmetric-key-ciphers-and-key-reuse">Symmetric Key Ciphers and Key Reuse</h2>
+<h2 id="http">HTTP:</h2>
 
 <ul>
-  <li>Depth Attacks : Giving attackers deeper information about your plaintext or key
-    <ul>
-      <li>例如之前的one-time pad ，當key重複使用時，攻擊者可以得知P1 ⊕ P2</li>
-    </ul>
-
-    <p><img src="/images/studynotes/depthattack.png" /></p>
-  </li>
-  <li>Replay Attacks:
-    <ul>
-      <li>當攻擊者監聽到一個Ciphers，傳送給對應的人，一樣可以得到正確的回覆</li>
-    </ul>
-
-    <p><img src="/images/studynotes/replyattack.png" /></p>
-  </li>
-</ul>
-
-<h2 id="using-a-nonceone-time-use-random-bytes">Using a Nonce(one-time use random bytes)</h2>
-
-<ul>
+  <li>Persistent but Stateless</li>
+  <li>not a whole conversation</li>
+  <li>just a line of message/request</li>
   <li>
-    <p>Countering Depth Attacks :
-  當key重複使用時，還是可以因為nonce不同，而加密成不同的cipher</p>
+    <p>Request and Resoinse Msg</p>
   </li>
-  <li>
-    <p>Countering Replay Attacks :
-  當攻擊者監聽到一個Ciphers，想要重送時，會因為Nonce不同，而被拒絕。</p>
-  </li>
+  <li>(HTTPie)[https://httpie.org] : cmd tool designed for painless debugging and interaction with HTTP servers, RESTful APIs, and web services</li>
+</ul>
+
+<h2 id="http-methods">HTTP methods</h2>
+
+<ul>
+  <li>Safety : Never change the resources</li>
+  <li>Idempotence : can be called many times without different outcome</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>HTTP method</th>
+      <th>Safety</th>
+      <th>Idempotence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>N</td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>N</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>N</td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>usage example :
+google search use GET method
+GET parameter is saved in url so that you can save the search result as a bookmark</li>
+</ul>
+
+<h2 id="http-status-code">HTTP status code</h2>
+
+<ul>
+  <li>DON’T be lazy, lookup  the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">table</a></li>
 </ul>
 
 <hr />
 
-<h1 id="hashing">Hashing</h1>
+<h1 id="happycoding-time--">Happy(Coding) time ~ 之前要先有</h1>
 
+<h1 id="section">出場人員介紹👏👏👏</h1>
+
+<h2 id="sinatrahttpsgithubcomsinatrasinatra"><a href="https://github.com/sinatra/sinatra">Sinatra</a></h2>
 <ul>
-  <li>No key from the user (built-in key)</li>
-  <li>One-way function only (cannot reverse/decrypt)</li>
-  <li>Compresses data to fixed length (e.g., 128-bits)</li>
-  <li>Collisions exist, but should be extremely rare</li>
+  <li>Web Application Framework</li>
+  <li>Sinatra is a DSL for quickly creating web applications in Ruby with minimal effort
+(介紹就這麼簡短，官網甚至一進去只看到sample code)</li>
 </ul>
 
-<h2 id="non-cryptographic-hashing">Non-cryptographic Hashing</h2>
+<h3 id="run-server">run server</h3>
 
 <ul>
-  <li>Cyclic Redundancy Check (CRC)
-    <ul>
-      <li>👍 Data Lookup</li>
-      <li>👎 Data integrity</li>
-    </ul>
-
-    <p><strong>pro</strong></p>
-
-    <ul>
-      <li>simple to perform in hardware</li>
-      <li>can catch common, unintentional errors</li>
-    </ul>
-
-    <p><strong>cons</strong></p>
-
-    <ul>
-      <li>cannot catch intentional manipulation</li>
-      <li>easy to revers</li>
-      <li>crc(x⊕y⊕z) = crc(x) ⊕ crc(y) ⊕ crc(z)
-well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
-    </ul>
-  </li>
+  <li>Execute Rack based web application as per config.ru</li>
 </ul>
 
-<h2 id="cryptographic-hashing">Cryptographic Hashing</h2>
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bat"><span class="line">rackup
+</span></code></pre></td></tr></table></div></figure>
+
+<h2 id="bundlerhttpbundlerio"><a href="http://bundler.io">Bundler</a></h2>
 <ul>
-  <li>Sha1 sha2</li>
-  <li>md5</li>
-  <li>…</li>
+  <li>provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.</li>
 </ul>
 
-<h2 id="data-integrity-mac-blocksmessage-authentication-code">Data Integrity: MAC blocks(Message Authentication Code)</h2>
+<h3 id="install">install</h3>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bat"><span class="line">gem install bundler
+</span></code></pre></td></tr></table></div></figure>
+
+<h3 id="execution">execution</h3>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bat"><span class="line">bundle install
+</span></code></pre></td></tr></table></div></figure>
+
 <ul>
-  <li>protects both a message’s data integrity as well as its authenticity, by allowing verifiers to detect any changes to the message content.</li>
-  <li>在解密前先驗證資料來源及正確性(有沒有被變更)</li>
-  <li>沒有先驗證就解密的話，攻擊者能從更改後的cipher跟plaintext中得到額外的訊息</li>
+  <li>Gemfile.lock stores which version of gems should be installed</li>
 </ul>
 
-<h3 id="approaches-to-authenticated-encryption">Approaches to Authenticated Encryption</h3>
+<h3 id="executionsuggestion">execution(suggestion)</h3>
 
-<ol>
-  <li>MAC-and-Encrypt
-    <ul>
-      <li>encrypy the plaintextthen calculate MAC on plaintext</li>
-    </ul>
-  </li>
-  <li>MAC-then-Encrypt (MtE)
-    <ul>
-      <li>calculate MAC on plaintext and encrypt plaintext + MAC</li>
-      <li>vulnerable to Decryption Oracle Attack</li>
-      <li>∵ you have to perform decryption before Authenticated</li>
-    </ul>
-  </li>
-  <li>Encrypt-then-MAC
-    <ul>
-      <li>encrypy the plaintext then calculate MAC on cipher</li>
-    </ul>
-  </li>
-</ol>
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bat"><span class="line">bundle exec rake
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>ensures following command is only run with gems specified in Gemfile.lock</li>
+</ul>
+
+<h2 id="rakehttpsgithubcomrubyrake"><a href="https://github.com/ruby/rake">rake</a></h2>
+<ul>
+  <li>Ruby make</li>
+</ul>
+
+<h3 id="simple-example">simple example</h3>
+
+<figure class="code"><figcaption><span>task simple</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">task</span> <span class="ss">default</span><span class="p">:</span> <span class="sx">%w[test]</span>
+</span><span class="line"><span class="n">task</span> <span class="ss">:test</span> <span class="k">do</span>
+</span><span class="line">  <span class="n">ruby</span> <span class="s2">&quot;test/unittest.rb&quot;</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 <hr />
 
-<h1 id="coding-time-">Coding time ~</h1>
+<h1 id="coding-time">真正的coding time~</h1>
 
-<p>So many things to care about</p>
+<p>Ruby 語法的部分就略過不說了</p>
 
+<h2 id="model">model</h2>
 <ul>
-  <li>which algorithm to apply(must be not broken yet)</li>
-  <li>implements a algorithm wihout making mistake</li>
-  <li>generate different keys</li>
-  <li>use nonce</li>
-  <li>Authenticated Encryption order</li>
+  <li>一般的class</li>
+  <li>這次spec 要求implement 下列 methods
+    <ul>
+      <li>initialize</li>
+      <li>save</li>
+      <li>find</li>
+      <li>all</li>
+      <li>to_json</li>
+    </ul>
+  </li>
 </ul>
 
-<p><img src="/images/fun/Jackie-chan-meme.jpg" /></p>
-
-<h2 id="developers-should-know-about-cryptography"><strong><em>Developers should know about cryptography!</em></strong></h2>
-
-<h2 id="but-only-cryptographers-should-write-ciphers"><strong><em>But only cryptographers should write ciphers!</em></strong></h2>
-
-<h2 id="nacl">NaCl</h2>
-
+<h2 id="controller">controller</h2>
 <ul>
-  <li>NaCl : a new easy-to-use highspeed software library for network communication, encryption, decryption, signatures, etc.</li>
+  <li>必需繼承 Sinatra::Base, rack才認得它</li>
+  <li>requirement
+    <ul>
+      <li>get /sourece : return details of a specific resource</li>
+      <li>get /sourece/id : return an index of all resources</li>
+      <li>post : create a new resource</li>
+    </ul>
+  </li>
 </ul>
 
-<p>Implemented in C</p>
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">class</span> <span class="nc">ShareConfigurationsAPI</span> <span class="o">&lt;</span> <span class="no">Sinatra</span><span class="o">::</span><span class="no">Base</span>
+</span><span class="line">  <span class="n">configure</span> <span class="k">do</span>
+</span><span class="line">    <span class="c1">#Configure Sinatra settings</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">get</span> <span class="s1">&#39;/?&#39;</span> <span class="k">do</span>
+</span><span class="line">    <span class="c1"># root route for anything</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">post</span> <span class="s1">&#39;/api/v1/configurations/?&#39;</span> <span class="k">do</span>
+</span><span class="line">    <span class="c1"># a post route</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<ul>
-  <li>libSodium :  portable, cross-compilable, installable, packageable fork of NaCl</li>
-</ul>
-
-<p>Implemented in C</p>
-
-<ul>
-  <li>RbNaCl : Ruby binding to the Networking and Cryptography (NaCl) library</li>
-</ul>
-
-<p>Implemented in Ruby, but you have to install libSodium yourself</p>
-
-<ul>
-  <li>rbnacl-libsodium : packages the libsodium library as a Ruby Gem</li>
-</ul>
-
-<p>Implemented in Ruby, the only thing to do is
-<code>gem install rbnacl-libsodium</code></p>
-
-<p><a href="https://github.com/cryptosphere/rbnacl/wiki">Document of RbNaCl</a></p>
-
-<p>灑花(<em>￣▽￣)/‧☆</em>”’ *-.,<em>,.-*’`“*-.,</em>☆</p>
 </div>
 
 
@@ -399,14 +371,14 @@ well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
     
     <h4>Share this post</h4>
     
-    <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://king4sam.github.io/blog/2017/03/27/ss-week5/;" 
+    <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://king4sam.github.io/blog/2017/03/31/ss-week7/;" 
         onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
         <span class="hidden">Twitter</span>
     </a>
-    <a class="fa fa-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://king4sam.github.io/blog/2017/03/27/ss-week5/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+    <a class="fa fa-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://king4sam.github.io/blog/2017/03/31/ss-week7/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
         <span class="hidden">Facebook</span>
     </a>
-    <a class="fa fa-google-plus" href="https://plus.google.com/share?url=https://king4sam.github.io/blog/2017/03/27/ss-week5/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+    <a class="fa fa-google-plus" href="https://plus.google.com/share?url=https://king4sam.github.io/blog/2017/03/31/ss-week7/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
         <span class="hidden">Google+</span>
     </a>
     
@@ -450,7 +422,7 @@ well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-27T14:19:35+08:00"  data-updated="true" itemprop="datePublished dateCreated">Mon 27 Mar 2017,  2:19 PM</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-31T10:37:03+08:00"  data-updated="true" itemprop="datePublished dateCreated">Fri 31 Mar 2017, 10:37 AM</time>
           <br>
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
@@ -467,28 +439,16 @@ well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
             
             
               
-                <a href="/blog/2017/03/25/ss-week4/" class="col-xs-12 col-md-4 btn btn-default" title="Previous Post: SS week4"> 
+                <a href="/blog/2017/03/27/ss-week5/" class="col-xs-12 col-md-4 btn btn-default" title="Previous Post: SS week5"> 
                   <div class="text-muted">
                     <small>Previous Post</small>
                   </div>
                   <div class="pager-title">
-                    <h4>SS week4</h4>
+                    <h4>SS week5</h4>
                   </div>
                 </a>
               
             
-            
-            
-              
-              <a href="/blog/2017/03/31/ss-week7/" class="col-xs-12 col-md-4 btn btn-default pull-right" title="Next Post: ss-week7">
-                <div class="text-muted">
-                  <small>Next Post</small>
-                </div>
-                <div class="pager-title">
-                  <h4>ss-week7</h4>
-                </div>
-              </a>
-              
             
             
           </div>
@@ -526,8 +486,8 @@ well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'https://king4sam.github.io/blog/2017/03/27/ss-week5/';
-        var disqus_url = 'https://king4sam.github.io/blog/2017/03/27/ss-week5/';
+        var disqus_identifier = 'https://king4sam.github.io/blog/2017/03/31/ss-week7/';
+        var disqus_url = 'https://king4sam.github.io/blog/2017/03/31/ss-week7/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Service_security | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/service-security/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-31T00:02:29+08:00</updated>
+  <updated>2017-04-19T23:18:46+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -12,6 +12,206 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ss-week7]]></title>
+    <link href="https://king4sam.github.io/blog/2017/03/31/ss-week7/"/>
+    <updated>2017-03-31T10:37:03+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/03/31/ss-week7</id>
+    <content type="html"><![CDATA[<h1 id="web-services-and-security">Web Services and Security</h1>
+
+<!--more-->
+
+<h2 id="internet-and-tcpip">Internet and TCP/IP</h2>
+
+<ul>
+  <li><a href="http://www.youtube.com/watch?v=9hIQjrMHTv4">科普時間</a></li>
+  <li>但老師連字幕都沒開變成在聽力測驗QQ</li>
+</ul>
+
+<h2 id="http">HTTP:</h2>
+
+<ul>
+  <li>Persistent but Stateless</li>
+  <li>not a whole conversation</li>
+  <li>just a line of message/request</li>
+  <li>
+    <p>Request and Resoinse Msg</p>
+  </li>
+  <li>(HTTPie)[https://httpie.org] : cmd tool designed for painless debugging and interaction with HTTP servers, RESTful APIs, and web services</li>
+</ul>
+
+<h2 id="http-methods">HTTP methods</h2>
+
+<ul>
+  <li>Safety : Never change the resources</li>
+  <li>Idempotence : can be called many times without different outcome</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>HTTP method</th>
+      <th>Safety</th>
+      <th>Idempotence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>N</td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>N</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>N</td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>usage example :
+google search use GET method
+GET parameter is saved in url so that you can save the search result as a bookmark</li>
+</ul>
+
+<h2 id="http-status-code">HTTP status code</h2>
+
+<ul>
+  <li>DON’T be lazy, lookup  the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">table</a></li>
+</ul>
+
+<hr />
+
+<h1 id="happycoding-time--">Happy(Coding) time ~ 之前要先有</h1>
+
+<h1 id="section">出場人員介紹👏👏👏</h1>
+
+<h2 id="sinatrahttpsgithubcomsinatrasinatra"><a href="https://github.com/sinatra/sinatra">Sinatra</a></h2>
+<ul>
+  <li>Web Application Framework</li>
+  <li>Sinatra is a DSL for quickly creating web applications in Ruby with minimal effort
+(介紹就這麼簡短，官網甚至一進去只看到sample code)</li>
+</ul>
+
+<h3 id="run-server">run server</h3>
+
+<ul>
+  <li>Execute Rack based web application as per config.ru</li>
+</ul>
+
+<p><code>bat
+rackup
+</code></p>
+
+<h2 id="bundlerhttpbundlerio"><a href="http://bundler.io">Bundler</a></h2>
+<ul>
+  <li>provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.</li>
+</ul>
+
+<h3 id="install">install</h3>
+
+<p><code>bat
+gem install bundler
+</code></p>
+
+<h3 id="execution">execution</h3>
+
+<p><code>bat
+bundle install
+</code></p>
+
+<ul>
+  <li>Gemfile.lock stores which version of gems should be installed</li>
+</ul>
+
+<h3 id="executionsuggestion">execution(suggestion)</h3>
+
+<p><code>bat
+bundle exec rake
+</code></p>
+
+<ul>
+  <li>ensures following command is only run with gems specified in Gemfile.lock</li>
+</ul>
+
+<h2 id="rakehttpsgithubcomrubyrake"><a href="https://github.com/ruby/rake">rake</a></h2>
+<ul>
+  <li>Ruby make</li>
+</ul>
+
+<h3 id="simple-example">simple example</h3>
+
+<p><code>ruby task simple
+task default: %w[test]
+task :test do
+  ruby "test/unittest.rb"
+end
+</code></p>
+
+<hr />
+
+<h1 id="coding-time">真正的coding time~</h1>
+
+<p>Ruby 語法的部分就略過不說了</p>
+
+<h2 id="model">model</h2>
+<ul>
+  <li>一般的class</li>
+  <li>這次spec 要求implement 下列 methods
+    <ul>
+      <li>initialize</li>
+      <li>save</li>
+      <li>find</li>
+      <li>all</li>
+      <li>to_json</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="controller">controller</h2>
+<ul>
+  <li>必需繼承 Sinatra::Base, rack才認得它</li>
+  <li>requirement
+    <ul>
+      <li>get /sourece : return details of a specific resource</li>
+      <li>get /sourece/id : return an index of all resources</li>
+      <li>post : create a new resource</li>
+    </ul>
+  </li>
+</ul>
+
+<p>``` ruby</p>
+
+<p>class ShareConfigurationsAPI &lt; Sinatra::Base
+  configure do
+    #Configure Sinatra settings
+  end</p>
+
+<p>get ‘/?’ do
+    # root route for anything
+  end</p>
+
+<p>post ‘/api/v1/configurations/?’ do
+    # a post route
+  end
+end</p>
+
+<p>```</p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SS Week5]]></title>

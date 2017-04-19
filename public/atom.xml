@@ -4,7 +4,7 @@
   <title><![CDATA[Necisam's blog]]></title>
   <link href="https://king4sam.github.io/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-03-31T00:02:29+08:00</updated>
+  <updated>2017-04-19T23:18:46+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -12,6 +12,219 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ss-week7]]></title>
+    <link href="https://king4sam.github.io/blog/2017/03/31/ss-week7/"/>
+    <updated>2017-03-31T10:37:03+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/03/31/ss-week7</id>
+    <content type="html"><![CDATA[<h1 id="web-services-and-security">Web Services and Security</h1>
+
+<!--more-->
+
+<h2 id="internet-and-tcpip">Internet and TCP/IP</h2>
+
+<ul>
+  <li><a href="http://www.youtube.com/watch?v=9hIQjrMHTv4">科普時間</a></li>
+  <li>但老師連字幕都沒開變成在聽力測驗QQ</li>
+</ul>
+
+<h2 id="http">HTTP:</h2>
+
+<ul>
+  <li>Persistent but Stateless</li>
+  <li>not a whole conversation</li>
+  <li>just a line of message/request</li>
+  <li>
+    <p>Request and Resoinse Msg</p>
+  </li>
+  <li>(HTTPie)[https://httpie.org] : cmd tool designed for painless debugging and interaction with HTTP servers, RESTful APIs, and web services</li>
+</ul>
+
+<h2 id="http-methods">HTTP methods</h2>
+
+<ul>
+  <li>Safety : Never change the resources</li>
+  <li>Idempotence : can be called many times without different outcome</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>HTTP method</th>
+      <th>Safety</th>
+      <th>Idempotence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>N</td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>N</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>N</td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>usage example :
+google search use GET method
+GET parameter is saved in url so that you can save the search result as a bookmark</li>
+</ul>
+
+<h2 id="http-status-code">HTTP status code</h2>
+
+<ul>
+  <li>DON’T be lazy, lookup  the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">table</a></li>
+</ul>
+
+<hr />
+
+<h1 id="happycoding-time--">Happy(Coding) time ~ 之前要先有</h1>
+
+<h1 id="section">出場人員介紹👏👏👏</h1>
+
+<h2 id="sinatrahttpsgithubcomsinatrasinatra"><a href="https://github.com/sinatra/sinatra">Sinatra</a></h2>
+<ul>
+  <li>Web Application Framework</li>
+  <li>Sinatra is a DSL for quickly creating web applications in Ruby with minimal effort
+(介紹就這麼簡短，官網甚至一進去只看到sample code)</li>
+</ul>
+
+<h3 id="run-server">run server</h3>
+
+<ul>
+  <li>Execute Rack based web application as per config.ru</li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bat"><span class="line">rackup
+</span></code></pre></td></tr></table></div></figure>
+
+<h2 id="bundlerhttpbundlerio"><a href="http://bundler.io">Bundler</a></h2>
+<ul>
+  <li>provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.</li>
+</ul>
+
+<h3 id="install">install</h3>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bat"><span class="line">gem install bundler
+</span></code></pre></td></tr></table></div></figure>
+
+<h3 id="execution">execution</h3>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bat"><span class="line">bundle install
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>Gemfile.lock stores which version of gems should be installed</li>
+</ul>
+
+<h3 id="executionsuggestion">execution(suggestion)</h3>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bat"><span class="line">bundle exec rake
+</span></code></pre></td></tr></table></div></figure>
+
+<ul>
+  <li>ensures following command is only run with gems specified in Gemfile.lock</li>
+</ul>
+
+<h2 id="rakehttpsgithubcomrubyrake"><a href="https://github.com/ruby/rake">rake</a></h2>
+<ul>
+  <li>Ruby make</li>
+</ul>
+
+<h3 id="simple-example">simple example</h3>
+
+<figure class="code"><figcaption><span>task simple</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">task</span> <span class="ss">default</span><span class="p">:</span> <span class="sx">%w[test]</span>
+</span><span class="line"><span class="n">task</span> <span class="ss">:test</span> <span class="k">do</span>
+</span><span class="line">  <span class="n">ruby</span> <span class="s2">&quot;test/unittest.rb&quot;</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<hr />
+
+<h1 id="coding-time">真正的coding time~</h1>
+
+<p>Ruby 語法的部分就略過不說了</p>
+
+<h2 id="model">model</h2>
+<ul>
+  <li>一般的class</li>
+  <li>這次spec 要求implement 下列 methods
+    <ul>
+      <li>initialize</li>
+      <li>save</li>
+      <li>find</li>
+      <li>all</li>
+      <li>to_json</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="controller">controller</h2>
+<ul>
+  <li>必需繼承 Sinatra::Base, rack才認得它</li>
+  <li>requirement
+    <ul>
+      <li>get /sourece : return details of a specific resource</li>
+      <li>get /sourece/id : return an index of all resources</li>
+      <li>post : create a new resource</li>
+    </ul>
+  </li>
+</ul>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">class</span> <span class="nc">ShareConfigurationsAPI</span> <span class="o">&lt;</span> <span class="no">Sinatra</span><span class="o">::</span><span class="no">Base</span>
+</span><span class="line">  <span class="n">configure</span> <span class="k">do</span>
+</span><span class="line">    <span class="c1">#Configure Sinatra settings</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">get</span> <span class="s1">&#39;/?&#39;</span> <span class="k">do</span>
+</span><span class="line">    <span class="c1"># root route for anything</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">post</span> <span class="s1">&#39;/api/v1/configurations/?&#39;</span> <span class="k">do</span>
+</span><span class="line">    <span class="c1"># a post route</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SS Week5]]></title>
@@ -2495,38 +2708,6 @@ well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
 </span><span class="line"><span class="cm">Error!!</span>
 </span><span class="line"><span class="cm">*/</span>
 </span></code></pre></td></tr></table></div></figure>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Jsuwp-2-9 Global Environment and Global Object]]></title>
-    <link href="https://king4sam.github.io/blog/2017/01/20/jsuwp-2-8/"/>
-    <updated>2017-01-20T11:45:46+08:00</updated>
-    <id>https://king4sam.github.io/blog/2017/01/20/jsuwp-2-8</id>
-    <content type="html"><![CDATA[<!--more-->
-
-<h1 id="global-environment-and-global-object">2-9 Global environment and Global object</h1>
-
-<ul>
-  <li>Global objects(Ex: window, on browser) and “this” is created by javascript engine</li>
-  <li>At globle level, ‘this’ is equal to ‘window’ inside browser</li>
-  <li>the global (values and functions) are attached to global objects</li>
-</ul>
-
-<p><img src="https://king4sam.github.io/images/studynotes/Globalcontext_overview.png" /></p>
-
-<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;hello world&#39;</span><span class="p">;</span>
-</span><span class="line"><span class="nx">b</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>
-</span><span class="line"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
