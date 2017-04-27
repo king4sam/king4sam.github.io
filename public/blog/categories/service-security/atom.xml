@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Service_security | Necisam's blog]]></title>
   <link href="https://king4sam.github.io/blog/categories/service-security/atom.xml" rel="self"/>
   <link href="https://king4sam.github.io/"/>
-  <updated>2017-04-20T00:47:14+08:00</updated>
+  <updated>2017-04-28T00:08:36+08:00</updated>
   <id>https://king4sam.github.io/</id>
   <author>
     <name><![CDATA[Necisam]]></name>
@@ -12,6 +12,349 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[SS-week2]]></title>
+    <link href="https://king4sam.github.io/blog/2017/04/27/ss-week2/"/>
+    <updated>2017-04-27T15:48:18+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/04/27/ss-week2</id>
+    <content type="html"><![CDATA[<h1 id="information-theory">Information Theory</h1>
+
+<!--more-->
+
+<h2 id="information-storage">Information Storage</h2>
+
+<p>訊號分成 analog 跟 digital</p>
+
+<p>大致討論的結果(只記得這些…)</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">type</th>
+      <th>pros</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">digital</td>
+      <td>電腦可讀 可驗證 易編輯</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">analog</td>
+      <td>能保存較原始資料</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>2000年後 digit 資料量爆炸性成長</p>
+
+<p><img src="http://media3.washingtonpost.com/wp-dyn/content/graphic/2011/02/11/GR2011021100614.jpg"></p>
+
+<h2 id="information-value">Information Value</h2>
+
+<h3 id="more-information">More Information?</h3>
+
+<p>左邊 還是 右邊 給我們比較<strong>多</strong>的資訊???</p>
+
+<p><img src="/images/ss/infovalue.png"></p>
+
+<p>幾乎大家一致認同左邊</p>
+
+<p>但那是因為左邊是我們認得的語言</p>
+
+<p>想像如果右邊是另一種語言</p>
+
+<p>可能不同的音調、個數、行數等等都代表不同意義</p>
+
+<p>這樣右邊會不會也是能帶給我們跟左邊一樣的資訊量呢🤔🤔🤔</p>
+
+<h3 id="measure-information-value">Measure Information value</h3>
+
+<p>那我們又如何衡量資訊的價值呢?</p>
+
+<p>試問下面三個投擲硬幣的結果
+那一個sequence比較有價值?</p>
+
+<p><img src="/images/ss/measureinfo.png"></p>
+
+<p><em>Hint : 隨便挖掉其中一個擲硬幣的結果，你有辦法填回去嗎?</em></p>
+
+<p>明顯的two-head coin 我們可以直接填H回去</p>
+
+<p>weighted coin 我們會猜H(H 出現機率比較大)</p>
+
+<p>而fair coin 我們就無法做出猜測</p>
+
+<h4 id="information-entropy">Information Entropy</h4>
+<p>disorder, unpredictability, uncertainty of information</p>
+
+<p>(記得高中老師說熵就是亂度</p>
+
+<p>以下的計算皆以密碼為例</p>
+
+<p>可用字元 b 個
+密碼長度 n 個</p>
+
+<p>可用密碼數(combinations)</p>
+
+<script type="math/tex; mode=display">b^{n}</script>
+
+<p>存儲密碼所需要的位元數(bits of entropy)</p>
+
+<script type="math/tex; mode=display">\log{b^{n}}</script>
+
+<h4 id="shannon-entropy-entropy-of-given-set-of-characters">Shannon Entropy( Entropy of given set of characters)</h4>
+
+<ul>
+  <li>
+    <p>整串密碼中每個字的平均消息量</p>
+  </li>
+  <li>
+    <p>How many questions would we expect to ask to find an element from a set of characters?</p>
+  </li>
+  <li>
+    <p>char出現時所需要問的次數的期望值
+  = 每個char出現的機率 * 出現時所需要問題次數</p>
+  </li>
+  <li>
+    <p>formula</p>
+  </li>
+</ul>
+
+<script type="math/tex; mode=display">H(X) = E[I(X)] = E[-\ln(P(X))]
+\\
+H(X) = \Sigma{P(x_i)I(x_i)} = - \Sigma{P(x_i)\log_b{P(x_i)}}, b = 2</script>
+
+<ul>
+  <li>implement</li>
+</ul>
+
+<p><code>ruby Shannon Entropy in ruby
+def entropy (str)
+  e = 0
+  sz = str.bytesize.to_f
+  b = str.bytes
+  0.upto(255) do |i|
+    x = b.count(i)/sz
+    if x &gt; 0
+      e += - x * (Math.log(x)/ Math.log(2))
+    end
+  end
+  e
+end
+</code>
+但當我們在用Shannon Entropy下去對密碼做分析的話</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">password type</th>
+      <th style="text-align: center">sample password</th>
+      <th style="text-align: right">bits of entropy</th>
+      <th style="text-align: right">Shannon Enrtopy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">length = 8, lowercase letters only</td>
+      <td style="text-align: center">cvobmsla</td>
+      <td style="text-align: right">37.60</td>
+      <td style="text-align: right">3.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">length = 8, lowercase + uppercase letters</td>
+      <td style="text-align: center">jAcieDlq</td>
+      <td style="text-align: right">45.60</td>
+      <td style="text-align: right">3.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">length = 8, letters + digits</td>
+      <td style="text-align: center">bA29Fs4f</td>
+      <td style="text-align: right">47.63</td>
+      <td style="text-align: right">3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">whole words<br />(4 words chosen at random from 2048 word dictionary)</td>
+      <td style="text-align: center">placidmealerrorpast</td>
+      <td style="text-align: right">44</td>
+      <td style="text-align: right">3.53</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>增加了char，密碼變的更複雜，但似乎沒有增加enyropy</p>
+
+<p>反而是原先認為容易被字典攻擊法攻擊的whole word 表現不差</p>
+
+<p>而且雖然英數字組合的bits of entropy高，但人類不會偏好隨機的組合</p>
+
+<p>因此實際會被用的組合數還要再下修</p>
+
+<p>反觀whole word的組合數就是真實中的problem space -&gt; 沒有捷徑猜密碼</p>
+
+<p><strong>People who don’t understand information theory and security</strong></p>
+
+<p>別期待user會使用隨機組合的密碼</p>
+
+<p>(譯: 過去二十年，我們努力讓每個人用人類更難記，但電腦很好猜的密碼)
+<img src="https://imgs.xkcd.com/comics/password_strength.png"></p>
+
+<hr />
+
+<p>後面是開發環境介紹跟一些bit operation</p>
+
+<p>我就略過</p>
+
+<p>但要特別筆記一下XOR</p>
+
+<p>真值表大家都會記</p>
+
+<p>重點是xor有這個特質</p>
+
+<script type="math/tex; mode=display">P \oplus K = C
+\\
+C \oplus K = P</script>
+
+<p>這個magic讓xor在一些地方有神奇功用</p>
+
+<p>例如</p>
+
+<ul>
+  <li>兩數互換不用第三個變數</li>
+</ul>
+
+<p><code>c
+void swap(int *a, int *b){
+  if(*a != *b) {
+      *a = *a ^ *b;
+      *b = *a ^ *b;
+      *a = *a ^ *b;
+  }
+}
+</code>
+- One-time Pad Cipher(week4)</p>
+
+<ul>
+  <li>某天寄來的code challenge</li>
+</ul>
+
+<p>implements function</p>
+
+<p>xor product(N,M) = N ^ N+1 … ^ M-1 ^ M</p>
+
+<p>要求</p>
+
+<p>complexity O(log(N))</p>
+
+<p>mem space usage O(1)</p>
+
+<p>其實看到log(N)就大概想應該是要binary下去找</p>
+
+<p>後來看到一個解法</p>
+
+<p>令f(n) = xor product(0,n)</p>
+
+<p>發現有規律</p>
+
+<p>0000 &lt;- 0  [a]<br />
+0001 &lt;- 1  [1]<br />
+0010 &lt;- 3  [a+1]<br />
+0011 &lt;- 0  [0]<br />
+0100 &lt;- 4  [a]<br />
+0101 &lt;- 1  [1]<br />
+0110 &lt;- 7  [a+1]<br /></p>
+
+<p>b(n) 用來查表 求出 xor product(0,n) 跟 xor product(0,m)</p>
+
+<p>兩個再做xor 就會變成 xor product(n,m)</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SS-week1]]></title>
+    <link href="https://king4sam.github.io/blog/2017/04/19/ss-week1/"/>
+    <updated>2017-04-19T23:37:56+08:00</updated>
+    <id>https://king4sam.github.io/blog/2017/04/19/ss-week1</id>
+    <content type="html"><![CDATA[<h1 id="security-and-service">Security and Service</h1>
+
+<!--more-->
+
+<p>既然課名都叫 Security and Security
+一開始當然是先討論什麼是 Security，什麼是 Security</p>
+
+<h2 id="security">security</h2>
+
+<ul>
+  <li>Scenario A: Traveling in a foreign country</li>
+  <li>Scenario B: Shopping online at a new website</li>
+</ul>
+
+<p>年代久遠，我忘記當初到底討論出哪些點了 😩</p>
+
+<p>總之寫了四分之一黑板</p>
+
+<p>而這些點最後又被歸類為以下六個面向</p>
+
+<h2 id="information-security-dimensions">Information Security Dimensions</h2>
+<ul>
+  <li>Availability : available for operation and use
+<br />可用性</li>
+  <li>Authentication : prove who you are
+<br />身份驗證</li>
+  <li>Authorization : the accessment to the information
+<br />授權</li>
+  <li>Confidentiality : confidential is protected
+<br />保密</li>
+  <li>Integrity : the quality of being honest
+<br />可以偵測資料是否被竄改過</li>
+  <li>Non-repudiation :
+<br />不可否認性(ex 發票證明交易確實發生過)</li>
+</ul>
+
+<p>最後再提供一些新聞，大家討論問題是發生在哪個面向</p>
+
+<p><img src="/images/ss/hospital_robbed.png">
+<img src="/images/ss/zomato.png"></p>
+
+<h2 id="service">Service</h2>
+
+<p>沒有討論太多，記得是認為</p>
+
+<p>providing values 就是個 Service</p>
+
+<p><del>順便幫下學期的soa打個廣告XDD<del></del></del></p>
+
+<hr />
+
+<h2 id="meet-your-tools">Meet Your Tools</h2>
+
+<p>這學期會用的都有以下特質</p>
+
+<ul>
+  <li>Free</li>
+  <li>Open Source</li>
+  <li>Low-level Mastery</li>
+</ul>
+
+<h2 id="ruby">ruby</h2>
+
+<p>老師說他最愛readable的特性</p>
+
+<h2 id="linux">linux</h2>
+<p>身為攻城獅你說你不會用linux?</p>
+
+<p>大三屁孩或用mac裝潮的就算了</p>
+
+<p>我絕對不是說當助教時遇到的奇葩學生</p>
+
+<h2 id="codecademy">Codecademy</h2>
+<p>Learn to code interactively, for free.</p>
+
+<h2 id="canvas-and-slack">Canvas and Slack</h2>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SS-week7]]></title>
@@ -153,12 +496,14 @@ bundle exec rake
 
 <h3 id="simple-example">simple example</h3>
 
-<p><code>ruby task simple
-task default: %w[test]
+<p>``` ruby task simple</p>
+
+<p>task default: %w[test]
 task :test do
-  ruby "test/unittest.rb"
-end
-</code></p>
+  ruby “test/unittest.rb”
+end</p>
+
+<p>```</p>
 
 <hr />
 
@@ -573,222 +918,6 @@ well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
 <p>∵ C1 ⊕ C2 = P1 ⊕ K ⊕ P2 ⊕ K = P1 ⊕ P2</p>
 
 <p>當攻擊者得知你任一個plaintext，就能解出所有plaintext</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SS Week6]]></title>
-    <link href="https://king4sam.github.io/blog/2017/03/24/ss-week6/"/>
-    <updated>2017-03-24T14:16:54+08:00</updated>
-    <id>https://king4sam.github.io/blog/2017/03/24/ss-week6</id>
-    <content type="html"><![CDATA[<h1 id="public-key-cryptography">Public Key Cryptography</h1>
-
-<!--more-->
-
-<p>之前所討論的symmetric cryptography最終都有一個無法解決的問題:
-如何交換key</p>
-
-<p>大概只能打扮成
-<br />
-<img src="/images/fun/heisenberg.jpg" height="200px" width="200px" /></p>
-
-<p>然後到咖啡店
-<br />
-<img src="/images/fun/behind_newspaper.jpg" /></p>
-
-<p>跟對方面交XDD</p>
-
-<p>因為加解密都用同一把key，所以key沒有辦法透過公開網路交換</p>
-
-<hr />
-
-<h2 id="what-is-public-key-pk-cryptography">What is Public-Key (PK) Cryptography</h2>
-<p>則是一個是私人金鑰，另一個則是公開金鑰</p>
-
-<p>公開金鑰可以再公開網路中傳輪</p>
-
-<p>私有金鑰則自己保管</p>
-
-<p>主要有兩種用途</p>
-
-<ul>
-  <li>加密資訊</li>
-</ul>
-
-<p><img src="/images/studynotes/secure.png" /></p>
-
-<ul>
-  <li>數位簽章(驗證來源是否正確)</li>
-</ul>
-
-<p><img src="/images/studynotes/signing.png" /></p>
-
-<p>如果要同時加密資訊並驗證來源</p>
-
-<p><img src="/images/studynotes/confidentiality_non-repu.png" /></p>
-
-<p><strong>NOTE</strong>: Does the order matter?</p>
-
-<p><strong>Sure!!</strong></p>
-
-<p>如果先用對方public key加密，再用自己private 簽名</p>
-
-<p>對方收到後先驗證來源後，只能保證加密後的資料是你的</p>
-
-<p>但plain text來源無法驗證</p>
-
-<hr />
-
-<h2 id="graphic-pk-cryptography-example">Graphic PK cryptography example</h2>
-
-<p>Ice cream vandor problem</p>
-
-<p><img src="/images/studynotes/icecreamvendor.png" /></p>
-
-<p>Q:</p>
-
-<ul>
-  <li>
-    <p>What is the minimum number of vans we need?</p>
-  </li>
-  <li>
-    <p>At which intersections would we base our vans?</p>
-  </li>
-</ul>
-
-<p>This problem is hard to solve:</p>
-
-<p><em>O(n choose k) = O(n!/k!(n-k)!)</em></p>
-
-<p>However, this solution is easy to check:</p>
-
-<p><em>O(n)</em></p>
-
-<h3 id="encrypt">Encrypt</h3>
-
-<p><img src="/images/studynotes/pkencry.png" /></p>
-
-<h3 id="decrypt">Decrypt</h3>
-
-<p><img src="/images/studynotes/pkdecry.png" /></p>
-
-<hr />
-
-<h2 id="real-world-pk-crypt-algorithm">real-world PK crypt algorithm</h2>
-
-<ol>
-  <li>knapsack problem</li>
-</ol>
-
-<ul>
-  <li>it has been broken 😰</li>
-</ul>
-
-<p><img src="/images/studynotes/knapsackkeygen.png" /></p>
-
-<p><img src="/images/studynotes/knapsackencry.png" /></p>
-
-<p><img src="/images/studynotes/knapsackdecry.png" /></p>
-
-<ol>
-  <li>RSA algorithm</li>
-</ol>
-
-<p><img src="/images/studynotes/rsakeygen.png" /></p>
-
-<p><img src="/images/studynotes/rsaencry.png" /></p>
-
-<p><img src="/images/studynotes/rsadecry.png" /></p>
-
-<hr />
-
-<h2 id="performance">Performance</h2>
-
-<p>那既然有了 PK , 那我們還需要symmetric cryptography幹麻?</p>
-
-<p>大家可以安全的交換隱密資訊了💪💪💪</p>
-
-<p>What a wonderful world ~~</p>
-
-<p>.</p>
-
-<p>.</p>
-
-<p>.</p>
-
-<p>但事實是</p>
-
-<p>非對稱的加密非常~慢</p>
-
-<p><img src="/images/studynotes/aesrsabench.png" /></p>
-
-<p><a href="https://github.com/ISS-Security/demo_crypto/blob/master/sk_vs_pk_bench.rb">benchmark</a></p>
-
-<p>於是美好世界</p>
-
-<p><img src="https://media.giphy.com/media/ZNKzkUzkRx75C/giphy.gif" /></p>
-
-<hr />
-
-<h2 id="in-practice">In practice</h2>
-
-<p>當然不是這樣世界就毀了</p>
-
-<p>現實中將對稱跟非對稱一起用</p>
-
-<p>用對稱加密資訊，再用非對稱加密key，這樣資訊跟key都可以在網路上傳輸啦~</p>
-
-<p>同時又兼顧效能</p>
-
-<p>whole picture
-<img src="/images/studynotes/pkplussk.png" /></p>
-
-<hr />
-
-<h2 id="coding-time">Coding Time~</h2>
-
-<ul>
-  <li>
-    <p>騙你的，只要用library就好</p>
-  </li>
-  <li>
-    <p>rbnacl都做完所有該做的事了</p>
-  </li>
-</ul>
-
-<p>``` ruby rbnacl-pk-simple_box https://github.com/ISS-Security/demo_crypto/blob/master/rbnacl/rbnacl-pk-simple_box.rb</p>
-
-<p>require ‘rbnacl/libsodium’</p>
-
-<h1 id="key-creation">KEY CREATION</h1>
-<p>personA_private_key = RbNaCl::PrivateKey.generate
-personA_public_key  = personA_private_key.public_key</p>
-
-<p>personB_private_key = RbNaCl::PrivateKey.generate
-personB_public_key  = personB_private_key.public_key</p>
-
-<h1 id="key-exchange">KEY EXCHANGE</h1>
-<p>personA_box = RbNaCl::SimpleBox.from_keypair(
-  personB_public_key,
-  personA_private_key
-)</p>
-
-<p>personB_box = RbNaCl::SimpleBox.from_keypair(
-  personA_public_key,
-  personB_private_key
-)</p>
-
-<h1 id="sending">SENDING</h1>
-<p>message = “secret”
-ciphertext = personA_box.encrypt(message)</p>
-
-<h1 id="receiving">RECEIVING</h1>
-<p>plaintext = personB_box.decrypt(ciphertext)
-```</p>
-
-<hr />
-
-<p>最近會儘快把前幾週的上課筆記給補起來👻👻👻</p>
 ]]></content>
   </entry>
   
