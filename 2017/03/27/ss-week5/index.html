@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>SS week5 - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"Symmetric Cryptography(Con’t)\nStream Ciphers\nA5/1 Cipher (GSM)\n\nProduces keystream bit at each step\nEasy to implement in hardware\n\n\nRC4 Cipher\n\nProduces keystream byte at each step\nOne of the most widely used software stream ciphers\nin older implementations of SSL /TLS; WEP(!)\nremoved from major browsers in 2015\n\n\n\n\n\nBlock Ciphers\nFeistel Cipher\nkey will change every round\nfunction F must be reversible\nmultiple “rounds”\n\n\n\n\nBlock Cipher Modes\nElectronic Code Book (ECB) Mode\n\n將plain text切成 blocks\n分別對每個block做Block Ciphers\n缺點:同樣的block會被加密成同樣的cipher\ndiffusion較差\n\n\nCipher Block Chaining (CBC) Mode\n\n跟ECB類似\n在做完Block Ciphers，會在跟前一個block的結果做xor，成為最後加密的結果\n改善diffusion\n最後一個block可以當MAC blocks(包含整個plain text的資訊)\n\n\nComparison\nECB   V.S  CBC\n\n\n\nAES Cipher\nmost popular nowadays\n\n\nSymmetric Key Ciphers and Key Reuse\nDepth Attacks : Giving attackers deeper information about your plaintext or key\n\n例如之前的one-time pad ，當key重複使用時，攻擊者可以得知P1 ⊕ P2\n\n\n\nReplay Attacks:\n\n當攻擊者監聽到一個Ciphers，傳送給對應的人，一樣可以得到正確的回覆\n\n\n\n\nUsing a Nonce(one-time use random bytes)\nCountering Depth Attacks :當key重複使用時，還是可以因為nonce不同，而加密成不同的cipher\n\nCountering Replay Attacks :當攻擊者監聽到一個Ciphers，想要重送時，會因為Nonce不同，而被拒絕。\n\n\n\nHashing\nNo key from the user (built-in key)\nOne-way function only (cannot reverse/decrypt)\nCompresses data to fixed length (e.g., 128-bits)\nCollisions exist, but should be extremely rare\n\nNon-cryptographic Hashing\nCyclic Redundancy Check (CRC)\n\n👍 Data Lookup\n👎 Data integrity\n\npro\n\nsimple to perform in hardware\ncan catch common, unintentional errors\n\ncons\n\ncannot catch intentional manipulation\neasy to revers\ncrc(x⊕y⊕z) = crc(x) ⊕ crc(y) ⊕ crc(z)well-known design flaws of the Wired Equivalent Privacy (WEP) protocol\n\n\n\nCryptographic Hashing\nSha1 sha2\nmd5\n…\n\nData Integrity: MAC blocks(Message Authentication Code)\nprotects both a message’s data integrity as well as its authenticity, by allowing verifiers to detect any changes to the message content.\n在解密前先驗證資料來源及正確性(有沒有被變更)\n沒有先驗證就解密的話，攻擊者能從更改後的cipher跟plaintext中得到額外的訊息\n\nApproaches to Authenticated Encryption\nMAC-and-Encrypt\n\n\nencrypy the plaintextthen calculate MAC on plaintext\n\n\nMAC-then-Encrypt (MtE)\n\n\ncalculate MAC on plaintext and encrypt plaintext + MAC\nvulnerable to Decryption Oracle Attack\n∵ you have to perform decryption before Authenticated\n\n\nEncrypt-then-MAC\n\n\nencrypy the plaintext then calculate MAC on cipher\n\n\nCoding time ~So many things to care about\n\nwhich algorithm to apply(must be not broken yet)\nimplements a algorithm wihout making mistake\ngenerate different keys\nuse nonce\nAuthenticated Encryption order\n\n\n##Developers should know about cryptography!\n##But only cryptographers should write ciphers!\nNaCl\nNaCl : a new easy-to-use highspeed software library for network communication, encryption, decryption, signatures, etc.\n\nImplemented in C\n\nlibSodium :  portable, cross-compilable, installable, packageable fork of NaCl\n\nImplemented in C\n\nRbNaCl : Ruby binding to the Networking and Cryptography (NaCl) library\n\nImplemented in Ruby, but you have to install libSodium yourself\n\nrbnacl-libsodium : packages the libsodium library as a Ruby Gem\n\nImplemented in Ruby, the only thing to do isgem install rbnacl-libsodium\nDocument of RbNaCl\n灑花(￣▽￣)/‧☆“‘ *-.,,.-*‘`”*-.,☆\n","dateCreated":"2017-03-27T14:19:35+08:00","dateModified":"2018-06-14T18:13:18+08:00","datePublished":"2017-03-27T14:19:35+08:00","description":"Symmetric Cryptography(Con’t)","headline":"SS week5","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/03/27/ss-week5/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/03/27/ss-week5/","keywords":"Service_Security"}</script>
+    <meta name="description" content="Symmetric Cryptography(Con’t)">
+<meta name="keywords" content="Service_Security">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SS week5">
+<meta property="og:url" content="http://yoursite.com/2017/03/27/ss-week5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Symmetric Cryptography(Con’t)">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/a51.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/feistel.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/ecb.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/cbc.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/ecbgirl.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/cbcgirl.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/aes.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/depthattack.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/replyattack.png">
+<meta property="og:image" content="http://yoursite.com/images/fun/Jackie-chan-meme.jpg">
+<meta property="og:updated_time" content="2018-06-14T10:13:18.312Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SS week5">
+<meta name="twitter:description" content="Symmetric Cryptography(Con’t)">
+<meta name="twitter:image" content="http://yoursite.com/images/studynotes/a51.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            SS week5
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-03-27T14:19:35+08:00">
+	
+		    Mar 27, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="Symmetric-Cryptography-Con’t"><a href="#Symmetric-Cryptography-Con’t" class="headerlink" title="Symmetric Cryptography(Con’t)"></a>Symmetric Cryptography(Con’t)</h1><a id="more"></a>
+<h2 id="Stream-Ciphers"><a href="#Stream-Ciphers" class="headerlink" title="Stream Ciphers"></a>Stream Ciphers</h2><ol>
+<li><p>A5/1 Cipher (GSM)</p>
+<ul>
+<li>Produces keystream bit at each step</li>
+<li>Easy to implement in hardware</li>
+</ul>
+<img src="/images/studynotes/a51.png"></li>
+<li><p>RC4 Cipher</p>
+<ul>
+<li>Produces keystream byte at each step</li>
+<li>One of the most widely used software stream ciphers<ul>
+<li>in older implementations of SSL /TLS; WEP(!)</li>
+<li>removed from major browsers in 2015</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Block-Ciphers"><a href="#Block-Ciphers" class="headerlink" title="Block Ciphers"></a>Block Ciphers</h2><ol>
+<li>Feistel Cipher<ul>
+<li>key will change every round</li>
+<li>function F must be reversible</li>
+<li>multiple “rounds”</li>
+</ul>
+</li>
+</ol>
+<img src="/images/studynotes/feistel.png">
+<h2 id="Block-Cipher-Modes"><a href="#Block-Cipher-Modes" class="headerlink" title="Block Cipher Modes"></a>Block Cipher Modes</h2><ol>
+<li>Electronic Code Book (ECB) Mode<img src="/images/studynotes/ecb.png">
+<ul>
+<li>將plain text切成 blocks</li>
+<li>分別對每個block做Block Ciphers</li>
+<li>缺點:同樣的block會被加密成同樣的cipher</li>
+<li>diffusion較差</li>
+</ul>
+</li>
+<li>Cipher Block Chaining (CBC) Mode<img src="/images/studynotes/cbc.png">
+<ul>
+<li>跟ECB類似</li>
+<li>在做完Block Ciphers，會在跟前一個block的結果做xor，成為最後加密的結果</li>
+<li>改善diffusion</li>
+<li>最後一個block可以當<a href="#data-integrity-mac-blocksmessage-authentication-code">MAC</a> blocks(包含整個plain text的資訊)</li>
+</ul>
+</li>
+<li><p>Comparison</p>
+<p>ECB   V.S  CBC</p>
+<img src="/images/studynotes/ecbgirl.png" width="280"><img src="/images/studynotes/cbcgirl.png" width="280">
+</li>
+</ol>
+<h2 id="AES-Cipher"><a href="#AES-Cipher" class="headerlink" title="AES Cipher"></a>AES Cipher</h2><ul>
+<li>most popular nowadays</li>
+</ul>
+<img src="/images/studynotes/aes.png">
+<h2 id="Symmetric-Key-Ciphers-and-Key-Reuse"><a href="#Symmetric-Key-Ciphers-and-Key-Reuse" class="headerlink" title="Symmetric Key Ciphers and Key Reuse"></a>Symmetric Key Ciphers and Key Reuse</h2><ul>
+<li><p>Depth Attacks : Giving attackers deeper information about your plaintext or key</p>
+<ul>
+<li>例如之前的one-time pad ，當key重複使用時，攻擊者可以得知P1 ⊕ P2</li>
+</ul>
+<img src="/images/studynotes/depthattack.png">
+</li>
+<li><p>Replay Attacks:</p>
+<ul>
+<li>當攻擊者監聽到一個Ciphers，傳送給對應的人，一樣可以得到正確的回覆</li>
+</ul>
+<img src="/images/studynotes/replyattack.png">
+</li>
+</ul>
+<h2 id="Using-a-Nonce-one-time-use-random-bytes"><a href="#Using-a-Nonce-one-time-use-random-bytes" class="headerlink" title="Using a Nonce(one-time use random bytes)"></a>Using a Nonce(one-time use random bytes)</h2><ul>
+<li><p>Countering Depth Attacks :<br>當key重複使用時，還是可以因為nonce不同，而加密成不同的cipher</p>
+</li>
+<li><p>Countering Replay Attacks :<br>當攻擊者監聽到一個Ciphers，想要重送時，會因為Nonce不同，而被拒絕。</p>
+</li>
+</ul>
+<hr>
+<h1 id="Hashing"><a href="#Hashing" class="headerlink" title="Hashing"></a>Hashing</h1><ul>
+<li>No key from the user (built-in key)</li>
+<li>One-way function only (cannot reverse/decrypt)</li>
+<li>Compresses data to fixed length (e.g., 128-bits)</li>
+<li>Collisions exist, but should be extremely rare</li>
+</ul>
+<h2 id="Non-cryptographic-Hashing"><a href="#Non-cryptographic-Hashing" class="headerlink" title="Non-cryptographic Hashing"></a>Non-cryptographic Hashing</h2><ul>
+<li><p>Cyclic Redundancy Check (CRC)</p>
+<ul>
+<li>👍 Data Lookup</li>
+<li>👎 Data integrity</li>
+</ul>
+<p><strong>pro</strong></p>
+<ul>
+<li>simple to perform in hardware</li>
+<li>can catch common, unintentional errors</li>
+</ul>
+<p><strong>cons</strong></p>
+<ul>
+<li>cannot catch intentional manipulation</li>
+<li>easy to revers</li>
+<li>crc(x⊕y⊕z) = crc(x) ⊕ crc(y) ⊕ crc(z)<br>well-known design flaws of the Wired Equivalent Privacy (WEP) protocol</li>
+</ul>
+</li>
+</ul>
+<h2 id="Cryptographic-Hashing"><a href="#Cryptographic-Hashing" class="headerlink" title="Cryptographic Hashing"></a>Cryptographic Hashing</h2><ul>
+<li>Sha1 sha2</li>
+<li>md5</li>
+<li>…</li>
+</ul>
+<h2 id="Data-Integrity-MAC-blocks-Message-Authentication-Code"><a href="#Data-Integrity-MAC-blocks-Message-Authentication-Code" class="headerlink" title="Data Integrity: MAC blocks(Message Authentication Code)"></a>Data Integrity: MAC blocks(Message Authentication Code)</h2><ul>
+<li>protects both a message’s data integrity as well as its authenticity, by allowing verifiers to detect any changes to the message content.</li>
+<li>在解密前先驗證資料來源及正確性(有沒有被變更)</li>
+<li>沒有先驗證就解密的話，攻擊者能從更改後的cipher跟plaintext中得到額外的訊息</li>
+</ul>
+<h3 id="Approaches-to-Authenticated-Encryption"><a href="#Approaches-to-Authenticated-Encryption" class="headerlink" title="Approaches to Authenticated Encryption"></a>Approaches to Authenticated Encryption</h3><ol>
+<li>MAC-and-Encrypt</li>
+</ol>
+<ul>
+<li>encrypy the plaintextthen calculate MAC on plaintext</li>
+</ul>
+<ol start="2">
+<li>MAC-then-Encrypt (MtE)</li>
+</ol>
+<ul>
+<li>calculate MAC on plaintext and encrypt plaintext + MAC</li>
+<li>vulnerable to Decryption Oracle Attack</li>
+<li>∵ you have to perform decryption before Authenticated</li>
+</ul>
+<ol start="3">
+<li>Encrypt-then-MAC</li>
+</ol>
+<ul>
+<li>encrypy the plaintext then calculate MAC on cipher</li>
+</ul>
+<hr>
+<h1 id="Coding-time"><a href="#Coding-time" class="headerlink" title="Coding time ~"></a>Coding time ~</h1><p>So many things to care about</p>
+<ul>
+<li>which algorithm to apply(must be not broken yet)</li>
+<li>implements a algorithm wihout making mistake</li>
+<li>generate different keys</li>
+<li>use nonce</li>
+<li>Authenticated Encryption order</li>
+</ul>
+<img src="/images/fun/Jackie-chan-meme.jpg">
+<p>##<strong><em>Developers should know about cryptography!</em></strong></p>
+<p>##<strong><em>But only cryptographers should write ciphers!</em></strong></p>
+<h2 id="NaCl"><a href="#NaCl" class="headerlink" title="NaCl"></a>NaCl</h2><ul>
+<li>NaCl : a new easy-to-use highspeed software library for network communication, encryption, decryption, signatures, etc.</li>
+</ul>
+<p>Implemented in C</p>
+<ul>
+<li>libSodium :  portable, cross-compilable, installable, packageable fork of NaCl</li>
+</ul>
+<p>Implemented in C</p>
+<ul>
+<li>RbNaCl : Ruby binding to the Networking and Cryptography (NaCl) library</li>
+</ul>
+<p>Implemented in Ruby, but you have to install libSodium yourself</p>
+<ul>
+<li>rbnacl-libsodium : packages the libsodium library as a Ruby Gem</li>
+</ul>
+<p>Implemented in Ruby, the only thing to do is<br><code>gem install rbnacl-libsodium</code></p>
+<p><a href="https://github.com/cryptosphere/rbnacl/wiki" target="_blank" rel="noopener">Document of RbNaCl</a></p>
+<p>灑花(<em>￣▽￣)/‧☆</em>“‘ *-.,<em>,.-*‘`”*-.,</em>☆</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Service-Security/">Service_Security</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/31/ss-week7/" data-tooltip="SS-week7" aria-label="PREVIOUS: SS-week7">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/25/ss-week4/" data-tooltip="SS week4" aria-label="NEXT: SS week4">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/27/ss-week5/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/27/ss-week5/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/27/ss-week5/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/31/ss-week7/" data-tooltip="SS-week7" aria-label="PREVIOUS: SS-week7">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/25/ss-week4/" data-tooltip="SS week4" aria-label="NEXT: SS week4">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/27/ss-week5/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/27/ss-week5/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/27/ss-week5/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/27/ss-week5/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/27/ss-week5/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/27/ss-week5/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/03/27/ss-week5/';
+                 
+                    this.page.identifier = '2017/03/27/ss-week5/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

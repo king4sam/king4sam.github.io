@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>jsuwp-8-69 ~ 8-72 Deep dive into jQuery - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"\n8-70 8-71 jQuert Part1、2jQuery Structure1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586// IIFE(function(global, factory)&#123;  ...  // invoked factory  return factory(global);&#125;(window, function(window, noglobal)&#123;  version = \"1.11.2\",  // Define a local copy of jQuery  jQuery = function( selector, context ) &#123;    return new jQuery.fn.init( selector, context );  &#125;,  .  .  .  // nickname for prototype  jQuery.fn = jQuery.prototype =&#123;    ...  &#125;;  //Merge the contents of two or more objects together into the first object.  jQuery.extend = jQuery.fn.extend = function() &#123;    ...    // jQurry habe makeArray property which is a function    makeArray: function( arr, results ) &#123;      var ret = results || [];      if ( arr != null ) &#123;        if ( isArraylike( Object(arr) ) ) &#123;          jQuery.merge( ret,            typeof arr === \"string\" ?            [ arr ] : arr          );        &#125; else &#123;          push.call( ret, arr );        &#125;      &#125;      return ret;    &#125;    ...  &#125;  //use extend to add properties on jQuery  jQuery.extend(&#123;...&#125;);  // Sizzle CSS Selector Engine  // another IIFE inside IIFE  var Sizzle =(function (window)&#123;&#125;);  // real init funciton  init = jQuery.fn.init = function( selector, context ) &#123;    ...    // this point to the empty object, created by calling new function    // makeArray still return this    return jQuery.makeArray( selector, this );  &#125;  // set up the new object's prototype ctreated by new  init.prototype = jQuery.fn;  //window from line 8  var  // Map over jQuery in case of overwrite  _jQuery = window.jQuery,  // Map over the $ in case of overwrite  _$ = window.$;  // Expose jQuery and $ identifiers  if ( typeof noGlobal === strundefined ) &#123;    window.jQuery = window.$ = jQuery;  &#125;  return jQuery;&#125;));\n\n8-73 jQuert Part3bigword alert : Method chaining\ncalling one method after another, and each method affects the parent object.\nobj.method1().method2()\n\nhow to implements  method chain\nfunctions return this\n\njquery addClass function123456789101112131415161718192021222324252627282930313233343536373839404142addClass: function( value ) &#123;    var classes, elem, cur, clazz, j, finalValue,      i = 0,      len = this.length,      proceed = typeof value === \"string\" &amp;&amp; value;    if ( jQuery.isFunction( value ) ) &#123;      return this.each(function( j ) &#123;        jQuery( this ).addClass( value.call( this, j, this.className ) );      &#125;);    &#125;    if ( proceed ) &#123;      // The disjunction here is for better compressibility (see removeClass)      classes = ( value || \"\" ).match( rnotwhite ) || [];      for ( ; i &lt; len; i++ ) &#123;        elem = this[ i ];        cur = elem.nodeType === 1 &amp;&amp; ( elem.className ?          ( \" \" + elem.className + \" \" ).replace( rclass, \" \" ) :          \" \"        );        if ( cur ) &#123;          j = 0;          while ( (clazz = classes[j++]) ) &#123;            if ( cur.indexOf( \" \" + clazz + \" \" ) &lt; 0 ) &#123;              cur += clazz + \" \";            &#125;          &#125;          // only assign if different to avoid unneeded rendering.          finalValue = jQuery.trim( cur );          if ( elem.className !== finalValue ) &#123;            elem.className = finalValue;          &#125;        &#125;      &#125;    &#125;    return this;  &#125;\n","dateCreated":"2017-02-20T16:39:33+08:00","dateModified":"2018-06-14T18:13:18+08:00","datePublished":"2017-02-20T16:39:33+08:00","description":"","headline":"jsuwp-8-69 ~ 8-72 Deep dive into jQuery","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/","keywords":"StudyNote javascript udemy"}</script>
+    <meta name="description" content="8-70 8-71 jQuert Part1、2jQuery Structure123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384">
+<meta name="keywords" content="StudyNote javascript udemy">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="jsuwp-8-69 ~ 8-72 Deep dive into jQuery">
+<meta property="og:url" content="http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="8-70 8-71 jQuert Part1、2jQuery Structure123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-14T10:13:18.021Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jsuwp-8-69 ~ 8-72 Deep dive into jQuery">
+<meta name="twitter:description" content="8-70 8-71 jQuert Part1、2jQuery Structure123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            jsuwp-8-69 ~ 8-72 Deep dive into jQuery
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-02-20T16:39:33+08:00">
+	
+		    Feb 20, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <a id="more"></a>
+<h1 id="8-70-8-71-jQuert-Part1、2"><a href="#8-70-8-71-jQuert-Part1、2" class="headerlink" title="8-70 8-71 jQuert Part1、2"></a>8-70 8-71 jQuert Part1、2</h1><figure class="highlight javascript"><figcaption><span>jQuery Structure</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// IIFE</span></span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">global, factory</span>)</span>&#123;</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  <span class="comment">// invoked factory</span></span><br><span class="line">  <span class="keyword">return</span> factory(global);</span><br><span class="line">&#125;(<span class="built_in">window</span>, <span class="function"><span class="keyword">function</span>(<span class="params">window, noglobal</span>)</span>&#123;</span><br><span class="line">  version = <span class="string">"1.11.2"</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Define a local copy of jQuery</span></span><br><span class="line">  jQuery = <span class="function"><span class="keyword">function</span>(<span class="params"> selector, context </span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> jQuery.fn.init( selector, context );</span><br><span class="line">  &#125;,</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line"></span><br><span class="line">  <span class="comment">// nickname for prototype</span></span><br><span class="line">  jQuery.fn = jQuery.prototype =&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//Merge the contents of two or more objects together into the first object.</span></span><br><span class="line">  jQuery.extend = jQuery.fn.extend = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jQurry habe makeArray property which is a function</span></span><br><span class="line">    makeArray: <span class="function"><span class="keyword">function</span>(<span class="params"> arr, results </span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> ret = results || [];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> ( arr != <span class="literal">null</span> ) &#123;</span><br><span class="line">        <span class="keyword">if</span> ( isArraylike( <span class="built_in">Object</span>(arr) ) ) &#123;</span><br><span class="line">          jQuery.merge( ret,</span><br><span class="line">            <span class="keyword">typeof</span> arr === <span class="string">"string"</span> ?</span><br><span class="line">            [ arr ] : arr</span><br><span class="line">          );</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          push.call( ret, arr );</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//use extend to add properties on jQuery</span></span><br><span class="line">  jQuery.extend(&#123;...&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Sizzle CSS Selector Engine</span></span><br><span class="line">  <span class="comment">// another IIFE inside IIFE</span></span><br><span class="line">  <span class="keyword">var</span> Sizzle =(<span class="function"><span class="keyword">function</span> (<span class="params">window</span>)</span>&#123;&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// real init funciton</span></span><br><span class="line">  init = jQuery.fn.init = <span class="function"><span class="keyword">function</span>(<span class="params"> selector, context </span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// this point to the empty object, created by calling new function</span></span><br><span class="line">    <span class="comment">// makeArray still return this</span></span><br><span class="line">    <span class="keyword">return</span> jQuery.makeArray( selector, <span class="keyword">this</span> );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// set up the new object's prototype ctreated by new</span></span><br><span class="line">  init.prototype = jQuery.fn;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//window from line 8</span></span><br><span class="line">  <span class="keyword">var</span></span><br><span class="line">  <span class="comment">// Map over jQuery in case of overwrite</span></span><br><span class="line">  _jQuery = <span class="built_in">window</span>.jQuery,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Map over the $ in case of overwrite</span></span><br><span class="line">  _$ = <span class="built_in">window</span>.$;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Expose jQuery and $ identifiers</span></span><br><span class="line">  <span class="keyword">if</span> ( <span class="keyword">typeof</span> noGlobal === strundefined ) &#123;</span><br><span class="line">    <span class="built_in">window</span>.jQuery = <span class="built_in">window</span>.$ = jQuery;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> jQuery;</span><br><span class="line"></span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="8-73-jQuert-Part3"><a href="#8-73-jQuert-Part3" class="headerlink" title="8-73 jQuert Part3"></a>8-73 jQuert Part3</h1><h2 id="bigword-alert-Method-chaining"><a href="#bigword-alert-Method-chaining" class="headerlink" title="bigword alert : Method chaining"></a>bigword alert : Method chaining</h2><ul>
+<li>calling one method after another, and each method affects the parent object.</li>
+<li>obj.method1().method2()</li>
+</ul>
+<h2 id="how-to-implements-method-chain"><a href="#how-to-implements-method-chain" class="headerlink" title="how to implements  method chain"></a>how to implements  method chain</h2><ul>
+<li>functions return this</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>jquery addClass function</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">addClass: <span class="function"><span class="keyword">function</span>(<span class="params"> value </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> classes, elem, cur, clazz, j, finalValue,</span><br><span class="line">      i = <span class="number">0</span>,</span><br><span class="line">      len = <span class="keyword">this</span>.length,</span><br><span class="line">      proceed = <span class="keyword">typeof</span> value === <span class="string">"string"</span> &amp;&amp; value;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( jQuery.isFunction( value ) ) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"> j </span>) </span>&#123;</span><br><span class="line">        jQuery( <span class="keyword">this</span> ).addClass( value.call( <span class="keyword">this</span>, j, <span class="keyword">this</span>.className ) );</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( proceed ) &#123;</span><br><span class="line">      <span class="comment">// The disjunction here is for better compressibility (see removeClass)</span></span><br><span class="line">      classes = ( value || <span class="string">""</span> ).match( rnotwhite ) || [];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> ( ; i &lt; len; i++ ) &#123;</span><br><span class="line">        elem = <span class="keyword">this</span>[ i ];</span><br><span class="line">        cur = elem.nodeType === <span class="number">1</span> &amp;&amp; ( elem.className ?</span><br><span class="line">          ( <span class="string">" "</span> + elem.className + <span class="string">" "</span> ).replace( rclass, <span class="string">" "</span> ) :</span><br><span class="line">          <span class="string">" "</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ( cur ) &#123;</span><br><span class="line">          j = <span class="number">0</span>;</span><br><span class="line">          <span class="keyword">while</span> ( (clazz = classes[j++]) ) &#123;</span><br><span class="line">            <span class="keyword">if</span> ( cur.indexOf( <span class="string">" "</span> + clazz + <span class="string">" "</span> ) &lt; <span class="number">0</span> ) &#123;</span><br><span class="line">              cur += clazz + <span class="string">" "</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="comment">// only assign if different to avoid unneeded rendering.</span></span><br><span class="line">          finalValue = jQuery.trim( cur );</span><br><span class="line">          <span class="keyword">if</span> ( elem.className !== finalValue ) &#123;</span><br><span class="line">            elem.className = finalValue;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/StudyNote-javascript-udemy/">StudyNote javascript udemy</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/" data-tooltip="jsuwp-9-73 ~ 9-80 Let&#39;s build a Framework/library" aria-label="PREVIOUS: jsuwp-9-73 ~ 9-80 Let&#39;s build a Framework/library">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/20/jsuwp-7-65-odds-and-ends/" data-tooltip="jsuwp-7-65 ~ 7-68 Odds and Ends" aria-label="NEXT: jsuwp-7-65 ~ 7-68 Odds and Ends">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/" data-tooltip="jsuwp-9-73 ~ 9-80 Let&#39;s build a Framework/library" aria-label="PREVIOUS: jsuwp-9-73 ~ 9-80 Let&#39;s build a Framework/library">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/20/jsuwp-7-65-odds-and-ends/" data-tooltip="jsuwp-7-65 ~ 7-68 Odds and Ends" aria-label="NEXT: jsuwp-7-65 ~ 7-68 Odds and Ends">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/';
+                 
+                    this.page.identifier = '2017/02/20/jsuwp-8-70-deep-dive-into-jquery/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

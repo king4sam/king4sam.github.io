@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>SS-week2 - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"Information Theory\nInformation Storage訊號分成 analog 跟 digital\n大致討論的結果(只記得這些…)\n\n\n\ntype\npros\n\n\n\n\ndigital\n電腦可讀 可驗證 易編輯\n\n\nanalog\n能保存較原始資料\n\n\n\n2000年後 digit 資料量爆炸性成長\n\nInformation ValueMore Information?左邊 還是 右邊 給我們比較多的資訊???\n\n幾乎大家一致認同左邊\n但那是因為左邊是我們認得的語言\n想像如果右邊是另一種語言\n可能不同的音調、個數、行數等等都代表不同意義\n這樣右邊會不會也是能帶給我們跟左邊一樣的資訊量呢🤔🤔🤔\nMeasure Information value那我們又如何衡量資訊的價值呢?\n試問下面三個投擲硬幣的結果那一個sequence比較有價值?\n\nHint : 隨便挖掉其中一個擲硬幣的結果，你有辦法填回去嗎?\n明顯的two-head coin 我們可以直接填H回去\nweighted coin 我們會猜H(H 出現機率比較大)\n而fair coin 我們就無法做出猜測\nInformation Entropydisorder, unpredictability, uncertainty of information\n(記得高中老師說熵就是亂度\n以下的計算皆以密碼為例\n可用字元 b 個密碼長度 n 個\n可用密碼數(combinations)\n$$  b^{n}$$\n存儲密碼所需要的位元數(bits of entropy)\n$$\\log{b^{n}}$$\nShannon Entropy( Entropy of given set of characters)\n整串密碼中每個字的平均消息量\n\nHow many questions would we expect to ask to find an element from a set of characters?\n\nchar出現時所需要問的次數的期望值= 每個char出現的機率 * 出現時所需要問題次數\n\nformula\n\n\n$$H(X) = E[I(X)] = E[-\\ln(P(X))]\\H(X) = \\Sigma{P(x_i)I(x_i)} = - \\Sigma{P(x_i)\\log_b{P(x_i)}}, b = 2$$\n\nimplement\n\nShannon Entropy in ruby123456789101112def entropy (str)  e = 0  sz = str.bytesize.to_f  b = str.bytes  0.upto(255) do |i|    x = b.count(i)/sz    if x &gt; 0      e += - x * (Math.log(x)/ Math.log(2))    end  end  eend\n但當我們在用Shannon Entropy下去對密碼做分析的話\n\n\n\npassword type\nsample password\nbits of entropy\nShannon Enrtopy\n\n\n\n\nlength = 8, lowercase letters only\ncvobmsla\n37.60\n3.0\n\n\nlength = 8, lowercase + uppercase letters\njAcieDlq\n45.60\n3.0\n\n\nlength = 8, letters + digits\nbA29Fs4f\n47.63\n3\n\n\nwhole words(4 words chosen at random from 2048 word dictionary)\nplacidmealerrorpast\n44\n3.53\n\n\n\n增加了char，密碼變的更複雜，但似乎沒有增加enyropy\n反而是原先認為容易被字典攻擊法攻擊的whole word 表現不差\n而且雖然英數字組合的bits of entropy高，但人類不會偏好隨機的組合\n因此實際會被用的組合數還要再下修\n反觀whole word的組合數就是真實中的problem space -&gt; 沒有捷徑猜密碼\nPeople who don’t understand information theory and security\n別期待user會使用隨機組合的密碼\n(譯: 過去二十年，我們努力讓每個人用人類更難記，但電腦很好猜的密碼)\n\n後面是開發環境介紹跟一些bit operation\n我就略過\n但要特別筆記一下XOR\n真值表大家都會記\n重點是xor有這個特質\n$$P \\oplus K = C\\C \\oplus K = P$$\n這個magic讓xor在一些地方有神奇功用\n例如\n\n兩數互換不用第三個變數\n\n1234567void swap(int *a, int *b)&#123;  if(*a != *b) &#123;      *a = *a ^ *b;      *b = *a ^ *b;      *a = *a ^ *b;  &#125;&#125;\n\nOne-time Pad Cipher(week4)\n\n某天寄來的code challenge\n\n\nimplements function\nxor product(N,M) = N ^ N+1 … ^ M-1 ^ M\n要求\ncomplexity O(log(N))\nmem space usage O(1)\n其實看到log(N)就大概想應該是要binary下去找\n後來看到一個解法\n令f(n) = xor product(0,n)\n發現有規律\n0000 &lt;- 0  [a]0001 &lt;- 1  [1]0010 &lt;- 3  [a+1]0011 &lt;- 0  [0]0100 &lt;- 4  [a]0101 &lt;- 1  [1]0110 &lt;- 7  [a+1]\nb(n) 用來查表 求出 xor product(0,n) 跟 xor product(0,m)\n兩個再做xor 就會變成 xor product(n,m)\n","dateCreated":"2017-04-27T15:48:18+08:00","dateModified":"2018-06-14T18:13:16+08:00","datePublished":"2017-04-27T15:48:18+08:00","description":"Information Theory","headline":"SS-week2","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/04/27/ss-week2/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/04/27/ss-week2/","keywords":"Service_Security"}</script>
+    <meta name="description" content="Information Theory">
+<meta name="keywords" content="Service_Security">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SS-week2">
+<meta property="og:url" content="http://yoursite.com/2017/04/27/ss-week2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Information Theory">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://media3.washingtonpost.com/wp-dyn/content/graphic/2011/02/11/GR2011021100614.jpg">
+<meta property="og:image" content="http://yoursite.com/images/ss/infovalue.png">
+<meta property="og:image" content="http://yoursite.com/images/ss/measureinfo.png">
+<meta property="og:image" content="https://imgs.xkcd.com/comics/password_strength.png">
+<meta property="og:updated_time" content="2018-06-14T10:13:16.576Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SS-week2">
+<meta name="twitter:description" content="Information Theory">
+<meta name="twitter:image" content="http://media3.washingtonpost.com/wp-dyn/content/graphic/2011/02/11/GR2011021100614.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            SS-week2
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-04-27T15:48:18+08:00">
+	
+		    Apr 27, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="Information-Theory"><a href="#Information-Theory" class="headerlink" title="Information Theory"></a>Information Theory</h1><a id="more"></a>
+<h2 id="Information-Storage"><a href="#Information-Storage" class="headerlink" title="Information Storage"></a>Information Storage</h2><p>訊號分成 analog 跟 digital</p>
+<p>大致討論的結果(只記得這些…)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">type</th>
+<th>pros</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">digital</td>
+<td>電腦可讀 可驗證 易編輯</td>
+</tr>
+<tr>
+<td style="text-align:left">analog</td>
+<td>能保存較原始資料</td>
+</tr>
+</tbody>
+</table>
+<p>2000年後 digit 資料量爆炸性成長</p>
+<img src="http://media3.washingtonpost.com/wp-dyn/content/graphic/2011/02/11/GR2011021100614.jpg">
+<h2 id="Information-Value"><a href="#Information-Value" class="headerlink" title="Information Value"></a>Information Value</h2><h3 id="More-Information"><a href="#More-Information" class="headerlink" title="More Information?"></a>More Information?</h3><p>左邊 還是 右邊 給我們比較<strong>多</strong>的資訊???</p>
+<img src="/images/ss/infovalue.png">
+<p>幾乎大家一致認同左邊</p>
+<p>但那是因為左邊是我們認得的語言</p>
+<p>想像如果右邊是另一種語言</p>
+<p>可能不同的音調、個數、行數等等都代表不同意義</p>
+<p>這樣右邊會不會也是能帶給我們跟左邊一樣的資訊量呢🤔🤔🤔</p>
+<h3 id="Measure-Information-value"><a href="#Measure-Information-value" class="headerlink" title="Measure Information value"></a>Measure Information value</h3><p>那我們又如何衡量資訊的價值呢?</p>
+<p>試問下面三個投擲硬幣的結果<br>那一個sequence比較有價值?</p>
+<img src="/images/ss/measureinfo.png">
+<p><em>Hint : 隨便挖掉其中一個擲硬幣的結果，你有辦法填回去嗎?</em></p>
+<p>明顯的two-head coin 我們可以直接填H回去</p>
+<p>weighted coin 我們會猜H(H 出現機率比較大)</p>
+<p>而fair coin 我們就無法做出猜測</p>
+<h4 id="Information-Entropy"><a href="#Information-Entropy" class="headerlink" title="Information Entropy"></a>Information Entropy</h4><p>disorder, unpredictability, uncertainty of information</p>
+<p>(記得高中老師說熵就是亂度</p>
+<p>以下的計算皆以密碼為例</p>
+<p>可用字元 b 個<br>密碼長度 n 個</p>
+<p>可用密碼數(combinations)</p>
+<p>$$<br>  b^{n}<br>$$</p>
+<p>存儲密碼所需要的位元數(bits of entropy)</p>
+<p>$$<br>\log{b^{n}}<br>$$</p>
+<h4 id="Shannon-Entropy-Entropy-of-given-set-of-characters"><a href="#Shannon-Entropy-Entropy-of-given-set-of-characters" class="headerlink" title="Shannon Entropy( Entropy of given set of characters)"></a>Shannon Entropy( Entropy of given set of characters)</h4><ul>
+<li><p>整串密碼中每個字的平均消息量</p>
+</li>
+<li><p>How many questions would we expect to ask to find an element from a set of characters?</p>
+</li>
+<li><p>char出現時所需要問的次數的期望值<br>= 每個char出現的機率 * 出現時所需要問題次數</p>
+</li>
+<li><p>formula</p>
+</li>
+</ul>
+<p>$$<br>H(X) = E[I(X)] = E[-\ln(P(X))]<br>\<br>H(X) = \Sigma{P(x_i)I(x_i)} = - \Sigma{P(x_i)\log_b{P(x_i)}}, b = 2<br>$$</p>
+<ul>
+<li>implement</li>
+</ul>
+<figure class="highlight ruby"><figcaption><span>Shannon Entropy in ruby</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">entropy</span> <span class="params">(str)</span></span></span><br><span class="line">  e = <span class="number">0</span></span><br><span class="line">  sz = str.bytesize.to_f</span><br><span class="line">  b = str.bytes</span><br><span class="line">  <span class="number">0</span>.upto(<span class="number">255</span>) <span class="keyword">do</span> <span class="params">|i|</span></span><br><span class="line">    x = b.count(i)/sz</span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">0</span></span><br><span class="line">      e += - x * (Math.log(x)/ Math.log(<span class="number">2</span>))</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  e</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>但當我們在用Shannon Entropy下去對密碼做分析的話</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">password type</th>
+<th style="text-align:center">sample password</th>
+<th style="text-align:right">bits of entropy</th>
+<th style="text-align:right">Shannon Enrtopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">length = 8, lowercase letters only</td>
+<td style="text-align:center">cvobmsla</td>
+<td style="text-align:right">37.60</td>
+<td style="text-align:right">3.0</td>
+</tr>
+<tr>
+<td style="text-align:center">length = 8, lowercase + uppercase letters</td>
+<td style="text-align:center">jAcieDlq</td>
+<td style="text-align:right">45.60</td>
+<td style="text-align:right">3.0</td>
+</tr>
+<tr>
+<td style="text-align:center">length = 8, letters + digits</td>
+<td style="text-align:center">bA29Fs4f</td>
+<td style="text-align:right">47.63</td>
+<td style="text-align:right">3</td>
+</tr>
+<tr>
+<td style="text-align:center">whole words<br>(4 words chosen at random from 2048 word dictionary)</td>
+<td style="text-align:center">placidmealerrorpast</td>
+<td style="text-align:right">44</td>
+<td style="text-align:right">3.53</td>
+</tr>
+</tbody>
+</table>
+<p>增加了char，密碼變的更複雜，但似乎沒有增加enyropy</p>
+<p>反而是原先認為容易被字典攻擊法攻擊的whole word 表現不差</p>
+<p>而且雖然英數字組合的bits of entropy高，但人類不會偏好隨機的組合</p>
+<p>因此實際會被用的組合數還要再下修</p>
+<p>反觀whole word的組合數就是真實中的problem space -&gt; 沒有捷徑猜密碼</p>
+<p><strong>People who don’t understand information theory and security</strong></p>
+<p>別期待user會使用隨機組合的密碼</p>
+<p>(譯: 過去二十年，我們努力讓每個人用人類更難記，但電腦很好猜的密碼)<br><img src="https://imgs.xkcd.com/comics/password_strength.png"></p>
+<hr>
+<p>後面是開發環境介紹跟一些bit operation</p>
+<p>我就略過</p>
+<p>但要特別筆記一下XOR</p>
+<p>真值表大家都會記</p>
+<p>重點是xor有這個特質</p>
+<p>$$<br>P \oplus K = C<br>\<br>C \oplus K = P<br>$$</p>
+<p>這個magic讓xor在一些地方有神奇功用</p>
+<p>例如</p>
+<ul>
+<li>兩數互換不用第三個變數</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(*a != *b) &#123;</span><br><span class="line">      *a = *a ^ *b;</span><br><span class="line">      *b = *a ^ *b;</span><br><span class="line">      *a = *a ^ *b;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>One-time Pad Cipher(week4)</p>
+</li>
+<li><p>某天寄來的code challenge</p>
+</li>
+</ul>
+<p>implements function</p>
+<p>xor product(N,M) = N ^ N+1 … ^ M-1 ^ M</p>
+<p>要求</p>
+<p>complexity O(log(N))</p>
+<p>mem space usage O(1)</p>
+<p>其實看到log(N)就大概想應該是要binary下去找</p>
+<p>後來看到一個解法</p>
+<p>令f(n) = xor product(0,n)</p>
+<p>發現有規律</p>
+<p>0000 &lt;- 0  [a]<br><br>0001 &lt;- 1  [1]<br><br>0010 &lt;- 3  [a+1]<br><br>0011 &lt;- 0  [0]<br><br>0100 &lt;- 4  [a]<br><br>0101 &lt;- 1  [1]<br><br>0110 &lt;- 7  [a+1]<br></p>
+<p>b(n) 用來查表 求出 xor product(0,n) 跟 xor product(0,m)</p>
+<p>兩個再做xor 就會變成 xor product(n,m)</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Service-Security/">Service_Security</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/28/ss-week8/" data-tooltip="SS-week8" aria-label="PREVIOUS: SS-week8">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/19/ss-week1/" data-tooltip="SS-week1" aria-label="NEXT: SS-week1">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/27/ss-week2/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/27/ss-week2/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/27/ss-week2/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/28/ss-week8/" data-tooltip="SS-week8" aria-label="PREVIOUS: SS-week8">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/19/ss-week1/" data-tooltip="SS-week1" aria-label="NEXT: SS-week1">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/27/ss-week2/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/27/ss-week2/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/27/ss-week2/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/27/ss-week2/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/27/ss-week2/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/27/ss-week2/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/04/27/ss-week2/';
+                 
+                    this.page.identifier = '2017/04/27/ss-week2/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

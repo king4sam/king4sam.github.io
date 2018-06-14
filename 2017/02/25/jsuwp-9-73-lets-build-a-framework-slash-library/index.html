@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>jsuwp-9-73 ~ 9-80 Let&#39;s build a Framework/library - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"9-73 Requirements\nGreeter\ninput : firstname lastname and optional language\noutput : formal and informal greeting sentence\nlanguage support English and Spanish\nreusable\njust G$() to call (no ‘new’)\nsupport jQuery(give selector, add greeting sentence to the selected element)\n\n\nGreeter.js123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121;(function (global, $)&#123;  // trick , avoid the problem caused by other lib that doesn't end with semicolon  // trick to use our lib without new  // function declare, it is not actually run  // so we can set Greeter.init later  var Greeter = function(firstName,lastName,language)&#123;    return new Greeter.init(firsname,lastname,language);  &#125;  // setup prototype of greeter  Greeter.prototype = &#123;    fullName : function()&#123;      return this.firstName + ' ' + this.lastName;    &#125;,    validate : function ()&#123;      if (supportedLangs.indexOf(this.language) === -1)&#123;        throw 'Invalid language';      &#125;    &#125;,    greeting : function()&#123;      return greetings[this.language] + ' ' + this.firstName + '!';    &#125;    formalgreeting : function()&#123;      return formalgreetings[this.language] + ', ' + this.fullName;    &#125;    greet : function (formal)&#123;      var msg ;      if(formal)&#123;        msg = formalgreeting();      &#125;      else&#123;        msg = greeting();      &#125;      if(console)&#123;        console.log(msg);      &#125;      return this;    &#125;,    log : function ()&#123;      if(console)&#123;        console.log(logMessages[this.language] + ' : ' + this.fullName());      &#125;      return this;    &#125;    setLang : function(lang)&#123;      this.language = lang;      this.validate();      return this;    &#125;,    // support jQuery    HTMLGreeting : function(selector, formal)&#123;      if(!$)&#123;        throw 'jQuery isnot loaded';      &#125;      if(!selector)&#123;        throw 'Missing jQuery selector';      &#125;      var msg;      else&#123;        msg = this.greeting()        $(selector).html = msg;        return this;      &#125;    &#125;  &#125;;  // available in init function because of closeure  // but these var can't be access from global  var supportedLangs = ['en','tw'];  var greetings = &#123;    en : 'Hello',    tw : '哈囉'  &#125;;  var formalgreetings = &#123;    en : 'Greetings',    tw : '你好'  &#125;;  var logMessages = &#123;    en : 'Logged in',    tw : '登入'  &#125;  // real constructor  Greeter.init = function (firstName,lastName,language)&#123;    // safe this    // point to the object created by new ()init    var self = this;    // setting default value    var self.firstName = firstName || 'DefaultFirstname';    var self.lastName = lastName || 'DefaultLastname';    var self.language = language || 'en';    self.validate();  &#125;  //setup prototype chain of the object created by new init()  Greeter.init.prototype = Greeter.prototype;  //expose greeter to the world  global.Greeter = global.G$ = Greeter;&#125;(window,jQuery));","dateCreated":"2017-02-25T01:04:51+08:00","dateModified":"2018-06-14T18:13:18+08:00","datePublished":"2017-02-25T01:04:51+08:00","description":"9-73 Requirements\nGreeter\ninput : firstname lastname and optional language\noutput : formal and informal greeting sentence\nlanguage support English and Spanish\nreusable\njust G$() to call (no ‘new’)\nsupport jQuery(give selector, add greeting sentence to the selected element)\n","headline":"jsuwp-9-73 ~ 9-80 Let's build a Framework/library","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/","keywords":"StudyNote javascript udemy"}</script>
+    <meta name="description" content="9-73 Requirements Greeter input : firstname lastname and optional language output : formal and informal greeting sentence language support English and Spanish reusable just G$() to call (no ‘new’) sup">
+<meta name="keywords" content="StudyNote javascript udemy">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="jsuwp-9-73 ~ 9-80 Let&#39;s build a Framework&#x2F;library">
+<meta property="og:url" content="http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="9-73 Requirements Greeter input : firstname lastname and optional language output : formal and informal greeting sentence language support English and Spanish reusable just G$() to call (no ‘new’) sup">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-14T10:13:18.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jsuwp-9-73 ~ 9-80 Let&#39;s build a Framework&#x2F;library">
+<meta name="twitter:description" content="9-73 Requirements Greeter input : firstname lastname and optional language output : formal and informal greeting sentence language support English and Spanish reusable just G$() to call (no ‘new’) sup">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            jsuwp-9-73 ~ 9-80 Let&#39;s build a Framework/library
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-02-25T01:04:51+08:00">
+	
+		    Feb 25, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="9-73-Requirements"><a href="#9-73-Requirements" class="headerlink" title="9-73 Requirements"></a>9-73 Requirements</h1><ul>
+<li>Greeter</li>
+<li>input : firstname lastname and optional language</li>
+<li>output : formal and informal greeting sentence</li>
+<li>language support English and Spanish</li>
+<li>reusable</li>
+<li>just G$() to call (no ‘new’)</li>
+<li>support jQuery(give selector, add greeting sentence to the selected element)</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight javascript"><figcaption><span>Greeter.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">;(<span class="function"><span class="keyword">function</span> (<span class="params">global, $</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// trick , avoid the problem caused by other lib that doesn't end with semicolon</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// trick to use our lib without new</span></span><br><span class="line">  <span class="comment">// function declare, it is not actually run</span></span><br><span class="line">  <span class="comment">// so we can set Greeter.init later</span></span><br><span class="line">  <span class="keyword">var</span> Greeter = <span class="function"><span class="keyword">function</span>(<span class="params">firstName,lastName,language</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Greeter.init(firsname,lastname,language);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// setup prototype of greeter</span></span><br><span class="line">  Greeter.prototype = &#123;</span><br><span class="line">    fullName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.firstName + <span class="string">' '</span> + <span class="keyword">this</span>.lastName;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    validate : <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (supportedLangs.indexOf(<span class="keyword">this</span>.language) === <span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">'Invalid language'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    greeting : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> greetings[<span class="keyword">this</span>.language] + <span class="string">' '</span> + <span class="keyword">this</span>.firstName + <span class="string">'!'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    formalgreeting : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> formalgreetings[<span class="keyword">this</span>.language] + <span class="string">', '</span> + <span class="keyword">this</span>.fullName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    greet : <span class="function"><span class="keyword">function</span> (<span class="params">formal</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> msg ;</span><br><span class="line">      <span class="keyword">if</span>(formal)&#123;</span><br><span class="line">        msg = formalgreeting();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span>&#123;</span><br><span class="line">        msg = greeting();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">console</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(msg);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    log : <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="built_in">console</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(logMessages[<span class="keyword">this</span>.language] + <span class="string">' : '</span> + <span class="keyword">this</span>.fullName());</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    setLang : <span class="function"><span class="keyword">function</span>(<span class="params">lang</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.language = lang;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">this</span>.validate();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// support jQuery</span></span><br><span class="line">    HTMLGreeting : <span class="function"><span class="keyword">function</span>(<span class="params">selector, formal</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(!$)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">'jQuery isnot loaded'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(!selector)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="string">'Missing jQuery selector'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span> msg;</span><br><span class="line">      <span class="keyword">else</span>&#123;</span><br><span class="line">        msg = <span class="keyword">this</span>.greeting()</span><br><span class="line">        $(selector).html = msg;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// available in init function because of closeure</span></span><br><span class="line">  <span class="comment">// but these var can't be access from global</span></span><br><span class="line">  <span class="keyword">var</span> supportedLangs = [<span class="string">'en'</span>,<span class="string">'tw'</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> greetings = &#123;</span><br><span class="line">    en : <span class="string">'Hello'</span>,</span><br><span class="line">    tw : <span class="string">'哈囉'</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> formalgreetings = &#123;</span><br><span class="line">    en : <span class="string">'Greetings'</span>,</span><br><span class="line">    tw : <span class="string">'你好'</span></span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> logMessages = &#123;</span><br><span class="line">    en : <span class="string">'Logged in'</span>,</span><br><span class="line">    tw : <span class="string">'登入'</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// real constructor</span></span><br><span class="line">  Greeter.init = <span class="function"><span class="keyword">function</span> (<span class="params">firstName,lastName,language</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// safe this</span></span><br><span class="line">    <span class="comment">// point to the object created by new ()init</span></span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// setting default value</span></span><br><span class="line">    <span class="keyword">var</span> self.firstName = firstName || <span class="string">'DefaultFirstname'</span>;</span><br><span class="line">    <span class="keyword">var</span> self.lastName = lastName || <span class="string">'DefaultLastname'</span>;</span><br><span class="line">    <span class="keyword">var</span> self.language = language || <span class="string">'en'</span>;</span><br><span class="line"></span><br><span class="line">    self.validate();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//setup prototype chain of the object created by new init()</span></span><br><span class="line">  Greeter.init.prototype = Greeter.prototype;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//expose greeter to the world</span></span><br><span class="line">  global.Greeter = global.G$ = Greeter;</span><br><span class="line"></span><br><span class="line">&#125;(<span class="built_in">window</span>,jQuery));</span><br></pre></td></tr></table></figure>
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/StudyNote-javascript-udemy/">StudyNote javascript udemy</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/20/gitimmersion/" data-tooltip="Gitimmersion Notes" aria-label="PREVIOUS: Gitimmersion Notes">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/" data-tooltip="jsuwp-8-69 ~ 8-72 Deep dive into jQuery" aria-label="NEXT: jsuwp-8-69 ~ 8-72 Deep dive into jQuery">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/20/gitimmersion/" data-tooltip="Gitimmersion Notes" aria-label="PREVIOUS: Gitimmersion Notes">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/20/jsuwp-8-70-deep-dive-into-jquery/" data-tooltip="jsuwp-8-69 ~ 8-72 Deep dive into jQuery" aria-label="NEXT: jsuwp-8-69 ~ 8-72 Deep dive into jQuery">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/';
+                 
+                    this.page.identifier = '2017/02/25/jsuwp-9-73-lets-build-a-framework-slash-library/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

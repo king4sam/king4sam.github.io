@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>jsuwp 3-19 ~ 3-27 Types and javascript - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"\n3-19 Types and javascriptbigword alert : Dynamic typing\nyou don’t tell the engine what type of data a variable holds\nit figures it out while your code is running\n\n3-20 Primitive typesbigword alert : Primitive type\na type of data that represents a single value\n(not a object)\n\nList of primitive types in javascript\nundefinedlack of existence(note that you shouldn’t set avariable to this)\n\nnulllack of existence(you can set a variable to this)\n\nbooleantrue or false\n\nnumberfloating point number\n\nstringsequence of characters\n\nsymbolnew feature in ES6, 略\n\n\n3-21 Operatorsbigword alert : operator\na special function that is syntactically (written) differently\n\nadd operator12var a = 4 + 3;\n\nrecall : postfix, prefix, infix\n\n3-22 Operator precedence and associativityoperator precedence and Associativity table\nbigword alert : operator precedence\nwhich operator function get called first\nhiger precedence wins\n\nbigword alert : associativity\nwhen function have the same precedence, what order operator function get called in\nleft-to-right or right-to-left\n\nprecedence and associativity1234567var a = 4 + 3 * 5;// precedencevar b = 4, var c = 5;a = b = c;// associativity\n3-24 Coercionbigword alert : Coercion\nconverting a value from one type to another\n\nCoercion1234567var a = 1var b = '2';/* bunch of codes */console.log(a+b);\n3-25 Comparison operatorComparsion result table\n\nRecalls : associativity, operator, coercion\n\ntry it out12345678910111213console.log(3 &lt; 2 &lt; 1);/*3 &lt; 2 &lt; 1 //associativityfalse &lt; 1 //coercion0 &lt; 1 //operatortrue */Number(undefined) // NaNNumber(null) // 0\nweird equal operator123456'3' == 3 //truefalse == 0 //truenull == 0 //false, what!?\"\" == 0 //true\"\" == false //true\n\nIn javascript, == will do coercion\nStrict equality (===) is going to save your life !!\n99% of the time, use ===\n\n3-27 Existence adn Booleanshow coercion could be useful1234567891011121314Boolean(undefined); //falseBoolean(null); //falseBoolean(''); //falseBoolean(0) //falsevar a;/*goes internet and looks for a value*/// a is coercion to boolean// if a could be 0, addtional comparsion is needif (a || a === 0)&#123;  console.log('Something is there.');&#125;\n","dateCreated":"2017-02-08T21:34:43+08:00","dateModified":"2018-06-14T18:13:17+08:00","datePublished":"2017-02-08T21:34:43+08:00","description":"","headline":"jsuwp 3-19 ~ 3-27 Types and javascript","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/02/08/jsuwp-2-19/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/02/08/jsuwp-2-19/","keywords":"StudyNote javascript udemy"}</script>
+    <meta name="description" content="3-19 Types and javascriptbigword alert : Dynamic typing you don’t tell the engine what type of data a variable holds it figures it out while your code is running  3-20 Primitive typesbigword alert :">
+<meta name="keywords" content="StudyNote javascript udemy">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="jsuwp 3-19 ~ 3-27 Types and javascript">
+<meta property="og:url" content="http://yoursite.com/2017/02/08/jsuwp-2-19/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="3-19 Types and javascriptbigword alert : Dynamic typing you don’t tell the engine what type of data a variable holds it figures it out while your code is running  3-20 Primitive typesbigword alert :">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-14T10:13:17.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jsuwp 3-19 ~ 3-27 Types and javascript">
+<meta name="twitter:description" content="3-19 Types and javascriptbigword alert : Dynamic typing you don’t tell the engine what type of data a variable holds it figures it out while your code is running  3-20 Primitive typesbigword alert :">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            jsuwp 3-19 ~ 3-27 Types and javascript
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-02-08T21:34:43+08:00">
+	
+		    Feb 08, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <a id="more"></a>
+<h1 id="3-19-Types-and-javascript"><a href="#3-19-Types-and-javascript" class="headerlink" title="3-19 Types and javascript"></a>3-19 Types and javascript</h1><h2 id="bigword-alert-Dynamic-typing"><a href="#bigword-alert-Dynamic-typing" class="headerlink" title="bigword alert : Dynamic typing"></a><strong>bigword alert : Dynamic typing</strong></h2><ul>
+<li>you don’t tell the engine what type of data a variable holds</li>
+<li>it figures it out while your code is running</li>
+</ul>
+<h1 id="3-20-Primitive-types"><a href="#3-20-Primitive-types" class="headerlink" title="3-20 Primitive types"></a>3-20 Primitive types</h1><h2 id="bigword-alert-Primitive-type"><a href="#bigword-alert-Primitive-type" class="headerlink" title="bigword alert : Primitive type"></a><strong>bigword alert : Primitive type</strong></h2><ul>
+<li>a type of data that represents a single value</li>
+<li>(not a object)</li>
+</ul>
+<h2 id="List-of-primitive-types-in-javascript"><a href="#List-of-primitive-types-in-javascript" class="headerlink" title="List of primitive types in javascript"></a>List of primitive types in javascript</h2><ol>
+<li><p>undefined<br>lack of existence(note that you shouldn’t set avariable to this)</p>
+</li>
+<li><p>null<br>lack of existence(you can set a variable to this)</p>
+</li>
+<li><p>boolean<br>true or false</p>
+</li>
+<li><p>number<br>floating point number</p>
+</li>
+<li><p>string<br>sequence of characters</p>
+</li>
+<li><p>symbol<br>new feature in ES6, 略</p>
+</li>
+</ol>
+<h1 id="3-21-Operators"><a href="#3-21-Operators" class="headerlink" title="3-21 Operators"></a>3-21 Operators</h1><h2 id="bigword-alert-operator"><a href="#bigword-alert-operator" class="headerlink" title="bigword alert : operator"></a><strong>bigword alert : operator</strong></h2><ul>
+<li>a special function that is syntactically (written) differently</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>add operator</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">4</span> + <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>recall : postfix, prefix, infix</li>
+</ul>
+<h1 id="3-22-Operator-precedence-and-associativity"><a href="#3-22-Operator-precedence-and-associativity" class="headerlink" title="3-22 Operator precedence and associativity"></a>3-22 Operator precedence and associativity</h1><p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Operator_Precedence" target="_blank" rel="noopener">operator precedence and Associativity table</a></p>
+<h2 id="bigword-alert-operator-precedence"><a href="#bigword-alert-operator-precedence" class="headerlink" title="bigword alert : operator precedence"></a><strong>bigword alert : operator precedence</strong></h2><ul>
+<li>which operator function get called first</li>
+<li>higer precedence wins</li>
+</ul>
+<h2 id="bigword-alert-associativity"><a href="#bigword-alert-associativity" class="headerlink" title="bigword alert : associativity"></a><strong>bigword alert : associativity</strong></h2><ul>
+<li>when function have the same precedence, what order operator function get called in</li>
+<li>left-to-right or right-to-left</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>precedence and associativity</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">4</span> + <span class="number">3</span> * <span class="number">5</span>;</span><br><span class="line"><span class="comment">// precedence</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">4</span>, <span class="keyword">var</span> c = <span class="number">5</span>;</span><br><span class="line">a = b = c;</span><br><span class="line"><span class="comment">// associativity</span></span><br></pre></td></tr></table></figure>
+<h1 id="3-24-Coercion"><a href="#3-24-Coercion" class="headerlink" title="3-24 Coercion"></a>3-24 Coercion</h1><h2 id="bigword-alert-Coercion"><a href="#bigword-alert-Coercion" class="headerlink" title="bigword alert : Coercion"></a><strong>bigword alert : Coercion</strong></h2><ul>
+<li>converting a value from one type to another</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>Coercion</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="string">'2'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* bunch of codes */</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a+b);</span><br></pre></td></tr></table></figure>
+<h1 id="3-25-Comparison-operator"><a href="#3-25-Comparison-operator" class="headerlink" title="3-25 Comparison operator"></a>3-25 Comparison operator</h1><p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Equality_comparisons_and_sameness" target="_blank" rel="noopener">Comparsion result table</a></p>
+<ul>
+<li>Recalls : associativity, operator, coercion</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>try it out</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">3</span> &lt; <span class="number">2</span> &lt; <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">3 &lt; 2 &lt; 1 //associativity</span></span><br><span class="line"><span class="comment">false &lt; 1 //coercion</span></span><br><span class="line"><span class="comment">0 &lt; 1 //operator</span></span><br><span class="line"><span class="comment">true</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Number</span>(<span class="literal">undefined</span>) <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">Number</span>(<span class="literal">null</span>) <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>weird equal operator</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="string">'3'</span> == <span class="number">3</span> <span class="comment">//true</span></span><br><span class="line"><span class="literal">false</span> == <span class="number">0</span> <span class="comment">//true</span></span><br><span class="line"><span class="literal">null</span> == <span class="number">0</span> <span class="comment">//false, what!?</span></span><br><span class="line"><span class="string">""</span> == <span class="number">0</span> <span class="comment">//true</span></span><br><span class="line"><span class="string">""</span> == <span class="literal">false</span> <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>In javascript, == will do coercion</li>
+<li>Strict equality (===) is going to save your life !!</li>
+<li>99% of the time, use ===</li>
+</ul>
+<h1 id="3-27-Existence-adn-Booleans"><a href="#3-27-Existence-adn-Booleans" class="headerlink" title="3-27 Existence adn Booleans"></a>3-27 Existence adn Booleans</h1><figure class="highlight javascript"><figcaption><span>how coercion could be useful</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="literal">undefined</span>); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="literal">null</span>); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="string">''</span>); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="number">0</span>) <span class="comment">//false</span></span><br><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*goes internet and looks for a value*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// a is coercion to boolean</span></span><br><span class="line"><span class="comment">// if a could be 0, addtional comparsion is need</span></span><br><span class="line"><span class="keyword">if</span> (a || a === <span class="number">0</span>)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Something is there.'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/StudyNote-javascript-udemy/">StudyNote javascript udemy</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/09/jsuwp-3-28/" data-tooltip="jsuwp-3-28 Default values" aria-label="PREVIOUS: jsuwp-3-28 Default values">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/04/jsuwp-2-18/" data-tooltip="jsuwp-2-18 What about asynchronous callback?" aria-label="NEXT: jsuwp-2-18 What about asynchronous callback?">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/08/jsuwp-2-19/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/08/jsuwp-2-19/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/08/jsuwp-2-19/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/09/jsuwp-3-28/" data-tooltip="jsuwp-3-28 Default values" aria-label="PREVIOUS: jsuwp-3-28 Default values">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/04/jsuwp-2-18/" data-tooltip="jsuwp-2-18 What about asynchronous callback?" aria-label="NEXT: jsuwp-2-18 What about asynchronous callback?">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/08/jsuwp-2-19/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/08/jsuwp-2-19/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/08/jsuwp-2-19/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/02/08/jsuwp-2-19/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/02/08/jsuwp-2-19/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/02/08/jsuwp-2-19/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/02/08/jsuwp-2-19/';
+                 
+                    this.page.identifier = '2017/02/08/jsuwp-2-19/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

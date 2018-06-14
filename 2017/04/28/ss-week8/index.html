@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>SS-week8 - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"Databases and Web Testing\n這周比較沒有講新的技術或概念\n大多是在介紹開發工具\nBugs and Vulnerabilities in Dependencies\nGemnasium : monitors your project dependencies and alerts you about updates and security vulnerabilities\n\nRake\ncommand line tool to run simple utility tasks\n\nraketask example1234desc 'Tests API root route'  task :api_spec do  sh 'ruby specs/api_spec.rb'end\nEnvironment Variables\nSystem-wide variables that running processes can access\n\n可以用來設定環境 存放credential key 等機密\n\n\nSQLITE\nsql db\n\nstore whole database in files\n\n雖然是輕量級，但 Max DB size 可以達到 140 terabytes\n\n\nsequel\nThe Database Toolkit for Ruby\n\nuse active record design pattern\n\nA database table or view is wrapped into a class\n\n我們可以像操作record，就樣平常我們對object一樣\n\n\n\n\n123456789# Group is a table in sqlite# group is the first record in Group tablegroup = Group.first# +----+-----------------+--------------------------------+# | id | fb_id | name |# +----+-----------------+--------------------------------+# | 1 | 150352985174571 | Web Service Development @ NTHU |# +----+-----------------+--------------------------------+# 1 row in set\ntux\nThe Tux gem provides a REPL with your Sinatra application running\n\n讓你可以在sinatra環境裡操作、debug\n\n\nhirb\nPretty Print for Active Records\n\n讓sequel的結果易讀\n\n\nMigrations(遷移)\n對資料庫更改(schema data)也能透過直接下sql指令達到\n\n但是用migration可以讓資料庫的修改也加入版本控制\n\n\nTesting\nwrite testing before coding !!\n\n\nSecurity Threats雖然用了Gemnasium解決了Dependencies的安全性問題\n但使用database似乎尚未解決上週的問題\n而且因為使用sql db，還多了兩個threats\n\nIntegrity: User could destroy earlier resources\n\nVulnerability: app does not check if :id key is being sent along with POST request\nVector: send :id along with POST request to see if app overwrite earlier resource\n\n\nIntegrity: Primary key id random generator could produce collisions\n\nVulnerability: random key generator produces same keys within given second\nVector: send mulitple POST ‘/resource’ requests within same second\n\n\nConfidentiality: Stored resources could be stolen if server is compromised\n\nVulnerability: User resources are not being encrypted\nVector: Attacker with access to server can read whole data store\n\n\nAuthorization, Authentication: Information about resources is not private\n\nVulnerability: App does not check if user is authorized to see resource\nVector: Anyone can access any data by knowing its public URL\n\n\n(new)Integrity, Authorization, Confidentiality: Mass Assignment Vulnerability\n\nVulnerability: Using column names supplied by user\nVector: HTTP requests\n\n\n(new)Integrity, Authorization, Confidentiality, Availability: SQL Injection\n\nVulnerability: User input used to form SQL query; no validation of input\nVector: Enter SQL fragments into input form or URL\n\n\n\n","dateCreated":"2017-04-28T14:34:27+08:00","dateModified":"2018-06-14T18:13:16+08:00","datePublished":"2017-04-28T14:34:27+08:00","description":"Databases and Web Testing","headline":"SS-week8","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/04/28/ss-week8/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/04/28/ss-week8/","keywords":"Service_Security"}</script>
+    <meta name="description" content="Databases and Web Testing">
+<meta name="keywords" content="Service_Security">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SS-week8">
+<meta property="og:url" content="http://yoursite.com/2017/04/28/ss-week8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Databases and Web Testing">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-14T10:13:16.601Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SS-week8">
+<meta name="twitter:description" content="Databases and Web Testing">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            SS-week8
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-04-28T14:34:27+08:00">
+	
+		    Apr 28, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="Databases-and-Web-Testing"><a href="#Databases-and-Web-Testing" class="headerlink" title="Databases and Web Testing"></a>Databases and Web Testing</h1><a id="more"></a>
+<p>這周比較沒有講新的技術或概念</p>
+<p>大多是在介紹開發工具</p>
+<h2 id="Bugs-and-Vulnerabilities-in-Dependencies"><a href="#Bugs-and-Vulnerabilities-in-Dependencies" class="headerlink" title="Bugs and Vulnerabilities in Dependencies"></a>Bugs and Vulnerabilities in Dependencies</h2><ul>
+<li>Gemnasium : monitors your project dependencies and alerts you about updates and security vulnerabilities</li>
+</ul>
+<h2 id="Rake"><a href="#Rake" class="headerlink" title="Rake"></a>Rake</h2><ul>
+<li>command line tool to run simple utility tasks</li>
+</ul>
+<figure class="highlight ruby"><figcaption><span>raketask example</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">desc <span class="string">'Tests API root route'</span></span><br><span class="line">  task <span class="symbol">:api_spec</span> <span class="keyword">do</span></span><br><span class="line">  sh <span class="string">'ruby specs/api_spec.rb'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="Environment-Variables"><a href="#Environment-Variables" class="headerlink" title="Environment Variables"></a>Environment Variables</h2><ul>
+<li><p>System-wide variables that running processes can access</p>
+</li>
+<li><p>可以用來設定環境 存放credential key 等機密</p>
+</li>
+</ul>
+<h2 id="SQLITE"><a href="#SQLITE" class="headerlink" title="SQLITE"></a>SQLITE</h2><ul>
+<li><p>sql db</p>
+</li>
+<li><p>store whole database in files</p>
+</li>
+<li><p>雖然是輕量級，但 Max DB size 可以達到 140 terabytes</p>
+</li>
+</ul>
+<h2 id="sequel"><a href="#sequel" class="headerlink" title="sequel"></a>sequel</h2><ul>
+<li><p>The Database Toolkit for Ruby</p>
+</li>
+<li><p>use active record design pattern</p>
+<ul>
+<li><p>A database table or view is wrapped into a class</p>
+</li>
+<li><p>我們可以像操作record，就樣平常我們對object一樣</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Group is a table in sqlite</span></span><br><span class="line"><span class="comment"># group is the first record in Group table</span></span><br><span class="line">group = Group.first</span><br><span class="line"><span class="comment"># +----+-----------------+--------------------------------+</span></span><br><span class="line"><span class="comment"># | id | fb_id | name |</span></span><br><span class="line"><span class="comment"># +----+-----------------+--------------------------------+</span></span><br><span class="line"><span class="comment"># | 1 | 150352985174571 | Web Service Development @ NTHU |</span></span><br><span class="line"><span class="comment"># +----+-----------------+--------------------------------+</span></span><br><span class="line"><span class="comment"># 1 row in set</span></span><br></pre></td></tr></table></figure>
+<h2 id="tux"><a href="#tux" class="headerlink" title="tux"></a>tux</h2><ul>
+<li><p>The Tux gem provides a REPL with your Sinatra application running</p>
+</li>
+<li><p>讓你可以在sinatra環境裡操作、debug</p>
+</li>
+</ul>
+<h2 id="hirb"><a href="#hirb" class="headerlink" title="hirb"></a>hirb</h2><ul>
+<li><p>Pretty Print for Active Records</p>
+</li>
+<li><p>讓sequel的結果易讀</p>
+</li>
+</ul>
+<h2 id="Migrations-遷移"><a href="#Migrations-遷移" class="headerlink" title="Migrations(遷移)"></a>Migrations(遷移)</h2><ul>
+<li><p>對資料庫更改(schema data)也能透過直接下sql指令達到</p>
+</li>
+<li><p>但是用migration可以讓資料庫的修改也加入版本控制</p>
+</li>
+</ul>
+<h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><ul>
+<li>write testing before coding !!</li>
+</ul>
+<hr>
+<h1 id="Security-Threats"><a href="#Security-Threats" class="headerlink" title="Security Threats"></a>Security Threats</h1><p>雖然用了Gemnasium解決了Dependencies的安全性問題</p>
+<p>但使用database似乎尚未解決<a href="/blog/2017/03/31/ss-week7/#SecurityThreats">上週的問題</a></p>
+<p>而且因為使用sql db，還多了兩個threats</p>
+<ul>
+<li><p>Integrity: User could destroy earlier resources</p>
+<ul>
+<li>Vulnerability: app does not check if :id key is being sent along with POST request</li>
+<li>Vector: send :id along with POST request to see if app overwrite earlier resource</li>
+</ul>
+</li>
+<li><p>Integrity: Primary key id random generator could produce collisions</p>
+<ul>
+<li>Vulnerability: random key generator produces same keys within given second</li>
+<li>Vector: send mulitple POST ‘/resource’ requests within same second</li>
+</ul>
+</li>
+<li><p>Confidentiality: Stored resources could be stolen if server is compromised</p>
+<ul>
+<li>Vulnerability: User resources are not being encrypted</li>
+<li>Vector: Attacker with access to server can read whole data store</li>
+</ul>
+</li>
+<li><p>Authorization, Authentication: Information about resources is not private</p>
+<ul>
+<li>Vulnerability: App does not check if user is authorized to see resource</li>
+<li>Vector: Anyone can access any data by knowing its public URL</li>
+</ul>
+</li>
+<li><p><strong>(new)</strong>Integrity, Authorization, Confidentiality: Mass Assignment Vulnerability</p>
+<ul>
+<li>Vulnerability: Using column names supplied by user</li>
+<li>Vector: HTTP requests</li>
+</ul>
+</li>
+<li><p><strong>(new)</strong>Integrity, Authorization, Confidentiality, Availability: SQL Injection</p>
+<ul>
+<li>Vulnerability: User input used to form SQL query; no validation of input</li>
+<li>Vector: Enter SQL fragments into input form or URL</li>
+</ul>
+</li>
+</ul>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Service-Security/">Service_Security</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/28/ss-week9/" data-tooltip="SS-week9" aria-label="PREVIOUS: SS-week9">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/27/ss-week2/" data-tooltip="SS-week2" aria-label="NEXT: SS-week2">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/28/ss-week8/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/28/ss-week8/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/28/ss-week8/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/28/ss-week9/" data-tooltip="SS-week9" aria-label="PREVIOUS: SS-week9">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/27/ss-week2/" data-tooltip="SS-week2" aria-label="NEXT: SS-week2">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/28/ss-week8/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/28/ss-week8/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/28/ss-week8/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/28/ss-week8/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/28/ss-week8/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/28/ss-week8/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/04/28/ss-week8/';
+                 
+                    this.page.identifier = '2017/04/28/ss-week8/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

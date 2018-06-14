@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>SS-week9 - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"Database Hardening\nMass Assignment VulnerabilitiesWhat要解決問題就要先了解問題\n\nMass assignment is a computer vulnerability where an active record pattern in a web application is abused to modify data.\n\n∵ In serialization formats is automatically converted on input into internal object and, in turn, into database record fields. It’s possible to overwrite fields that were never intended to be modified from outside.\n\n最常見的在insert 或 update時 塞入id欄位的值\n\n\nMass assignment example12345678# Project has many Configurations# when add_configuration, the project_id should be given by dbnew_data = &#123; name: 'Safe Project', repo_url: 'http://github.com/safeproject' &#125;new_proj = Project.create(new_data)new_proj.add_configuration(filename: 'app.yml')# however sb set project_id to what doesn't own this configuration# procject_id 3 would be other account' projectnew_proj.add_configuration(filename: 'app.yml', project_id: 3)\nSolutions\nSequel has Default Mass Assignment Restrictions: Primary keys, Foreign keys🙏\n\n除此之外，也可以有Custom Mass Attack Restrictions\n\n\n12345678class Configuration &lt; Sequel::Model  many_to_one :project  # Specified columns are unrestricted  # Unspecified columns are restricted  # 預設是restricted，有特別指定才是unrestricted  # so sweet 💋  set_allowed_columns :filename, :relative_path, :descriptionend\nSQL Injection VulnerabilityWhatAny input from users should be considered dangerous and ‘dirty’ to your system\n\nSQL statements are inserted into an entry field for execution\nPassing web route parameters directly into the database permits SQL injection\n\nSQLInjection example1s = 'http://localhost:9292/api/v1/projects/2%20or%20id%3D1'\nSolutions\nValidation : Essential, but has limited effect on SQL injection\n\nLiteralization : simplest way to prevent sql injection\n\n\n1project = Project.where(id: 1)\n\nQuery Parameterization : One of the best ways to prevent SQL injection\n\nApplication side : Bound Statements\n\n\n\n123projects = Project.where(id: :$find_id)#&lt;Sequel::SQLite::Dataset: \"SELECT * FROM `projects` WHERE (`id` = `$find_id`)\"&gt;projects.call(:select, :find_id =&gt; 1)\n\nDatabase side : Prepared Statements (wiki)\n\na feature used to execute the same or similar database statements repeatedly with high efficiency.\n\nThe overhead of compiling and optimizing the statement is incurred only once, although the statement is executed multiple times.\n\nbecause parameter values need not be correctly escaped\n\n\n\n\n123ds = DB[:items].where(:name=&gt;:$n)ps = ds.prepare(:select, :select_by_name)ps.call(:n=&gt;'Jim')\nUUIDPros\nUnique across every table, every database, every server\nAllows easy merging of records from different databases\nAllows easy distribution of databases across multiple servers\nCan generate IDs without having to roundtrip to the database\nDB replication usually requires UUIDs\n\nCons\nPerformance costs on inserts and joins\nUgly URLs (if uuid is in URL)\nCumbersome to debug: long, unpredictable\n\n12SecureRandom.uuid# =&gt; \"eac3d7a1-a4c3-49c0-8892-f2b329e600ea\"\nuse uuid in sequel123456789# migrationsSequel.migration do  change do    create_table(:configurations) do    String :id, type: :uuid, primary_key: true# sequel modelclass Configuration &lt; Sequel::Model  plugin :uuid, field: :id","dateCreated":"2017-04-28T15:46:30+08:00","dateModified":"2018-06-14T18:13:16+08:00","datePublished":"2017-04-28T15:46:30+08:00","description":"Database Hardening","headline":"SS-week9","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/04/28/ss-week9/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/04/28/ss-week9/","keywords":"Service_Security"}</script>
+    <meta name="description" content="Database Hardening">
+<meta name="keywords" content="Service_Security">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SS-week9">
+<meta property="og:url" content="http://yoursite.com/2017/04/28/ss-week9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Database Hardening">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-14T10:13:16.630Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SS-week9">
+<meta name="twitter:description" content="Database Hardening">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            SS-week9
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-04-28T15:46:30+08:00">
+	
+		    Apr 28, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="Database-Hardening"><a href="#Database-Hardening" class="headerlink" title="Database Hardening"></a>Database Hardening</h1><a id="more"></a>
+<h2 id="Mass-Assignment-Vulnerabilities"><a href="#Mass-Assignment-Vulnerabilities" class="headerlink" title="Mass Assignment Vulnerabilities"></a>Mass Assignment Vulnerabilities</h2><h3 id="What"><a href="#What" class="headerlink" title="What"></a>What</h3><p>要解決問題就要先了解問題</p>
+<ul>
+<li><p>Mass assignment is a computer vulnerability where an active record pattern in a web application is abused to modify data.</p>
+</li>
+<li><p>∵ In serialization formats is automatically converted on input into internal object and, in turn, into database record fields. It’s possible to overwrite fields that were never intended to be modified from outside.</p>
+</li>
+<li><p>最常見的在insert 或 update時 塞入id欄位的值</p>
+</li>
+</ul>
+<figure class="highlight ruby"><figcaption><span>Mass assignment example</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Project has many Configurations</span></span><br><span class="line"><span class="comment"># when add_configuration, the project_id should be given by db</span></span><br><span class="line">new_data = &#123; <span class="symbol">name:</span> <span class="string">'Safe Project'</span>, <span class="symbol">repo_url:</span> <span class="string">'http://github.com/safeproject'</span> &#125;</span><br><span class="line">new_proj = Project.create(new_data)</span><br><span class="line">new_proj.add_configuration(<span class="symbol">filename:</span> <span class="string">'app.yml'</span>)</span><br><span class="line"><span class="comment"># however sb set project_id to what doesn't own this configuration</span></span><br><span class="line"><span class="comment"># procject_id 3 would be other account' project</span></span><br><span class="line">new_proj.add_configuration(<span class="symbol">filename:</span> <span class="string">'app.yml'</span>, <span class="symbol">project_id:</span> <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Solutions"><a href="#Solutions" class="headerlink" title="Solutions"></a>Solutions</h3><ul>
+<li><p>Sequel has Default Mass Assignment Restrictions: Primary keys, Foreign keys🙏</p>
+</li>
+<li><p>除此之外，也可以有Custom Mass Attack Restrictions</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Configuration</span> &lt; Sequel::Model</span></span><br><span class="line">  many_to_one <span class="symbol">:project</span></span><br><span class="line">  <span class="comment"># Specified columns are unrestricted</span></span><br><span class="line">  <span class="comment"># Unspecified columns are restricted</span></span><br><span class="line">  <span class="comment"># 預設是restricted，有特別指定才是unrestricted</span></span><br><span class="line">  <span class="comment"># so sweet 💋</span></span><br><span class="line">  set_allowed_columns <span class="symbol">:filename</span>, <span class="symbol">:relative_path</span>, <span class="symbol">:description</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="SQL-Injection-Vulnerability"><a href="#SQL-Injection-Vulnerability" class="headerlink" title="SQL Injection Vulnerability"></a>SQL Injection Vulnerability</h2><h3 id="What-1"><a href="#What-1" class="headerlink" title="What"></a>What</h3><p><strong>Any input from users should be considered dangerous and ‘dirty’ to your system</strong></p>
+<ul>
+<li>SQL statements are inserted into an entry field for execution</li>
+<li>Passing web route parameters directly into the database permits SQL injection</li>
+</ul>
+<figure class="highlight ruby"><figcaption><span>SQLInjection example</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'http://localhost:9292/api/v1/projects/2%20or%20id%3D1'</span></span><br></pre></td></tr></table></figure>
+<h3 id="Solutions-1"><a href="#Solutions-1" class="headerlink" title="Solutions"></a>Solutions</h3><ul>
+<li><p>Validation : Essential, but has limited effect on SQL injection</p>
+</li>
+<li><p>Literalization : simplest way to prevent sql injection</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">project = Project.where(<span class="symbol">id:</span> <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Query Parameterization : One of the best ways to prevent SQL injection</p>
+<ul>
+<li>Application side : Bound Statements</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">projects = Project.where(<span class="symbol">id:</span> <span class="symbol">:</span>$find_id)</span><br><span class="line"><span class="comment">#&lt;Sequel::SQLite::Dataset: "SELECT * FROM `projects` WHERE (`id` = `$find_id`)"&gt;</span></span><br><span class="line">projects.call(<span class="symbol">:select</span>, <span class="symbol">:find_id</span> =&gt; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Database side : Prepared Statements <a href="https://en.wikipedia.org/wiki/Prepared_statement#cite_note-phpmanual-1" target="_blank" rel="noopener">(wiki)</a></p>
+<ul>
+<li><p>a feature used to execute the same or similar database statements repeatedly with high efficiency.</p>
+</li>
+<li><p>The overhead of compiling and optimizing the statement is incurred only once, although the statement is executed multiple times.</p>
+</li>
+<li><p>because parameter values need not be correctly escaped</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ds = DB[<span class="symbol">:items</span>].where(<span class="symbol">:name=&gt;</span><span class="symbol">:</span>$n)</span><br><span class="line">ps = ds.prepare(<span class="symbol">:select</span>, <span class="symbol">:select_by_name</span>)</span><br><span class="line">ps.call(<span class="symbol">:n=&gt;<span class="string">'Jim'</span></span>)</span><br></pre></td></tr></table></figure>
+<h2 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h2><h3 id="Pros"><a href="#Pros" class="headerlink" title="Pros"></a>Pros</h3><ul>
+<li>Unique across every table, every database, every server</li>
+<li>Allows easy merging of records from different databases</li>
+<li>Allows easy distribution of databases across multiple servers</li>
+<li>Can generate IDs without having to roundtrip to the database</li>
+<li>DB replication usually requires UUIDs</li>
+</ul>
+<h3 id="Cons"><a href="#Cons" class="headerlink" title="Cons"></a>Cons</h3><ul>
+<li>Performance costs on inserts and joins</li>
+<li>Ugly URLs (if uuid is in URL)</li>
+<li>Cumbersome to debug: long, unpredictable</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SecureRandom.uuid</span><br><span class="line"><span class="comment"># =&gt; "eac3d7a1-a4c3-49c0-8892-f2b329e600ea"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><figcaption><span>use uuid in sequel</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># migrations</span></span><br><span class="line">Sequel.migration <span class="keyword">do</span></span><br><span class="line">  change <span class="keyword">do</span></span><br><span class="line">    create_table(<span class="symbol">:configurations</span>) <span class="keyword">do</span></span><br><span class="line">    String <span class="symbol">:id</span>, <span class="symbol">type:</span> <span class="symbol">:uuid</span>, <span class="symbol">primary_key:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sequel model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Configuration</span> &lt; Sequel::Model</span></span><br><span class="line">  plugin <span class="symbol">:uuid</span>, <span class="symbol">field:</span> <span class="symbol">:id</span></span><br></pre></td></tr></table></figure>
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Service-Security/">Service_Security</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/28/ss-week8/" data-tooltip="SS-week8" aria-label="NEXT: SS-week8">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/28/ss-week9/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/28/ss-week9/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/28/ss-week9/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/28/ss-week8/" data-tooltip="SS-week8" aria-label="NEXT: SS-week8">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/28/ss-week9/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/28/ss-week9/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/28/ss-week9/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/28/ss-week9/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/04/28/ss-week9/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/28/ss-week9/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/04/28/ss-week9/';
+                 
+                    this.page.identifier = '2017/04/28/ss-week9/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

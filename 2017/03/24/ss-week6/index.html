@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>SS week6 - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"Public Key Cryptography\n之前所討論的symmetric cryptography最終都有一個無法解決的問題:如何交換key\n大概只能打扮成\n然後到咖啡店\n跟對方面交XDD\n因為加解密都用同一把key，所以key沒有辦法透過公開網路交換\n\nWhat is Public-Key (PK) Cryptography則是一個是私人金鑰，另一個則是公開金鑰\n公開金鑰可以再公開網路中傳輪\n私有金鑰則自己保管\n主要有兩種用途\n\n加密資訊\n\n\n\n數位簽章(驗證來源是否正確)\n\n\n如果要同時加密資訊並驗證來源\n\nNOTE: Does the order matter?\nSure!!\n如果先用對方public key加密，再用自己private 簽名\n對方收到後先驗證來源後，只能保證加密後的資料是你的\n但plain text來源無法驗證\n\nGraphic PK cryptography exampleIce cream vandor problem\n\nQ:\n\nWhat is the minimum number of vans we need?\n\nAt which intersections would we base our vans?\n\n\nThis problem is hard to solve:\nO(n choose k) = O(n!/k!(n-k)!)\nHowever, this solution is easy to check:\nO(n)\nEncrypt\nDecrypt\n\nreal-world PK crypt algorithm\nknapsack problem\n\n\nit has been broken 😰\n\n\n\n\n\nRSA algorithm\n\n\n\n\n\nPerformance那既然有了 PK , 那我們還需要symmetric cryptography幹麻?\n大家可以安全的交換隱密資訊了💪💪💪\nWhat a wonderful world ~~\n.\n.\n.\n但事實是\n非對稱的加密非常~慢\n\nbenchmark\n於是美好世界\n\n\nIn practice當然不是這樣世界就毀了\n現實中將對稱跟非對稱一起用\n用對稱加密資訊，再用非對稱加密key，這樣資訊跟key都可以在網路上傳輸啦~\n同時又兼顧效能\nwhole picture\n\nCoding Time~\n騙你的，只要用library就好\n\nrbnacl都做完所有該做的事了\n\n\nrbnacl-pk-simple_boxlink123456789101112131415161718192021222324252627require 'rbnacl/libsodium'# KEY CREATIONpersonA_private_key = RbNaCl::PrivateKey.generatepersonA_public_key  = personA_private_key.public_keypersonB_private_key = RbNaCl::PrivateKey.generatepersonB_public_key  = personB_private_key.public_key# KEY EXCHANGEpersonA_box = RbNaCl::SimpleBox.from_keypair(  personB_public_key,  personA_private_key)personB_box = RbNaCl::SimpleBox.from_keypair(  personA_public_key,  personB_private_key)# SENDINGmessage = \"secret\"ciphertext = personA_box.encrypt(message)# RECEIVINGplaintext = personB_box.decrypt(ciphertext)\n\n最近會儘快把前幾週的上課筆記給補起來👻👻👻\n","dateCreated":"2017-03-24T14:16:54+08:00","dateModified":"2018-06-14T18:13:18+08:00","datePublished":"2017-03-24T14:16:54+08:00","description":"Public Key Cryptography","headline":"SS week6","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/03/24/ss-week6/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/03/24/ss-week6/","keywords":"Service_Security"}</script>
+    <meta name="description" content="Public Key Cryptography">
+<meta name="keywords" content="Service_Security">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SS week6">
+<meta property="og:url" content="http://yoursite.com/2017/03/24/ss-week6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Public Key Cryptography">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/images/fun/heisenberg.jpg">
+<meta property="og:image" content="http://yoursite.com/images/fun/behind_newspaper.jpg">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/secure.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/signing.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/confidentiality_non-repu.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/icecreamvendor.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/pkencry.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/pkdecry.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/knapsackkeygen.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/knapsackencry.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/knapsackdecry.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/rsakeygen.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/rsaencry.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/rsadecry.png">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/aesrsabench.png">
+<meta property="og:image" content="https://media.giphy.com/media/ZNKzkUzkRx75C/giphy.gif">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/pkplussk.png">
+<meta property="og:updated_time" content="2018-06-14T10:13:18.237Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SS week6">
+<meta name="twitter:description" content="Public Key Cryptography">
+<meta name="twitter:image" content="http://yoursite.com/images/fun/heisenberg.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            SS week6
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-03-24T14:16:54+08:00">
+	
+		    Mar 24, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="Public-Key-Cryptography"><a href="#Public-Key-Cryptography" class="headerlink" title="Public Key Cryptography"></a>Public Key Cryptography</h1><a id="more"></a>
+<p>之前所討論的symmetric cryptography最終都有一個無法解決的問題:<br>如何交換key</p>
+<p>大概只能打扮成<br><br><br><img src="/images/fun/heisenberg.jpg" height="200px" width="200px"></p>
+<p>然後到咖啡店<br><br><br><img src="/images/fun/behind_newspaper.jpg"></p>
+<p>跟對方面交XDD</p>
+<p>因為加解密都用同一把key，所以key沒有辦法透過公開網路交換</p>
+<hr>
+<h2 id="What-is-Public-Key-PK-Cryptography"><a href="#What-is-Public-Key-PK-Cryptography" class="headerlink" title="What is Public-Key (PK) Cryptography"></a>What is Public-Key (PK) Cryptography</h2><p>則是一個是私人金鑰，另一個則是公開金鑰</p>
+<p>公開金鑰可以再公開網路中傳輪</p>
+<p>私有金鑰則自己保管</p>
+<p>主要有兩種用途</p>
+<ul>
+<li>加密資訊</li>
+</ul>
+<p><img src="/images/studynotes/secure.png"></p>
+<ul>
+<li>數位簽章(驗證來源是否正確)</li>
+</ul>
+<p><img src="/images/studynotes/signing.png"></p>
+<p>如果要同時加密資訊並驗證來源</p>
+<p><img src="/images/studynotes/confidentiality_non-repu.png"></p>
+<p><strong>NOTE</strong>: Does the order matter?</p>
+<p><strong>Sure!!</strong></p>
+<p>如果先用對方public key加密，再用自己private 簽名</p>
+<p>對方收到後先驗證來源後，只能保證加密後的資料是你的</p>
+<p>但plain text來源無法驗證</p>
+<hr>
+<h2 id="Graphic-PK-cryptography-example"><a href="#Graphic-PK-cryptography-example" class="headerlink" title="Graphic PK cryptography example"></a>Graphic PK cryptography example</h2><p>Ice cream vandor problem</p>
+<p><img src="/images/studynotes/icecreamvendor.png"></p>
+<p>Q:</p>
+<ul>
+<li><p>What is the minimum number of vans we need?</p>
+</li>
+<li><p>At which intersections would we base our vans?</p>
+</li>
+</ul>
+<p>This problem is hard to solve:</p>
+<p><em>O(n choose k) = O(n!/k!(n-k)!)</em></p>
+<p>However, this solution is easy to check:</p>
+<p><em>O(n)</em></p>
+<h3 id="Encrypt"><a href="#Encrypt" class="headerlink" title="Encrypt"></a>Encrypt</h3><p><img src="/images/studynotes/pkencry.png"></p>
+<h3 id="Decrypt"><a href="#Decrypt" class="headerlink" title="Decrypt"></a>Decrypt</h3><p><img src="/images/studynotes/pkdecry.png"></p>
+<hr>
+<h2 id="real-world-PK-crypt-algorithm"><a href="#real-world-PK-crypt-algorithm" class="headerlink" title="real-world PK crypt algorithm"></a>real-world PK crypt algorithm</h2><ol>
+<li>knapsack problem</li>
+</ol>
+<ul>
+<li>it has been broken 😰</li>
+</ul>
+<p><img src="/images/studynotes/knapsackkeygen.png"></p>
+<p><img src="/images/studynotes/knapsackencry.png"></p>
+<p><img src="/images/studynotes/knapsackdecry.png"></p>
+<ol start="2">
+<li>RSA algorithm</li>
+</ol>
+<p><img src="/images/studynotes/rsakeygen.png"></p>
+<p><img src="/images/studynotes/rsaencry.png"></p>
+<p><img src="/images/studynotes/rsadecry.png"></p>
+<hr>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p>那既然有了 PK , 那我們還需要symmetric cryptography幹麻?</p>
+<p>大家可以安全的交換隱密資訊了💪💪💪</p>
+<p>What a wonderful world ~~</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>但事實是</p>
+<p>非對稱的加密非常~慢</p>
+<p><img src="/images/studynotes/aesrsabench.png"></p>
+<p><a href="https://github.com/ISS-Security/demo_crypto/blob/master/sk_vs_pk_bench.rb" target="_blank" rel="noopener">benchmark</a></p>
+<p>於是美好世界</p>
+<p><img src="https://media.giphy.com/media/ZNKzkUzkRx75C/giphy.gif"></p>
+<hr>
+<h2 id="In-practice"><a href="#In-practice" class="headerlink" title="In practice"></a>In practice</h2><p>當然不是這樣世界就毀了</p>
+<p>現實中將對稱跟非對稱一起用</p>
+<p>用對稱加密資訊，再用非對稱加密key，這樣資訊跟key都可以在網路上傳輸啦~</p>
+<p>同時又兼顧效能</p>
+<p>whole picture<br><img src="/images/studynotes/pkplussk.png"></p>
+<hr>
+<h2 id="Coding-Time"><a href="#Coding-Time" class="headerlink" title="Coding Time~"></a>Coding Time~</h2><ul>
+<li><p>騙你的，只要用library就好</p>
+</li>
+<li><p>rbnacl都做完所有該做的事了</p>
+</li>
+</ul>
+<figure class="highlight ruby"><figcaption><span>rbnacl-pk-simple_box</span><a href="https://github.com/ISS-Security/demo_crypto/blob/master/rbnacl/rbnacl-pk-simple_box.rb" target="_blank" rel="noopener">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="string">'rbnacl/libsodium'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># KEY CREATION</span></span><br><span class="line">personA_private_key = RbNaCl::PrivateKey.generate</span><br><span class="line">personA_public_key  = personA_private_key.public_key</span><br><span class="line"></span><br><span class="line">personB_private_key = RbNaCl::PrivateKey.generate</span><br><span class="line">personB_public_key  = personB_private_key.public_key</span><br><span class="line"></span><br><span class="line"><span class="comment"># KEY EXCHANGE</span></span><br><span class="line">personA_box = RbNaCl::SimpleBox.from_keypair(</span><br><span class="line">  personB_public_key,</span><br><span class="line">  personA_private_key</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">personB_box = RbNaCl::SimpleBox.from_keypair(</span><br><span class="line">  personA_public_key,</span><br><span class="line">  personB_private_key</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># SENDING</span></span><br><span class="line">message = <span class="string">"secret"</span></span><br><span class="line">ciphertext = personA_box.encrypt(message)</span><br><span class="line"></span><br><span class="line"><span class="comment"># RECEIVING</span></span><br><span class="line">plaintext = personB_box.decrypt(ciphertext)</span><br></pre></td></tr></table></figure>
+<hr>
+<p>最近會儘快把前幾週的上課筆記給補起來👻👻👻</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Service-Security/">Service_Security</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/25/ss-week4/" data-tooltip="SS week4" aria-label="PREVIOUS: SS week4">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/23/git-branching-tutorial/" data-tooltip="Git Branching Tutorial" aria-label="NEXT: Git Branching Tutorial">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/24/ss-week6/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/24/ss-week6/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/24/ss-week6/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/25/ss-week4/" data-tooltip="SS week4" aria-label="PREVIOUS: SS week4">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/23/git-branching-tutorial/" data-tooltip="Git Branching Tutorial" aria-label="NEXT: Git Branching Tutorial">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/24/ss-week6/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/24/ss-week6/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/24/ss-week6/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/24/ss-week6/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/24/ss-week6/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/24/ss-week6/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/03/24/ss-week6/';
+                 
+                    this.page.identifier = '2017/03/24/ss-week6/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

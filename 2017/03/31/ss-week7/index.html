@@ -1,0 +1,657 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>SS-week7 - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"Web Services and Security\nInternet and TCP/IP\n科普時間\n但老師連字幕都沒開變成在聽力測驗QQ\n\nHTTP:\nPersistent but Stateless\nnot a whole conversation\njust a line of message/request\nRequest and Resoinse Msg\n\n(HTTPie)[https://httpie.org] : cmd tool designed for painless debugging and interaction with HTTP servers, RESTful APIs, and web services\n\n\nHTTP methods\nSafety : Never change the resources\nIdempotence : can be called many times without different outcome\n\n\n\n\nHTTP method\nSafety\nIdempotence\n\n\n\n\nGET\nY\nY\n\n\nPOST\nN\nN\n\n\nPUT\nN\nY\n\n\nDELETE\nN\nY\n\n\n\n\nusage example :google search use GET methodGET parameter is saved in url so that you can save the search result as a bookmark\n\nHTTP status code\nDON’T be lazy, lookup  the table\n\n\nHappy(Coding) time ~ 之前要先有出場人員介紹👏👏👏Sinatra\nWeb Application Framework\nSinatra is a DSL for quickly creating web applications in Ruby with minimal effort(介紹就這麼簡短，官網甚至一進去只看到sample code)\n\nrun server\nExecute Rack based web application as per config.ru\n\n1rackup\nBundler\nprovides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.\n\ninstall1gem install bundler\nexecution1bundle install\n\nGemfile.lock stores which version of gems should be installed\n\nexecution(suggestion)1bundle exec rake\n\nensures following command is only run with gems specified in Gemfile.lock\n\nrake\nRuby make\n\nsimple exampletask simple12345task default: %w[test]task :test do  ruby \"test/unittest.rb\"end\n\n真正的coding time~Ruby 語法的部分就略過不說了\nmodel\n一般的class\n這次spec 要求implement 下列 methods\ninitialize\nsave\nfind\nall\nto_json\n\n\n\ncontroller\n必需繼承 Sinatra::Base, rack才認得它\nrequirement\nget /sourece : return details of a specific resource\nget /sourece/id : return an index of all resources\npost : create a new resource\n\n\n\n1234567891011121314class ShareConfigurationsAPI &lt; Sinatra::Base  configure do    #Configure Sinatra settings  end  get '/?' do    # root route for anything  end  post '/api/v1/configurations/?' do    # a post route  endend\n\nSecurity Threats當然目前的服務很簡單，也有很多漏洞下面列了一些，之後我們都會一個一個來解決\n\nThreat: Confidentiality\n\nStored resources could be stolen if server is compromised\nVulnerability: User resources are not being encrypted\nVector: Attacker with access to server can read whole data store\n\n\nThreat: Authorization, Authentication\n\nInformation about resources is not private\nVulnerability: App does not check if user is authorized to see resource\nVector: Anyone can access any data by knowing its public URL\n\n\nThreat: Integrity, Bug\n\n:id random key generator could produce collisions\nVulnerability: random key generator produces same keys within given second\nVector: send multiple POST ‘/resource’ requests within same second\n\n\nThreat: Integrity\n\nUser could destroy earlier resources\nVulnerability: app does not check if :id key is being sent along with POST request\nVector: send :id along with POST request to see if app overwrite earlier resource\n\n\nThreat: All dimensions\n\nDependencies (gems) could have vulnerabilities\nVulnerability: gems could allow attacks (denial of service, remote code execution, etc.)\nVector: send a payload to a route that will likely invoke a particular dependency (gem)\n\n\n\n","dateCreated":"2017-03-31T10:37:03+08:00","dateModified":"2018-06-14T18:13:16+08:00","datePublished":"2017-03-31T10:37:03+08:00","description":"Web Services and Security","headline":"SS-week7","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/03/31/ss-week7/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/03/31/ss-week7/","keywords":"Service_Security"}</script>
+    <meta name="description" content="Web Services and Security">
+<meta name="keywords" content="Service_Security">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SS-week7">
+<meta property="og:url" content="http://yoursite.com/2017/03/31/ss-week7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Web Services and Security">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-06-14T10:13:16.518Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SS-week7">
+<meta name="twitter:description" content="Web Services and Security">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            SS-week7
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-03-31T10:37:03+08:00">
+	
+		    Mar 31, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h1 id="Web-Services-and-Security"><a href="#Web-Services-and-Security" class="headerlink" title="Web Services and Security"></a>Web Services and Security</h1><a id="more"></a>
+<h2 id="Internet-and-TCP-IP"><a href="#Internet-and-TCP-IP" class="headerlink" title="Internet and TCP/IP"></a>Internet and TCP/IP</h2><ul>
+<li><a href="http://www.youtube.com/watch?v=9hIQjrMHTv4" target="_blank" rel="noopener">科普時間</a></li>
+<li>但老師連字幕都沒開變成在聽力測驗QQ</li>
+</ul>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP:"></a>HTTP:</h2><ul>
+<li>Persistent but Stateless</li>
+<li>not a whole conversation</li>
+<li>just a line of message/request</li>
+<li><p>Request and Resoinse Msg</p>
+</li>
+<li><p>(HTTPie)[<a href="https://httpie.org]" target="_blank" rel="noopener">https://httpie.org]</a> : cmd tool designed for painless debugging and interaction with HTTP servers, RESTful APIs, and web services</p>
+</li>
+</ul>
+<h2 id="HTTP-methods"><a href="#HTTP-methods" class="headerlink" title="HTTP methods"></a>HTTP methods</h2><ul>
+<li>Safety : Never change the resources</li>
+<li>Idempotence : can be called many times without different outcome</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>HTTP method</th>
+<th>Safety</th>
+<th>Idempotence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>usage example :<br>google search use GET method<br>GET parameter is saved in url so that you can save the search result as a bookmark</li>
+</ul>
+<h2 id="HTTP-status-code"><a href="#HTTP-status-code" class="headerlink" title="HTTP status code"></a>HTTP status code</h2><ul>
+<li>DON’T be lazy, lookup  the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank" rel="noopener">table</a></li>
+</ul>
+<hr>
+<h1 id="Happy-Coding-time-之前要先有"><a href="#Happy-Coding-time-之前要先有" class="headerlink" title="Happy(Coding) time ~ 之前要先有"></a>Happy(Coding) time ~ 之前要先有</h1><h1 id="出場人員介紹👏👏👏"><a href="#出場人員介紹👏👏👏" class="headerlink" title="出場人員介紹👏👏👏"></a>出場人員介紹👏👏👏</h1><h2 id="Sinatra"><a href="#Sinatra" class="headerlink" title="Sinatra"></a><a href="https://github.com/sinatra/sinatra" target="_blank" rel="noopener">Sinatra</a></h2><ul>
+<li>Web Application Framework</li>
+<li>Sinatra is a DSL for quickly creating web applications in Ruby with minimal effort<br>(介紹就這麼簡短，官網甚至一進去只看到sample code)</li>
+</ul>
+<h3 id="run-server"><a href="#run-server" class="headerlink" title="run server"></a>run server</h3><ul>
+<li>Execute Rack based web application as per config.ru</li>
+</ul>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rackup</span><br></pre></td></tr></table></figure>
+<h2 id="Bundler"><a href="#Bundler" class="headerlink" title="Bundler"></a><a href="http://bundler.io" target="_blank" rel="noopener">Bundler</a></h2><ul>
+<li>provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.</li>
+</ul>
+<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install bundler</span><br></pre></td></tr></table></figure>
+<h3 id="execution"><a href="#execution" class="headerlink" title="execution"></a>execution</h3><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Gemfile.lock stores which version of gems should be installed</li>
+</ul>
+<h3 id="execution-suggestion"><a href="#execution-suggestion" class="headerlink" title="execution(suggestion)"></a>execution(suggestion)</h3><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec rake</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ensures following command is only run with gems specified in Gemfile.lock</li>
+</ul>
+<h2 id="rake"><a href="#rake" class="headerlink" title="rake"></a><a href="https://github.com/ruby/rake" target="_blank" rel="noopener">rake</a></h2><ul>
+<li>Ruby make</li>
+</ul>
+<h3 id="simple-example"><a href="#simple-example" class="headerlink" title="simple example"></a>simple example</h3><figure class="highlight ruby"><figcaption><span>task simple</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">task <span class="symbol">default:</span> <span class="string">%w[test]</span></span><br><span class="line">task <span class="symbol">:test</span> <span class="keyword">do</span></span><br><span class="line">  ruby <span class="string">"test/unittest.rb"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="真正的coding-time"><a href="#真正的coding-time" class="headerlink" title="真正的coding time~"></a>真正的coding time~</h1><p>Ruby 語法的部分就略過不說了</p>
+<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><ul>
+<li>一般的class</li>
+<li>這次spec 要求implement 下列 methods<ul>
+<li>initialize</li>
+<li>save</li>
+<li>find</li>
+<li>all</li>
+<li>to_json</li>
+</ul>
+</li>
+</ul>
+<h2 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h2><ul>
+<li>必需繼承 Sinatra::Base, rack才認得它</li>
+<li>requirement<ul>
+<li>get /sourece : return details of a specific resource</li>
+<li>get /sourece/id : return an index of all resources</li>
+<li>post : create a new resource</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShareConfigurationsAPI</span> &lt; Sinatra::Base</span></span><br><span class="line">  configure <span class="keyword">do</span></span><br><span class="line">    <span class="comment">#Configure Sinatra settings</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  get <span class="string">'/?'</span> <span class="keyword">do</span></span><br><span class="line">    <span class="comment"># root route for anything</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  post <span class="string">'/api/v1/configurations/?'</span> <span class="keyword">do</span></span><br><span class="line">    <span class="comment"># a post route</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="Security-Threats"><a href="#Security-Threats" class="headerlink" title="Security Threats"></a>Security Threats</h1><p>當然目前的服務很簡單，也有很多漏洞<br>下面列了一些，之後我們都會一個一個來解決</p>
+<ul>
+<li><p>Threat: Confidentiality</p>
+<ul>
+<li>Stored resources could be stolen if server is compromised</li>
+<li>Vulnerability: User resources are not being encrypted</li>
+<li>Vector: Attacker with access to server can read whole data store</li>
+</ul>
+</li>
+<li><p>Threat: Authorization, Authentication</p>
+<ul>
+<li>Information about resources is not private</li>
+<li>Vulnerability: App does not check if user is authorized to see resource</li>
+<li>Vector: Anyone can access any data by knowing its public URL</li>
+</ul>
+</li>
+<li><p>Threat: Integrity, Bug</p>
+<ul>
+<li>:id random key generator could produce collisions</li>
+<li>Vulnerability: random key generator produces same keys within given second</li>
+<li>Vector: send multiple POST ‘/resource’ requests within same second</li>
+</ul>
+</li>
+<li><p>Threat: Integrity</p>
+<ul>
+<li>User could destroy earlier resources</li>
+<li>Vulnerability: app does not check if :id key is being sent along with POST request</li>
+<li>Vector: send :id along with POST request to see if app overwrite earlier resource</li>
+</ul>
+</li>
+<li><p>Threat: All dimensions</p>
+<ul>
+<li>Dependencies (gems) could have vulnerabilities</li>
+<li>Vulnerability: gems could allow attacks (denial of service, remote code execution, etc.)</li>
+<li>Vector: send a payload to a route that will likely invoke a particular dependency (gem)</li>
+</ul>
+</li>
+</ul>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Service-Security/">Service_Security</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/19/ss-week1/" data-tooltip="SS-week1" aria-label="PREVIOUS: SS-week1">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/27/ss-week5/" data-tooltip="SS week5" aria-label="NEXT: SS week5">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/31/ss-week7/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/31/ss-week7/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/31/ss-week7/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/19/ss-week1/" data-tooltip="SS-week1" aria-label="PREVIOUS: SS-week1">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/27/ss-week5/" data-tooltip="SS week5" aria-label="NEXT: SS week5">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/31/ss-week7/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/31/ss-week7/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/31/ss-week7/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/03/31/ss-week7/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/03/31/ss-week7/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/03/31/ss-week7/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/03/31/ss-week7/';
+                 
+                    this.page.identifier = '2017/03/31/ss-week7/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

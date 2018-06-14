@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>JS understanding the weird parts 6-57 ~ 6-64 building objects - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"\n6-57 Function creator ‘new’, and the history of javascripthistory time\njavascript 之所以叫 javascript，為了吸引 Java programmer XDD\nnew constructor 也是從 Java 搬來的 (笑)\n\nnew\na operator\n‘new’ create a empty object\n\n12345678910111213function Person(firstname, lastname)&#123;  console.log(this);//Person&#123;&#125;, a new empty object  this.firstname = firstname;  this.lastname = lastname;  console.log(\"this function is invoked\");&#125;var john = new Person('John', 'Doe');console.log(john);var jane = new Person('Jane', 'Doe');console.log(jane);\n\nnew create a brand new empty object\nthe function Person() is called\nthis in the function is point to the new empty object\nif the function doesn’t return a value, js engine return the new object\n\nbigword alert : Function Constructors\nA normal function that is used to construct objects.\n‘this’ points to a new empty object.\nthe new empty object is returned from the funciton automatically.\n\n後記:我到現在才知道在js裡，new後面的是一個function…囧\n\n6-58 Function constructor and ‘.prototype’Recall\n\n.prototype (property) is used only by functions\n\n.property is the prototype of any object created(use ‘new’)\n\n__proto__  is in all objects(includeing functions)\n\n__proto__ is the prototype of the the object\n\n\n.prototype 是改變所有new 出來的新object 的 prototype\n看下面例子，john.__proto__ 指向 Person.prototype\n\ngood js code sets properties inside the function constructor. But methods are set on the prototype.\n\n∵ methods(function) 也是object，放在function contstrctor，變成每個new 出來的都有一份 methods 的copy但它們只做一樣的事情 -&gt; 浪費記憶體\n123456789101112131415161718192021222324252627function Person(firstname, lastname) &#123;    console.log(this);    this.firstname = firstname;    this.lastname = lastname;    console.log('This function is invoked.');&#125;Person.prototype.getFullName = function() &#123;    return this.firstname + ' ' + this.lastname;&#125;var john = new Person('John', 'Doe');console.log(john);var jane = new Person('Jane', 'Doe');console.log(jane);Person.prototype.getFormalFullName = function() &#123;    return this.lastname + ', ' + this.firstname;&#125;console.log(john.getFormalFullName());\n6-59 Dangerous aside : new and function\nif we invoked a function constructor without new , the function is still run. However, the function will return undefined in default.\n\nuse capital letter for function constructor\n\n\n6-60 conceuptual Aside : build-in function constructorautoboxbuild-in function constructor12345678910var a = new String('John');var b = new Number(3);// creating Number object, not primitive type\"John\".length //4// primitive has no methods//js engine autobox the primitive string into Object String3.toFixed; //err, js doesn't do autobox on numbers\njs easy enhance123456// add new method to origin String ObjectString.prototype.isLengthGreaterThan = function(limit)&#123;  return this.length &gt; limit;&#125;console.log('John'.isLengthGreaterThan(3)); //true\n6-61 Dangerous Aside: build-in function constructor\nis better not to use (primitive tpye) built-in function constructors\ndeal with date : moment.js\n\n123456789var a = 3;var b = new Number(3);a == b //truea === b // falsevar c = Number(\"3\"); //convert string to primitive number\n6-62 Dangerous Aside : Arrays and for…in\nindex(0,1,2…) is the property name\n\n1234567891011121314151617181920212223// Array.prototype.myCustomFeature = 'cool!';var arr = ['John','Jane','Jim'];for(var prop in arr)&#123;  console.log(prop + ' : ' + arr[prop]);&#125;/*0 : John1 : Jane2 : Jim *//*0 : John1 : Jane2 : JimmyCustomFeature : cool! */// use standard for loop to avoid this\n6-63 Object.create and Pure Prototypal Inheritance\nPure Prototypal Inheritance\nObject.create create a empty object with prototype point to the argument\n\n12345678910111213141516171819var person = &#123;  firstname : &apos;Default&apos;,  lastname : &apos;Default&apos;,  greet : function()&#123;    return &apos;Hi&apos; + this.firstname;    // this point to the object person    // if there is no this, js engine would find firstname in greet function&apos;s execution context    // then find firstname in outer environment(in this case, it&apos;s global object)  &#125;&#125;var john = Object.create(person);console.log(john);// john has default name!! because of the prototypejohn.firstname = &apos;John&apos;;john.lastname = &apos;Doe&apos;;console.log(john);\nif browser doesn’t support Object.create… Polyfill!!\nbigword alert : Polyfill\ncode that adds a feature the engine may lack\n\nobject.create polyfill123456789101112131415161718192021222324252627//if object.create not exist, undefined// undefined is coerced to booleanif (!Object.create) &#123;  Object.create = function (o) &#123;    if (arguments.length &gt; 1) &#123;      throw new Error('Object.create implementation'      + ' only accepts the first parameter.');    &#125;    function F() &#123;&#125;    F.prototype = o;    return new F();  &#125;;&#125;var person = &#123;    firstname: 'Default',    lastname: 'Default',    greet: function() &#123;        return 'Hi ' + this.firstname;    &#125;&#125;var john = Object.create(person);john.firstname = 'John';john.lastname = 'Doe';console.log(john);\n6-64 ES6 and Classes\nES6 has new keywords : class\n但作者認為這只是個syntatic sugur, 本質上還是 prototypal inheritance\n仍然建議使用prototypal inheritance 的方式\n\nES6 class123456789101112131415// note that this is a Object, a created object// it exist in memory alreadyclass Person&#123;  constructor(firstname, lastname)&#123;    this.firstname = firstname;    this.lastname = lastname;  &#125;  greet()&#123;  return 'Hi ' + firstname;  &#125;&#125; var john = new Person('John', 'Doe');\n","dateCreated":"2017-01-17T23:35:42+08:00","dateModified":"2018-06-14T18:13:17+08:00","datePublished":"2017-01-17T23:35:42+08:00","description":"","headline":"JS understanding the weird parts 6-57 ~ 6-64 building objects","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/01/17/jsuwp-5-57/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/01/17/jsuwp-5-57/","keywords":"StudyNote javascript udemy"}</script>
+    <meta name="description" content="6-57 Function creator ‘new’, and the history of javascripthistory time javascript 之所以叫 javascript，為了吸引 Java programmer XDD new constructor 也是從 Java 搬來的 (笑)  new a operator ‘new’ create a empty object">
+<meta name="keywords" content="StudyNote javascript udemy">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JS understanding the weird parts 6-57 ~ 6-64 building objects">
+<meta property="og:url" content="http://yoursite.com/2017/01/17/jsuwp-5-57/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="6-57 Function creator ‘new’, and the history of javascripthistory time javascript 之所以叫 javascript，為了吸引 Java programmer XDD new constructor 也是從 Java 搬來的 (笑)  new a operator ‘new’ create a empty object">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/images/studynotes/dotprototype.jpg">
+<meta property="og:updated_time" content="2018-06-14T10:13:17.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS understanding the weird parts 6-57 ~ 6-64 building objects">
+<meta name="twitter:description" content="6-57 Function creator ‘new’, and the history of javascripthistory time javascript 之所以叫 javascript，為了吸引 Java programmer XDD new constructor 也是從 Java 搬來的 (笑)  new a operator ‘new’ create a empty object">
+<meta name="twitter:image" content="http://yoursite.com/images/studynotes/dotprototype.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            JS understanding the weird parts 6-57 ~ 6-64 building objects
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-01-17T23:35:42+08:00">
+	
+		    Jan 17, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <a id="more"></a>
+<h1 id="6-57-Function-creator-‘new’-and-the-history-of-javascript"><a href="#6-57-Function-creator-‘new’-and-the-history-of-javascript" class="headerlink" title="6-57 Function creator ‘new’, and the history of javascript"></a>6-57 Function creator ‘new’, and the history of javascript</h1><h2 id="history-time"><a href="#history-time" class="headerlink" title="history time"></a>history time</h2><ul>
+<li>javascript 之所以叫 javascript，為了吸引 Java programmer XDD</li>
+<li>new constructor 也是從 Java 搬來的 (笑)</li>
+</ul>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><ul>
+<li>a operator</li>
+<li>‘new’ create a empty object</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">firstname, lastname</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>);<span class="comment">//Person&#123;&#125;, a new empty object</span></span><br><span class="line">  <span class="keyword">this</span>.firstname = firstname;</span><br><span class="line">  <span class="keyword">this</span>.lastname = lastname;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"this function is invoked"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> Person(<span class="string">'John'</span>, <span class="string">'Doe'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(john);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jane = <span class="keyword">new</span> Person(<span class="string">'Jane'</span>, <span class="string">'Doe'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(jane);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>new create a brand new empty object</li>
+<li>the function Person() is called</li>
+<li>this in the function is point to the new empty object</li>
+<li>if the function doesn’t return a value, js engine return the new object</li>
+</ol>
+<h2 id="bigword-alert-Function-Constructors"><a href="#bigword-alert-Function-Constructors" class="headerlink" title="bigword alert : Function Constructors"></a>bigword alert : Function Constructors</h2><ul>
+<li>A normal function that is used to construct objects.</li>
+<li>‘this’ points to a new empty object.</li>
+<li>the new empty object is returned from the funciton automatically.</li>
+</ul>
+<p>後記:<br>我到現在才知道在js裡，new後面的是一個function…囧</p>
+<hr>
+<h1 id="6-58-Function-constructor-and-‘-prototype’"><a href="#6-58-Function-constructor-and-‘-prototype’" class="headerlink" title="6-58 Function constructor and ‘.prototype’"></a>6-58 Function constructor and ‘.prototype’</h1><h2 id="Recall"><a href="#Recall" class="headerlink" title="Recall"></a>Recall</h2><p><img src="/images/studynotes/dotprototype.jpg"></p>
+<ul>
+<li><p>.prototype (property) is used only by functions</p>
+</li>
+<li><p>.property is the prototype of any object created(use ‘new’)</p>
+</li>
+<li><p>__proto__  is in all objects(includeing functions)</p>
+</li>
+<li><p>__proto__ is the prototype of the the object</p>
+</li>
+</ul>
+<p>.prototype 是改變所有new 出來的新object 的 prototype</p>
+<p>看下面例子，john.__proto__ 指向 Person.prototype</p>
+<ul>
+<li>good js code sets properties inside the function constructor. But methods are set on the prototype.</li>
+</ul>
+<p>∵ methods(function) 也是object，放在function contstrctor，變成每個new 出來的都有一份 methods 的copy<br>但它們只做一樣的事情 -&gt; 浪費記憶體</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">firstname, lastname</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>.firstname = firstname;</span><br><span class="line">    <span class="keyword">this</span>.lastname = lastname;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'This function is invoked.'</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.getFullName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.firstname + <span class="string">' '</span> + <span class="keyword">this</span>.lastname;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="keyword">new</span> Person(<span class="string">'John'</span>, <span class="string">'Doe'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(john);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jane = <span class="keyword">new</span> Person(<span class="string">'Jane'</span>, <span class="string">'Doe'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(jane);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Person.prototype.getFormalFullName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.lastname + <span class="string">', '</span> + <span class="keyword">this</span>.firstname;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(john.getFormalFullName());</span><br></pre></td></tr></table></figure>
+<h1 id="6-59-Dangerous-aside-new-and-function"><a href="#6-59-Dangerous-aside-new-and-function" class="headerlink" title="6-59 Dangerous aside : new and function"></a>6-59 Dangerous aside : new and function</h1><ul>
+<li><p>if we invoked a function constructor without new , the function is still run. However, the function will return undefined in default.</p>
+</li>
+<li><p>use capital letter for function constructor</p>
+</li>
+</ul>
+<h1 id="6-60-conceuptual-Aside-build-in-function-constructor"><a href="#6-60-conceuptual-Aside-build-in-function-constructor" class="headerlink" title="6-60 conceuptual Aside : build-in function constructor"></a>6-60 conceuptual Aside : build-in function constructor</h1><h2 id="autobox"><a href="#autobox" class="headerlink" title="autobox"></a>autobox</h2><figure class="highlight javascript"><figcaption><span>build-in function constructor</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'John'</span>);</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">3</span>);</span><br><span class="line"><span class="comment">// creating Number object, not primitive type</span></span><br><span class="line"></span><br><span class="line"><span class="string">"John"</span>.length <span class="comment">//4</span></span><br><span class="line"><span class="comment">// primitive has no methods</span></span><br><span class="line"><span class="comment">//js engine autobox the primitive string into Object String</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>toFixed; <span class="comment">//err, js doesn't do autobox on numbers</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>js easy enhance</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// add new method to origin String Object</span></span><br><span class="line"><span class="built_in">String</span>.prototype.isLengthGreaterThan = <span class="function"><span class="keyword">function</span>(<span class="params">limit</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.length &gt; limit;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'John'</span>.isLengthGreaterThan(<span class="number">3</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h1 id="6-61-Dangerous-Aside-build-in-function-constructor"><a href="#6-61-Dangerous-Aside-build-in-function-constructor" class="headerlink" title="6-61 Dangerous Aside: build-in function constructor"></a>6-61 Dangerous Aside: build-in function constructor</h1><ul>
+<li>is better not to use (primitive tpye) built-in function constructors</li>
+<li>deal with date : moment.js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">a == b <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line">a === b <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> c = <span class="built_in">Number</span>(<span class="string">"3"</span>); <span class="comment">//convert string to primitive number</span></span><br></pre></td></tr></table></figure>
+<h1 id="6-62-Dangerous-Aside-Arrays-and-for…in"><a href="#6-62-Dangerous-Aside-Arrays-and-for…in" class="headerlink" title="6-62 Dangerous Aside : Arrays and for…in"></a>6-62 Dangerous Aside : Arrays and for…in</h1><ul>
+<li>index(0,1,2…) is the property name</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// Array.prototype.myCustomFeature = 'cool!';</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">'John'</span>,<span class="string">'Jane'</span>,<span class="string">'Jim'</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> prop <span class="keyword">in</span> arr)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(prop + <span class="string">' : '</span> + arr[prop]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">0 : John</span></span><br><span class="line"><span class="comment">1 : Jane</span></span><br><span class="line"><span class="comment">2 : Jim</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">0 : John</span></span><br><span class="line"><span class="comment">1 : Jane</span></span><br><span class="line"><span class="comment">2 : Jim</span></span><br><span class="line"><span class="comment">myCustomFeature : cool!</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// use standard for loop to avoid this</span></span><br></pre></td></tr></table></figure>
+<h1 id="6-63-Object-create-and-Pure-Prototypal-Inheritance"><a href="#6-63-Object-create-and-Pure-Prototypal-Inheritance" class="headerlink" title="6-63 Object.create and Pure Prototypal Inheritance"></a>6-63 Object.create and Pure Prototypal Inheritance</h1><ul>
+<li>Pure Prototypal Inheritance</li>
+<li>Object.create create a empty object with prototype point to the argument</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var person = &#123;</span><br><span class="line">  firstname : &apos;Default&apos;,</span><br><span class="line">  lastname : &apos;Default&apos;,</span><br><span class="line">  greet : function()&#123;</span><br><span class="line">    return &apos;Hi&apos; + this.firstname;</span><br><span class="line">    // this point to the object person</span><br><span class="line">    // if there is no this, js engine would find firstname in greet function&apos;s execution context</span><br><span class="line">    // then find firstname in outer environment(in this case, it&apos;s global object)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var john = Object.create(person);</span><br><span class="line">console.log(john);</span><br><span class="line">// john has default name!! because of the prototype</span><br><span class="line"></span><br><span class="line">john.firstname = &apos;John&apos;;</span><br><span class="line">john.lastname = &apos;Doe&apos;;</span><br><span class="line">console.log(john);</span><br></pre></td></tr></table></figure>
+<p>if browser doesn’t support Object.create… Polyfill!!</p>
+<h2 id="bigword-alert-Polyfill"><a href="#bigword-alert-Polyfill" class="headerlink" title="bigword alert : Polyfill"></a>bigword alert : Polyfill</h2><ul>
+<li>code that adds a feature the engine may lack</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>object.create polyfill</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//if object.create not exist, undefined</span></span><br><span class="line"><span class="comment">// undefined is coerced to boolean</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">Object</span>.create) &#123;</span><br><span class="line">  <span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span> (<span class="params">o</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">arguments</span>.length &gt; <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Object.create implementation'</span></span><br><span class="line">      + <span class="string">' only accepts the first parameter.'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    F.prototype = o;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    firstname: <span class="string">'Default'</span>,</span><br><span class="line">    lastname: <span class="string">'Default'</span>,</span><br><span class="line">    greet: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Hi '</span> + <span class="keyword">this</span>.firstname;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> john = <span class="built_in">Object</span>.create(person);</span><br><span class="line">john.firstname = <span class="string">'John'</span>;</span><br><span class="line">john.lastname = <span class="string">'Doe'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(john);</span><br></pre></td></tr></table></figure>
+<h1 id="6-64-ES6-and-Classes"><a href="#6-64-ES6-and-Classes" class="headerlink" title="6-64 ES6 and Classes"></a>6-64 ES6 and Classes</h1><ul>
+<li>ES6 has new keywords : class</li>
+<li>但作者認為這只是個syntatic sugur, 本質上還是 prototypal inheritance</li>
+<li>仍然建議使用prototypal inheritance 的方式</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>ES6 class</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// note that this is a Object, a created object</span></span><br><span class="line"><span class="comment">// it exist in memory already</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(firstname, lastname)&#123;</span><br><span class="line">    <span class="keyword">this</span>.firstname = firstname;</span><br><span class="line">    <span class="keyword">this</span>.lastname = lastname;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  greet()&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'Hi '</span> + firstname;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">var</span> john = <span class="keyword">new</span> Person(<span class="string">'John'</span>, <span class="string">'Doe'</span>);</span><br></pre></td></tr></table></figure>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/StudyNote-javascript-udemy/">StudyNote javascript udemy</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/20/jsuwp-2-6/" data-tooltip="jsuwp-2-6 Syntax Parser, Execution Contex and Lexical Environment" aria-label="PREVIOUS: jsuwp-2-6 Syntax Parser, Execution Contex and Lexical Environment">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/15/jsuwp-5-53/" data-tooltip="JS understanding the weird parts 5-53 ~ 5-56 Object-oriented javascript and prototypal inheritance" aria-label="NEXT: JS understanding the weird parts 5-53 ~ 5-56 Object-oriented javascript and prototypal inheritance">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/01/17/jsuwp-5-57/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/01/17/jsuwp-5-57/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/01/17/jsuwp-5-57/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/20/jsuwp-2-6/" data-tooltip="jsuwp-2-6 Syntax Parser, Execution Contex and Lexical Environment" aria-label="PREVIOUS: jsuwp-2-6 Syntax Parser, Execution Contex and Lexical Environment">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/15/jsuwp-5-53/" data-tooltip="JS understanding the weird parts 5-53 ~ 5-56 Object-oriented javascript and prototypal inheritance" aria-label="NEXT: JS understanding the weird parts 5-53 ~ 5-56 Object-oriented javascript and prototypal inheritance">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/01/17/jsuwp-5-57/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/01/17/jsuwp-5-57/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/01/17/jsuwp-5-57/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/01/17/jsuwp-5-57/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/01/17/jsuwp-5-57/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/01/17/jsuwp-5-57/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/01/17/jsuwp-5-57/';
+                 
+                    this.page.identifier = '2017/01/17/jsuwp-5-57/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>

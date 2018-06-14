@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>JS understanding the weird parts 4-34 ~ 4-40 function - Hexo</title>
+    <meta name="author" content="Necisam">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg"},"articleBody":"\n4-34 Functions are Objectsbigword alert : FIRST CLASS FUNCTIONS\nevery things you can do with other types you can do with functions.\nassignthem to variables, pass them around, create them on the fly.\njs is not the only language that has first class function\n\n\nfunction has more properties than object\n\nName(optional)\nCode\nuse () to invoke a function\n\n\nFunctions are Objects1234567//declare a functionfunction greet()&#123;  console.log('hi');&#125;greet.languague = \"English\"; //add property to function!!!\n\n#4-35 Function statements and function Expressions\nbigword alert : Expression\na unit of code that results in a value\nstatement just do the work\n\nfunction express vs statement12345678910111213greet();//function statementfunction greet()&#123;  console.log('hi');&#125;//function express, return a object to varvar anonymousGreet = function ()&#123;  console.log('hi');&#125;anonymousGreet(); //use () to invoke a function\nfunction hoisting12345anonymousGreet(); //error : anonymousGreet is undefined this linevar anonymousGreet = function ()&#123; //anonymousGreet is set to a function  console.log('hi');&#125;\npass function as parameter12345678function log(a)&#123;  console.log(a);&#125;log(function ()&#123;  console.log('hi');&#125;);\n\n#4-36 By value and By reference\n\nIn js, primitives are by value\nIn js, objects(includes functions) are by reference\n沒有選擇餘地，就是這樣\n\nby value\nby reference\nbigword alert : Mutate\nto change sth\nImmutable means it can’t be changed\n\nby value/reference12345678910111213141516171819202122232425262728293031323334// by value (primitives)var a = 3;var b;b = a;a = 2;console.log(a);console.log(b);// by reference (all objects (including functions))var c = &#123; greeting: 'hi' &#125;;var d;d = c;c.greeting = 'hello'; // mutateconsole.log(c);console.log(d);// by reference (even as parameters)function changeGreeting(obj) &#123;    obj.greeting = 'Hola'; // mutate&#125;changeGreeting(d);console.log(c);console.log(d);// equals operator sets up new memory space (new address)c = &#123; greeting: 'howdy' &#125;;console.log(c);console.log(d);\n\n#4-37 Object, functions,and this\n\n‘this’ is depending on how the funciton is called\n\n\nIn the global execution context -&gt; global object\nIn function context, simple call (ex : f1() ) -&gt; global object\nAs an object method -&gt; the object\n\nwhole document\nwhat is this123456789101112131415161718192021222324252627282930console.log(this);// windowfunction a ()&#123;  console.log(this);&#125;a()// windowvar b = function()&#123;  console.log(this);&#125;b()//windowvar c = &#123;  name:\"the c object\",  log: function()&#123;    this.name = \"updated c object\";    console.log(this);//c object    var setname = function(newname)&#123;      this.name = newname;// the global object ,windows!!!      // a lot of people think it's wrong    &#125;    setname('updated again!!');    console.log(this); //c object with name : \"updated c object\"  &#125;&#125;c.log();\ntips avoiding weird this1234567891011121314151617var c = &#123;  name:\"the c object\",  log: function()&#123;    var self = this; //save this(c object) address in var self    self.name = \"updated c object\";    console.log(self);    var setname = function(newname)&#123;      self.name = newname;// self point to the c objects    &#125;    setname('updated again!!');    console.log(self);  &#125;&#125;c.log();\n\n4-38 Array-collection of anything\nIn javascript, array is typeless. You can put anything into it(Even a function = special object).\n\narray contains everything123456789101112131415var arr = [  1,  true,  &#123;    name:'sam',    phone:'0911111111'  &#125;,  function (name)&#123;    var greeting = 'Hello ';    console.log(greeting + name);  &#125;,  \"bello\"]arr[3](arr[2].name); // \"Hello sam\"\n\n4-39 arguments and spreads\narguments keyword contains all the function arguments\narguments is array-like, not exactly regular array\narguments will become deprecated\nspread parameter(…) //資料查到是叫Rest parameters\n\nuse arguments12345678function greet(firstname,lastname,language)&#123;  console.log(arguments);  console.log(firstname);  console.log(lastname);  console.log(language);&#125;greet() // undefined undefined undefined\nspreadparams1234function greet(firstname,lastname,language, ...other)&#123;  // additional params are put into an array called other&#125;\n\n4-40 function overloading\njs don’t have function overloading\nIn js, funtion is an object\nIn js, there are firstclass function\n\n123456789101112131415161718function greet(firstname, lastname, language) &#123;  language = language || 'en';  if (language === 'en') &#123;    console.log('Hello ' + firstname + ' ' + lastname);  &#125;  if (language === 'es') &#123;    console.log('Hola ' + firstname + ' ' + lastname);  &#125;&#125;function greetEnglish(firstname, lastname) &#123;  greet(firstname, lastname, 'en');&#125;function greetSpanish(firstname, lastname) &#123;  greet(firstname, lastname, 'es');&#125;greetEnglish('John', 'Doe');greetSpanish('John', 'Doe');\n","dateCreated":"2017-01-04T15:20:42+08:00","dateModified":"2018-06-14T18:13:17+08:00","datePublished":"2017-01-04T15:20:42+08:00","description":"","headline":"JS understanding the weird parts 4-34 ~ 4-40 function","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/"},"publisher":{"@type":"Organization","name":"Necisam","sameAs":["https://github.com/king4sam","https://www.facebook.com/yucheng.cheng.90","mailto:king4sam990816@gmail.com"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/","keywords":"StudyNote javascript udemy"}</script>
+    <meta name="description" content="4-34 Functions are Objectsbigword alert : FIRST CLASS FUNCTIONS every things you can do with other types you can do with functions. assignthem to variables, pass them around, create them on the fly.">
+<meta name="keywords" content="StudyNote javascript udemy">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="JS understanding the weird parts 4-34 ~ 4-40 function">
+<meta property="og:url" content="http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="4-34 Functions are Objectsbigword alert : FIRST CLASS FUNCTIONS every things you can do with other types you can do with functions. assignthem to variables, pass them around, create them on the fly.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/!--￼11--%3E/images/studynotes/functions.PNG">
+<meta property="og:image" content="http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/!--￼12--%3E/images/studynotes/byvalue.PNG">
+<meta property="og:image" content="http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/!--￼13--%3E/images/studynotes/byreference.PNG">
+<meta property="og:updated_time" content="2018-06-14T10:13:17.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS understanding the weird parts 4-34 ~ 4-40 function">
+<meta name="twitter:description" content="4-34 Functions are Objectsbigword alert : FIRST CLASS FUNCTIONS every things you can do with other types you can do with functions. assignthem to variables, pass them around, create them on the fly.">
+<meta name="twitter:image" content="http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/!--￼11--%3E/images/studynotes/functions.PNG">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://yoursite.com/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-1udptkpril81ozu8ifd8zpujn7ipu7lefxsiu5gxx0dpnzntdx6dusvki3ao.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Hexo</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Necisam</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/king4sam" target="_blank" rel="noopener" title="king4sam">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">king4sam</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/yucheng.cheng.90" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:king4sam990816@gmail.com" target="_blank" rel="noopener" title="GMAIL">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GMAIL</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            JS understanding the weird parts 4-34 ~ 4-40 function
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-01-04T15:20:42+08:00">
+	
+		    Jan 04, 2017
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <a id="more"></a>
+<h1 id="4-34-Functions-are-Objects"><a href="#4-34-Functions-are-Objects" class="headerlink" title="4-34 Functions are Objects"></a>4-34 Functions are Objects</h1><h2 id="bigword-alert-FIRST-CLASS-FUNCTIONS"><a href="#bigword-alert-FIRST-CLASS-FUNCTIONS" class="headerlink" title="bigword alert : FIRST CLASS FUNCTIONS"></a><strong>bigword alert : FIRST CLASS FUNCTIONS</strong></h2><ul>
+<li>every things you can do with other types you can do with functions.</li>
+<li>assignthem to variables, pass them around, create them on the fly.</li>
+<li>js is not the only language that has first class function</li>
+</ul>
+<hr>
+<p>function has more properties than object</p>
+<ul>
+<li>Name(optional)</li>
+<li>Code</li>
+<li>use () to invoke a function</li>
+</ul>
+<p><img src="!--￼11--&gt;/images/studynotes/functions.PNG" alt="My helpful screenshot"></p>
+<figure class="highlight javascript"><figcaption><span>Functions are Objects</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//declare a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greet.languague = <span class="string">"English"</span>; <span class="comment">//add property to function!!!</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>#4-35 Function statements and function Expressions</p>
+<h2 id="bigword-alert-Expression"><a href="#bigword-alert-Expression" class="headerlink" title="bigword alert : Expression"></a><strong>bigword alert : Expression</strong></h2><ul>
+<li>a unit of code that results in a value</li>
+<li>statement just do the work</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>function express vs statement</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">greet();</span><br><span class="line"></span><br><span class="line"><span class="comment">//function statement</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//function express, return a object to var</span></span><br><span class="line"><span class="keyword">var</span> anonymousGreet = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;</span><br><span class="line">anonymousGreet(); <span class="comment">//use () to invoke a function</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>function hoisting</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">anonymousGreet(); <span class="comment">//error : anonymousGreet is undefined this line</span></span><br><span class="line"><span class="keyword">var</span> anonymousGreet = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="comment">//anonymousGreet is set to a function</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>pass function as parameter</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<hr>
+<p>#4-36 By value and By reference</p>
+<ul>
+<li>In js, primitives are by value</li>
+<li>In js, objects(includes functions) are by reference</li>
+<li>沒有選擇餘地，就是這樣</li>
+</ul>
+<h2 id="by-value"><a href="#by-value" class="headerlink" title="by value"></a>by value</h2><p><img src="!--￼12--&gt;/images/studynotes/byvalue.PNG" alt="My helpful screenshot"></p>
+<h2 id="by-reference"><a href="#by-reference" class="headerlink" title="by reference"></a>by reference</h2><p><img src="!--￼13--&gt;/images/studynotes/byreference.PNG" alt="My helpful screenshot"></p>
+<h2 id="bigword-alert-Mutate"><a href="#bigword-alert-Mutate" class="headerlink" title="bigword alert : Mutate"></a>bigword alert : Mutate</h2><ul>
+<li>to change sth</li>
+<li>Immutable means it can’t be changed</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>by value/reference</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// by value (primitives)</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> b;</span><br><span class="line"></span><br><span class="line">b = a;</span><br><span class="line">a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br><span class="line"></span><br><span class="line"><span class="comment">// by reference (all objects (including functions))</span></span><br><span class="line"><span class="keyword">var</span> c = &#123; <span class="attr">greeting</span>: <span class="string">'hi'</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> d;</span><br><span class="line"></span><br><span class="line">d = c;</span><br><span class="line">c.greeting = <span class="string">'hello'</span>; <span class="comment">// mutate</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(c);</span><br><span class="line"><span class="built_in">console</span>.log(d);</span><br><span class="line"></span><br><span class="line"><span class="comment">// by reference (even as parameters)</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeGreeting</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    obj.greeting = <span class="string">'Hola'</span>; <span class="comment">// mutate</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">changeGreeting(d);</span><br><span class="line"><span class="built_in">console</span>.log(c);</span><br><span class="line"><span class="built_in">console</span>.log(d);</span><br><span class="line"></span><br><span class="line"><span class="comment">// equals operator sets up new memory space (new address)</span></span><br><span class="line">c = &#123; <span class="attr">greeting</span>: <span class="string">'howdy'</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(c);</span><br><span class="line"><span class="built_in">console</span>.log(d);</span><br></pre></td></tr></table></figure>
+<hr>
+<p>#4-37 Object, functions,and this</p>
+<ul>
+<li>‘this’ is depending on how the funciton is called</li>
+</ul>
+<ol>
+<li>In the global execution context -&gt; global object</li>
+<li>In function context, simple call (ex : f1() ) -&gt; global object</li>
+<li>As an object method -&gt; the object</li>
+</ol>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this" target="_blank" rel="noopener">whole document</a></p>
+<figure class="highlight javascript"><figcaption><span>what is this</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>);<span class="comment">// window</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">a()<span class="comment">// window</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">b()<span class="comment">//window</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> c = &#123;</span><br><span class="line">  name:<span class="string">"the c object"</span>,</span><br><span class="line">  log: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"updated c object"</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>);<span class="comment">//c object</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> setname = <span class="function"><span class="keyword">function</span>(<span class="params">newname</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.name = newname;<span class="comment">// the global object ,windows!!!</span></span><br><span class="line">      <span class="comment">// a lot of people think it's wrong</span></span><br><span class="line">    &#125;</span><br><span class="line">    setname(<span class="string">'updated again!!'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>); <span class="comment">//c object with name : "updated c object"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">c.log();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>tips avoiding weird this</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> c = &#123;</span><br><span class="line">  name:<span class="string">"the c object"</span>,</span><br><span class="line">  log: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>; <span class="comment">//save this(c object) address in var self</span></span><br><span class="line"></span><br><span class="line">    self.name = <span class="string">"updated c object"</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(self);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> setname = <span class="function"><span class="keyword">function</span>(<span class="params">newname</span>)</span>&#123;</span><br><span class="line">      self.name = newname;<span class="comment">// self point to the c objects</span></span><br><span class="line">    &#125;</span><br><span class="line">    setname(<span class="string">'updated again!!'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(self);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">c.log();</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="4-38-Array-collection-of-anything"><a href="#4-38-Array-collection-of-anything" class="headerlink" title="4-38 Array-collection of anything"></a>4-38 Array-collection of anything</h1><ul>
+<li>In javascript, array is typeless. You can put anything into it(Even a function = special object).</li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>array contains everything</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [</span><br><span class="line">  <span class="number">1</span>,</span><br><span class="line">  <span class="literal">true</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    name:<span class="string">'sam'</span>,</span><br><span class="line">    phone:<span class="string">'0911111111'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> greeting = <span class="string">'Hello '</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(greeting + name);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"bello"</span></span><br><span class="line">]</span><br><span class="line">arr[<span class="number">3</span>](arr[<span class="number">2</span>].name); <span class="comment">// "Hello sam"</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="4-39-arguments-and-spreads"><a href="#4-39-arguments-and-spreads" class="headerlink" title="4-39 arguments and spreads"></a>4-39 arguments and spreads</h1><ul>
+<li>arguments keyword contains all the function arguments</li>
+<li>arguments is array-like, not exactly regular array</li>
+<li>arguments will become deprecated</li>
+<li>spread parameter(…) //資料查到是叫<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters" target="_blank" rel="noopener">Rest parameters</a></li>
+</ul>
+<figure class="highlight javascript"><figcaption><span>use arguments</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span>(<span class="params">firstname,lastname,language</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(firstname);</span><br><span class="line">  <span class="built_in">console</span>.log(lastname);</span><br><span class="line">  <span class="built_in">console</span>.log(language);</span><br><span class="line">&#125;</span><br><span class="line">greet() <span class="comment">// undefined undefined undefined</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><figcaption><span>spreadparams</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span>(<span class="params">firstname,lastname,language, ...other</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// additional params are put into an array called other</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="4-40-function-overloading"><a href="#4-40-function-overloading" class="headerlink" title="4-40 function overloading"></a>4-40 function overloading</h1><ul>
+<li>js don’t have function overloading</li>
+<li>In js, funtion is an object</li>
+<li>In js, there are firstclass function</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greet</span>(<span class="params">firstname, lastname, language</span>) </span>&#123;</span><br><span class="line">  language = language || <span class="string">'en'</span>;</span><br><span class="line">  <span class="keyword">if</span> (language === <span class="string">'en'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hello '</span> + firstname + <span class="string">' '</span> + lastname);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (language === <span class="string">'es'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hola '</span> + firstname + <span class="string">' '</span> + lastname);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greetEnglish</span>(<span class="params">firstname, lastname</span>) </span>&#123;</span><br><span class="line">  greet(firstname, lastname, <span class="string">'en'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">greetSpanish</span>(<span class="params">firstname, lastname</span>) </span>&#123;</span><br><span class="line">  greet(firstname, lastname, <span class="string">'es'</span>);</span><br><span class="line">&#125;</span><br><span class="line">greetEnglish(<span class="string">'John'</span>, <span class="string">'Doe'</span>);</span><br><span class="line">greetSpanish(<span class="string">'John'</span>, <span class="string">'Doe'</span>);</span><br></pre></td></tr></table></figure>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/StudyNote-javascript-udemy/">StudyNote javascript udemy</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/05/jsuwp-4-41-4-42/" data-tooltip="JS understanding the weird parts 4-41 ~ 4-42 ASI" aria-label="PREVIOUS: JS understanding the weird parts 4-41 ~ 4-42 ASI">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/12/22/unix2016-assignment7-note/" data-tooltip="unix2016 assignment7 note" aria-label="NEXT: unix2016 assignment7 note">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Necisam. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/05/jsuwp-4-41-4-42/" data-tooltip="JS understanding the weird parts 4-41 ~ 4-42 ASI" aria-label="PREVIOUS: JS understanding the weird parts 4-41 ~ 4-42 ASI">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/12/22/unix2016-assignment7-note/" data-tooltip="unix2016 assignment7 note" aria-label="NEXT: unix2016 assignment7 note">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/" title="Share on Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/" title="Share on Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/" title="Share on Google+">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment-o"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Necisam</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                Tainan, Taiwan
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-yhuo2grt8r7qkqumzgjoglkfbicl1thukjgmla6jopu56zpcowfedi5zjcor.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'http://yoursite.com/2017/01/04/jsuwp-4-34-4-40/';
+                 
+                    this.page.identifier = '2017/01/04/jsuwp-4-34-4-40/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'necisam';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+
+    </body>
+</html>
