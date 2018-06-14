@@ -3,7 +3,7 @@ layout: post
 title: "jsuwp-4-30 Objects and Functions"
 date: 2017-02-12 00:06:26 +0800
 comments: true
-categories: StudyNote javascript udemy
+tags: StudyNote javascript udemy
 ---
 
 <!--more-->

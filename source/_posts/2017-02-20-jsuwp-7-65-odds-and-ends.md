@@ -3,7 +3,7 @@ layout: post
 title: "jsuwp-7-65 ~ 7-68 Odds and Ends"
 date: 2017-02-20 15:29:15 +0800
 comments: true
-categories: StudyNote javascript udemy
+tags: StudyNote javascript udemy
 ---
 
 <!--more-->

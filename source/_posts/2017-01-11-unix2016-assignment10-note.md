@@ -3,7 +3,7 @@ layout: post
 title: "unix2016 assignment10 note"
 date: 2017-01-11 17:36:45 +0800
 comments: true
-categories: unix2016
+tags: unix2016
 ---
 
 # Requirements

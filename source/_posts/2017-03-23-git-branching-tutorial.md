@@ -3,7 +3,7 @@ layout: post
 title: "Git Branching Tutorial"
 date: 2017-03-23 15:17:35 +0800
 comments: true
-categories: git
+tags: git
 ---
 
 <!--more-->

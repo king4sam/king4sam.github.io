@@ -3,7 +3,7 @@ layout: post
 title: "plugin test"
 date: 2016-08-1 14:05:33 +0800
 comments: true
-categories:
+tags:
 - octopress
 - plugin
 
@@ -40,15 +40,7 @@ end
 
 ### 效果
 
-{% img [class names] https://s3.graphiq.com/sites/default/files/465/media/images/t2/Shiba_Inu_5187048.jpg %}
-
-## Mathjax
-
-### allow Latex
-
-$$
-f'\left( x\right) = \lim _{x\rightarrow 0}\dfrac {f\left( x+\Delta x\right) - f\left( x\right)}{\Delta x}
-$$
+{% img [class names] http://www.marieclaire.com.hk/sites/default/files/editors/user11/image6_28.jpeg %}
 
 ---
 

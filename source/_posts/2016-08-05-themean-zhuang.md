@@ -3,7 +3,7 @@ layout: post
 title: "theme安裝"
 date: 2016-08-05 10:52:06 +0800
 comments: true
-categories:
+tags:
 - octopress
 - theme
 ---

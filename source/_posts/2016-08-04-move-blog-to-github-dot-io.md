@@ -3,7 +3,7 @@ layout: post
 title: "move blog to github.io"
 date: 2016-08-04 23:46:00 +0800
 comments: true
-categories:
+tags:
 - github
 - octopress
 ---

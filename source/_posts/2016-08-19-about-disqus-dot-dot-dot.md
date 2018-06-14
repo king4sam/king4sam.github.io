@@ -3,7 +3,7 @@ layout: post
 title: "about disqus..."
 date: 2016-08-19 18:45:44 +0800
 comments: true
-categories:
+tags:
 - disqus
 - octopress
 ---

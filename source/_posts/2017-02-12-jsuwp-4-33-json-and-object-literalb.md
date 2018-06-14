@@ -3,7 +3,7 @@ layout: post
 title: "jsuwp-4-33 Json and object literal"
 date: 2017-02-12 00:51:29 +0800
 comments: true
-categories: StudyNote javascript udemy
+tags: StudyNote javascript udemy
 ---
 
 

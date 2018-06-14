@@ -3,7 +3,7 @@ layout: post
 title: "jsuwp-4-32 Framework aside: Faking Namespace"
 date: 2017-02-12 00:43:18 +0800
 comments: true
-categories: StudyNote javascript udemy
+tags: StudyNote javascript udemy
 ---
 
 <!--more-->

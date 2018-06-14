@@ -3,7 +3,7 @@ layout: post
 title: "Install octopress and deploy to heroku"
 date: 2016-07-30 23:01:14 +0800
 comments: true
-categories:
+tags:
 - octopress
 - rake
 - heroku

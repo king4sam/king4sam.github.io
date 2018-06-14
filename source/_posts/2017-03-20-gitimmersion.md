@@ -3,7 +3,7 @@ layout: post
 title: "Gitimmersion Notes"
 date: 2017-03-20 14:34:51 +0800
 comments: true
-categories: git
+tags: git
 ---
 
 之前用git時有些指令常常忘記，還來跳出去查一下

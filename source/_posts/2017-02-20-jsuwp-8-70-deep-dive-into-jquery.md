@@ -3,7 +3,7 @@ layout: post
 title: "jsuwp-8-69 ~ 8-72 Deep dive into jQuery"
 date: 2017-02-20 16:39:33 +0800
 comments: true
-categories: StudyNote javascript udemy
+tags: StudyNote javascript udemy
 ---
 
 <!--more-->
